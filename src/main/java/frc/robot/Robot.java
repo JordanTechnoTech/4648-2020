@@ -32,8 +32,8 @@ public class Robot extends TimedRobot {
   private final ColorSensorV3 m_colorSensor = new ColorSensorV3(i2cPort);
 
   /**
-   * This function is run when the robot is first started up and should be
-   * used for any initialization code.
+   * This function is run when the robot is first started up and should be used
+   * for any initialization code.
    */
   @Override
   public void robotInit() {
@@ -43,17 +43,38 @@ public class Robot extends TimedRobot {
   }
 
   /**
-   * This function is called every robot packet, no matter the mode. Use
-   * this for items like diagnostics that you want ran during disabled,
-   * autonomous, teleoperated and test.
+   * This function is called every robot packet, no matter the mode. Use this for
+   * items like diagnostics that you want ran during disabled, autonomous,
+   * teleoperated and test.
    *
-   * <p>This runs after the mode specific periodic functions, but before
-   * LiveWindow and SmartDashboard integrated updating.
+   * <p>
+   * This runs after the mode specific periodic functions, but before LiveWindow
+   * and SmartDashboard integrated updating.
    */
   @Override
   public void robotPeriodic() {
     Color detectedColor = m_colorSensor.getColor();
     double IR = m_colorSensor.getIR();
+    double[] values = {detectedColor.red, detectedColor.green,detectedColor.blue};
+
+
+    //check if color detected is RED
+    if (values[0] >= 0.4 && values[1] <= 0.2 && values[2] <= 0.2) {
+      SmartDashboard.putString("Color", "RED");
+    }
+    //check if color detected is GREEN
+    if (values[0] <= 0.2 && values[1] >= 0.4 && values[2] <= 0.2) {
+      SmartDashboard.putString("Color", "GREEN");
+    }
+    //check if color detected is BLUE
+    if (values[0] <= 0.2 && values[1] <= 0.2 && values[2] >= 0.4) {
+      SmartDashboard.putString("Color", "BLUE");
+    }
+    //check if color detected is YELLOW
+    if (values[0] >= 0.35 && values[1] >= 0.35 && values[2] <= 0.2) {
+      SmartDashboard.putString("Color", "YELLOW");
+    }
+
 
     SmartDashboard.putNumber("Red", detectedColor.red);
     SmartDashboard.putNumber("Green", detectedColor.green);
