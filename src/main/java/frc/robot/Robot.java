@@ -59,40 +59,44 @@ public class Robot extends TimedRobot {
 
     Color oldColor = Color.kWhite;
     Color newColor = Color.kWhite;
-    int rot = 0;
+    int changes = 0;
     
 
     //check if color detected is RED
     if (values[0] >= 0.5 && values[1] <= 0.35 && values[2] <= 0.2) {
       SmartDashboard.putString("Color", "RED");
+      newColor = Color.kRed;
     }else 
     //check if color detected is GREEN
     if (values[0] <= 0.2 && values[1]>= 0.4 && values[2] <= 0.3) {
       SmartDashboard.putString("Color", "GREEN");
+      newColor = Color.kGreen;
     }else 
     //check if color detected is BLUE
     if (values[0] <= 0.2 && values[1] >= 0.2 && values[2] >= 0.4) {
       SmartDashboard.putString("Color", "BLUE");
+      newColor = Color.kBlue;
     }else 
     //check if color detected is YELLOW
     if (values[0] >= 0.3 && values[1] >= 0.4 && values[2] <= 0.2) {
       SmartDashboard.putString("Color", "YELLOW");
+      newColor = Color.kYellow;
     }else {
       newColor = Color.kWhite;
     }
 
     //check if a color change has happened
     if(newColor != oldColor) {
-      rot++;
-      oldColor = newColor;
+      ++changes;
     }
+    oldColor = newColor;
 
 
     SmartDashboard.putNumber("Red", detectedColor.red);
     SmartDashboard.putNumber("Green", detectedColor.green);
     SmartDashboard.putNumber("Blue", detectedColor.blue);
     SmartDashboard.putNumber("IR", IR);
-    SmartDashboard.putNumber("Rotations", rot);
+    SmartDashboard.putNumber("Color Changes", changes);
   }
 
   /**
