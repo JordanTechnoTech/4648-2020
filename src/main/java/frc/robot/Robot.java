@@ -81,8 +81,6 @@ public class Robot extends TimedRobot {
     if (values[0] >= 0.3 && values[1] >= 0.4 && values[2] <= 0.2) {
       SmartDashboard.putString("Color", "YELLOW");
       newColor = Color.kYellow;
-    }else {
-      newColor = Color.kWhite;
     }
 
     //check if a color change has happened
