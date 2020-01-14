@@ -148,7 +148,7 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     velocity = m_xbox.getTriggerAxis(Hand.kRight) - m_xbox.getTriggerAxis(Hand.kLeft);
 
-    m_robotDrive.arcadeDrive(velocity, m_xbox.getX(Hand.kLeft));
+    m_robotDrive.arcadeDrive(velocity * 0.7f, m_xbox.getX(Hand.kLeft) * 0.7f);
   }
 
   /**
