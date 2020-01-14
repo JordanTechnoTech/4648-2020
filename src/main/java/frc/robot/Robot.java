@@ -38,7 +38,7 @@ public class Robot extends TimedRobot {
   private final Talon m_leftMotor = new Talon(0);
   private final Talon m_rightMotor = new Talon(1);
   private final DifferentialDrive m_robotDrive = new DifferentialDrive(m_leftMotor, m_rightMotor);
-  private final XboxController m_xbox = new XboxController(1);
+  private final XboxController m_xbox = new XboxController(0);
   private double velocity = 0;
 
   /**
