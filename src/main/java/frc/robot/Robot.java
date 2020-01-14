@@ -44,6 +44,9 @@ public class Robot extends TimedRobot {
   private Color oldColor = Color.kWhite;
   private Color newColor = Color.kWhite;
   private int changes = 0;
+  private String[] colors = {"RED","YELLOW","BLUE","GREEN"};
+  private int currentColor = 0;
+  private int sensorColor = 2;
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -74,22 +77,22 @@ public class Robot extends TimedRobot {
 
     //check if color detected is RED
     if (values[0] >= 0.5 && values[1] <= 0.35 && values[2] <= 0.2) {
-      SmartDashboard.putString("Color", "RED");
+      currentColor = 0;
       newColor = Color.kRed;
     }else 
     //check if color detected is GREEN
     if (values[0] <= 0.2 && values[1]>= 0.4 && values[2] <= 0.3) {
-      SmartDashboard.putString("Color", "GREEN");
+      currentColor = 3;
       newColor = Color.kGreen;
     }else 
     //check if color detected is BLUE
     if (values[0] <= 0.2 && values[1] >= 0.2 && values[2] >= 0.4) {
-      SmartDashboard.putString("Color", "BLUE");
+      currentColor = 2;
       newColor = Color.kBlue;
     }else 
     //check if color detected is YELLOW
     if (values[0] >= 0.3 && values[1] >= 0.4 && values[2] <= 0.2) {
-      SmartDashboard.putString("Color", "YELLOW");
+      currentColor = 1;
       newColor = Color.kYellow;
     }
 
@@ -99,12 +102,19 @@ public class Robot extends TimedRobot {
     }
     oldColor = newColor;
 
+    //offset the color for the sensor
+    sensorColor = currentColor + 2;
+    if(sensorColor > 3) {
+      sensorColor = sensorColor - 3;
+    }
+
 
     SmartDashboard.putNumber("Red", detectedColor.red);
     SmartDashboard.putNumber("Green", detectedColor.green);
     SmartDashboard.putNumber("Blue", detectedColor.blue);
     SmartDashboard.putNumber("IR", IR);
     SmartDashboard.putString("Color Changes", "" + changes);
+    SmartDashboard.putString("Color", colors[currentColor]);
   }
 
   /**
