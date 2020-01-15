@@ -8,10 +8,14 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.util.Color;
+import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.Talon;
 
 import com.revrobotics.ColorSensorV3;
 
@@ -30,6 +34,19 @@ public class Robot extends TimedRobot {
 
   private final I2C.Port i2cPort = I2C.Port.kOnboard;
   private final ColorSensorV3 m_colorSensor = new ColorSensorV3(i2cPort);
+
+  private final Talon m_leftMotor = new Talon(0);
+  private final Talon m_rightMotor = new Talon(1);
+  private final DifferentialDrive m_robotDrive = new DifferentialDrive(m_leftMotor, m_rightMotor);
+  private final XboxController m_xbox = new XboxController(0);
+  private double velocity = 0;
+
+  private Color oldColor = Color.kWhite;
+  private Color newColor = Color.kWhite;
+  private int changes = 0;
+  private String[] colors = {"RED","YELLOW","BLUE","GREEN"};
+  private int currentColor = 0;
+  private int sensorColor = 2;
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -56,45 +73,48 @@ public class Robot extends TimedRobot {
     Color detectedColor = m_colorSensor.getColor();
     double IR = m_colorSensor.getIR();
     double[] values = {detectedColor.red, detectedColor.green,detectedColor.blue};
-
-    Color oldColor = Color.kWhite;
-    Color newColor = Color.kWhite;
-    int changes = 0;
     
 
     //check if color detected is RED
     if (values[0] >= 0.5 && values[1] <= 0.35 && values[2] <= 0.2) {
-      SmartDashboard.putString("Color", "RED");
+      currentColor = 0;
       newColor = Color.kRed;
     }else 
     //check if color detected is GREEN
     if (values[0] <= 0.2 && values[1]>= 0.4 && values[2] <= 0.3) {
-      SmartDashboard.putString("Color", "GREEN");
+      currentColor = 3;
       newColor = Color.kGreen;
     }else 
     //check if color detected is BLUE
     if (values[0] <= 0.2 && values[1] >= 0.2 && values[2] >= 0.4) {
-      SmartDashboard.putString("Color", "BLUE");
+      currentColor = 2;
       newColor = Color.kBlue;
     }else 
     //check if color detected is YELLOW
     if (values[0] >= 0.3 && values[1] >= 0.4 && values[2] <= 0.2) {
-      SmartDashboard.putString("Color", "YELLOW");
+      currentColor = 1;
       newColor = Color.kYellow;
     }
 
     //check if a color change has happened
-    if(newColor != oldColor) {
-      ++changes;
+    if(oldColor != newColor) {
+      changes = changes + 1;
     }
     oldColor = newColor;
+
+    //offset the color for the sensor
+    sensorColor = currentColor + 2;
+    if(sensorColor > 3) {
+      sensorColor = sensorColor - 3;
+    }
 
 
     SmartDashboard.putNumber("Red", detectedColor.red);
     SmartDashboard.putNumber("Green", detectedColor.green);
     SmartDashboard.putNumber("Blue", detectedColor.blue);
     SmartDashboard.putNumber("IR", IR);
-    SmartDashboard.putNumber("Color Changes", changes);
+    SmartDashboard.putString("Color Changes", "" + changes);
+    SmartDashboard.putString("Color", colors[currentColor]);
   }
 
   /**
@@ -136,6 +156,9 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+    velocity = m_xbox.getTriggerAxis(Hand.kRight) - m_xbox.getTriggerAxis(Hand.kLeft);
+
+    m_robotDrive.arcadeDrive(velocity * 0.7f, (m_xbox.getX(Hand.kLeft) + 0.22f) * 0.5f);
   }
 
   /**
