@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.RobotMap;
 
 public class DriveSubsystem extends Subsystem {
 	// Put methods for controlling this subsystem
@@ -21,12 +22,9 @@ public class DriveSubsystem extends Subsystem {
 	private final Spark rightDrive = RobotMap.rightDriveMotorController;
 	private final DifferentialDrive differentialDrive1 = RobotMap.drivetrain;
 
-	private final ADIS16448_IMU imu = RobotMap.imu;
-
 	public DriveSubsystem() {
 		addChild("Left CIM", (Spark) leftDrive);
 		addChild("Right CIM", (Spark) rightDrive);
-		addChild("IMU", imu);
 		addChild("Left Encoder",RobotMap.leftEncoder);
 		addChild("Right Encoder",RobotMap.rightEncoder);
 		differentialDrive1.setSafetyEnabled(false);
@@ -36,7 +34,7 @@ public class DriveSubsystem extends Subsystem {
 
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
-		setDefaultCommand(new DriveCommand());
+		//setDefaultCommand(new DriveCommand());
 	}
 
 	public void tankDrive(double leftSpeed, double rightSpeed) {
@@ -47,22 +45,11 @@ public class DriveSubsystem extends Subsystem {
 		differentialDrive1.arcadeDrive(forwardSpeed, rotationSpeed);
 	}
 
-	public void log() {
-		SmartDashboard.putNumber("Gyro-Angle", imu.getAngle());
-		SmartDashboard.putNumber("Gyro-X", imu.getAngleX());
-		SmartDashboard.putNumber("Gyro-Y", imu.getAngleY());
-		SmartDashboard.putNumber("Gyro-Z", imu.getAngleZ());
-
-		SmartDashboard.putNumber("Pressure: ", imu.getBarometricPressure());
-		SmartDashboard.putNumber("Temperature: ", imu.getTemperature());
-		
-//		SmartDashboard.putNumber("Left Sonar Distance: ", RobotMap.leftSonar.getValue());
-//		SmartDashboard.putNumber("Right Sonar Distance: ", RobotMap.rightSonar.getValue());
-		
+	public void log() {	
 		SmartDashboard.putNumber("Left Speed", leftDrive.get());
 		SmartDashboard.putNumber("Right Speed", rightDrive.get());
 		
-		SmartDashboard.putNumber("Left Encoder", RobotMap.leftEncoder.get());
-		SmartDashboard.putNumber("Right Encoder", RobotMap.rightEncoder.get());
+		//SmartDashboard.putNumber("Left Encoder", RobotMap.leftEncoder.get());
+		//SmartDashboard.putNumber("Right Encoder", RobotMap.rightEncoder.get());
 	}
 }
