@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.subsystems;
+package frc.robot.subsystem;
 
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -19,7 +19,7 @@ public class DriveSubsystem extends Subsystem {
 	
 	private final Spark leftDrive = RobotMap.leftDriveMotorController;
 	private final Spark rightDrive = RobotMap.rightDriveMotorController;
-	private final DifferentialDrive differentialDrive1 = RobotMap.drivetrain;
+	protected final DifferentialDrive differentialDrive1 = RobotMap.drivetrain;
 
 	public DriveSubsystem() {
 		addChild("Left CIM", (Spark) leftDrive);
