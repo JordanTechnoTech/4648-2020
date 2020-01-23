@@ -8,15 +8,16 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.I2C;
-import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystem.TechnoTechSubsytem;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import com.revrobotics.ColorSensorV3;
 
 /**
@@ -33,18 +34,14 @@ public class Robot extends TimedRobot {
   private final I2C.Port i2cPort = I2C.Port.kOnboard;
   private final ColorSensorV3 m_colorSensor = new ColorSensorV3(i2cPort);
 
-  private final Talon m_leftMotor = new Talon(0);
-  private final Talon m_rightMotor = new Talon(1);
-  private final DifferentialDrive m_robotDrive = new DifferentialDrive(m_leftMotor, m_rightMotor);
-  private final XboxController m_xbox = new XboxController(0);
-  private double velocity = 0;
-
   private Color oldColor = Color.kWhite;
   private Color newColor = Color.kWhite;
   private int changes = 0;
   private String[] colors = {"RED","YELLOW","BLUE","GREEN"};
   private int currentColor = 0;
   private int sensorColor = 2;
+
+  List<TechnoTechSubsytem> subsystems = new ArrayList<>();
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -55,6 +52,12 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+    RobotMap.init();
+    initSubsystems();
+  }
+
+  public void initSubsystems() {
+    
   }
 
   /**
@@ -166,9 +169,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    velocity = m_xbox.getTriggerAxis(Hand.kRight) - m_xbox.getTriggerAxis(Hand.kLeft);
 
-    m_robotDrive.arcadeDrive(velocity * 0.7f, (m_xbox.getX(Hand.kLeft) + 0.22f) * 0.5f);
   }
 
   @Override
