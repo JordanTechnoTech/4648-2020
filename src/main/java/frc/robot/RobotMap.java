@@ -2,6 +2,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Sendable;
 import edu.wpi.first.wpilibj.Spark;
+import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 public class RobotMap {
@@ -15,6 +16,7 @@ public class RobotMap {
 	public static Spark leftDriveMotorController;
 	public static Spark rightDriveMotorController;
 	public static DifferentialDrive drivetrain;
+	public static Subsystem driveSubsystem;
 
 
 	public static void init() {

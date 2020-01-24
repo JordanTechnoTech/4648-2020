@@ -13,6 +13,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.subsystem.DriveSubsystem;
 import frc.robot.subsystem.TechnoTechSubsytem;
 
 import java.util.ArrayList;
@@ -21,9 +23,10 @@ import java.util.List;
 import com.revrobotics.ColorSensorV3;
 
 /**
- * The VM is configured to automatically run this class, and to call the functions corresponding to
- * each mode, as described in the TimedRobot documentation. If you change the name of this class or
- * the package after creating this project, you must also update the build.gradle file in the
+ * The VM is configured to automatically run this class, and to call the
+ * functions corresponding to each mode, as described in the TimedRobot
+ * documentation. If you change the name of this class or the package after
+ * creating this project, you must also update the build.gradle file in the
  * project.
  */
 public class Robot extends TimedRobot {
@@ -37,11 +40,11 @@ public class Robot extends TimedRobot {
   private Color oldColor = Color.kWhite;
   private Color newColor = Color.kWhite;
   private int changes = 0;
-  private String[] colors = {"RED","YELLOW","BLUE","GREEN"};
+  private String[] colors = { "RED", "YELLOW", "BLUE", "GREEN" };
   private int currentColor = 0;
   private int sensorColor = 2;
 
-  List<TechnoTechSubsytem> subsystems = new ArrayList<>();
+  List<Subsystem> subsystems = new ArrayList<>();
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -57,7 +60,7 @@ public class Robot extends TimedRobot {
   }
 
   public void initSubsystems() {
-    
+    subsystems.add(RobotMap.driveSubsystem);
   }
 
   /**
