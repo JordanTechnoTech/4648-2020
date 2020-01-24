@@ -13,9 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj.command.Subsystem;
-import frc.robot.subsystem.DriveSubsystem;
-import frc.robot.subsystem.TechnoTechSubsytem;
+import frc.robot.subsystem.TechnoTechSubsystem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +42,7 @@ public class Robot extends TimedRobot {
   private int currentColor = 0;
   private int sensorColor = 2;
 
-  List<Subsystem> subsystems = new ArrayList<>();
+  List<TechnoTechSubsystem> subsystems = new ArrayList<>();
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -172,7 +170,11 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+      log();
+  }
 
+  private void log() {
+    subsystems.forEach(TechnoTechSubsystem::log);
   }
 
   @Override

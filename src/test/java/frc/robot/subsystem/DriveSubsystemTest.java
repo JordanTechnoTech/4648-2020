@@ -1,4 +1,5 @@
 package frc.robot.subsystem;
+
 import org.junit.Test;
 
 import frc.robot.subsystem.DriveSubsystem;
@@ -12,10 +13,10 @@ public class DriveSubsystemTest {
         //setup
         RobotMap.init();
         //when
-        DriveSubsystem subject = new DriveSubsystem();
+        DriveSubsystem subject = RobotMap.driveSubsystem;
 
         //then
-        assertEquals(null, subject.getDefaultCommand());
+        assertEquals("DriveCommand", subject.getDefaultCommand().getName());
         assertEquals(0.0, RobotMap.leftDriveMotorController.getSpeed(), 0.0);
         assertEquals(0.0, RobotMap.rightDriveMotorController.getSpeed(), 0.0);
     }
@@ -23,13 +24,13 @@ public class DriveSubsystemTest {
     //@Test
     public void testArcadeDrive () {
         //setup
-        DriveSubsystem subject = new DriveSubsystem();
+        DriveSubsystem subject = RobotMap.driveSubsystem;
         RobotMap.init();
         //when
         subject.arcadeDrive(0.25, 0.0);
 
         //then
-        assertEquals(null, subject.getDefaultCommand());
+        assertEquals("DriveCommand", subject.getDefaultCommand().getName());
         assertEquals(0.25, RobotMap.leftDriveMotorController.getSpeed(), 0.0);
         assertEquals(0.25, RobotMap.rightDriveMotorController.getSpeed(), 0.0);
     }
