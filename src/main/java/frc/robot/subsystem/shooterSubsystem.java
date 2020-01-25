@@ -9,7 +9,7 @@ public class shooterSubsystem extends Subsystem implements TechnoTechSubsystem {
     private TalonSRX shooterTalon;
 
     public shooterSubsystem(TalonSRX talonSRX) {
-        shooterTalon = talonSRX;
+        this.shooterTalon = talonSRX;
     }
 
     
@@ -17,12 +17,13 @@ public class shooterSubsystem extends Subsystem implements TechnoTechSubsystem {
 
     }
 
-    public void shoot() {
-        shooterTalon.set(ControlMode.PercentOutput, 1);
+    public void setSpeed(double speed) {
+        shooterTalon.set(ControlMode.PercentOutput, speed);
     }
+
     
     @Override
     public void log() {
-            
+        
     }
 }

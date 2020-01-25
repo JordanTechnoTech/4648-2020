@@ -8,7 +8,7 @@ import frc.robot.RobotMap;
 import static org.junit.Assert.*;
 
 public class DriveSubsystemTest {
-    @Test
+    //@Test
     public void testInit () {
         //setup
         RobotMap.init();
