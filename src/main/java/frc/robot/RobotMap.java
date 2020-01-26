@@ -15,7 +15,7 @@ public class RobotMap {
 	public static final Sendable rightEncoder = null;
 	public static int rightDriveMotor = 1;
 	public static int leftDriveMotor = 0;
-	public static int shooterMotor = 0;
+	public static int shooterMotor = 1;
 
 	public static TalonSRX shooterMotorController;
 	public static Talon leftDriveMotorController;

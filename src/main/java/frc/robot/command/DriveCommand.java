@@ -10,7 +10,7 @@ public class DriveCommand extends Command {
 
     @Override
     protected void execute() {
-        RobotMap.driveSubsystem.arcadeDrive(RobotMap.oi.controller0.getStickRightXValue(), RobotMap.oi.controller0.getStickRightYValue());
+        RobotMap.driveSubsystem.arcadeDrive(RobotMap.oi.controller0.getStickLeftYValue(), -RobotMap.oi.controller0.getStickLeftXValue());
     }
 
     @Override
