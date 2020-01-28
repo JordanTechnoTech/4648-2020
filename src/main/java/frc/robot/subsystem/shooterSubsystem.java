@@ -3,6 +3,7 @@ package frc.robot.subsystem;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class shooterSubsystem extends Subsystem implements TechnoTechSubsystem {
 
@@ -24,6 +25,6 @@ public class shooterSubsystem extends Subsystem implements TechnoTechSubsystem {
     
     @Override
     public void log() {
-        
+        SmartDashboard.putNumber("TalonSRX", shooterTalon.getMotorOutputPercent());
     }
 }
