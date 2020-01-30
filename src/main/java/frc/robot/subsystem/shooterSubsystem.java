@@ -2,8 +2,10 @@ package frc.robot.subsystem;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.subsystem.ShooterSubsystem;
 
 public class ShooterSubsystem extends Subsystem implements TechnoTechSubsystem {
 
@@ -15,7 +17,7 @@ public class ShooterSubsystem extends Subsystem implements TechnoTechSubsystem {
 
     
     public void initDefaultCommand() {
-
+        
     }
 
     public void setSpeed(double speed) {

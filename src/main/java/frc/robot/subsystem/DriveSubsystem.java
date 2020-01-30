@@ -34,7 +34,6 @@ public class DriveSubsystem extends Subsystem implements TechnoTechSubsystem {
 
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
-		//setDefaultCommand(new DriveCommand());
 		setDefaultCommand(new DriveCommand());
 	}
 
