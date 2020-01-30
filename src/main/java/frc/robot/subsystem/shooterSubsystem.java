@@ -5,11 +5,11 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class shooterSubsystem extends Subsystem implements TechnoTechSubsystem {
+public class ShooterSubsystem extends Subsystem implements TechnoTechSubsystem {
 
     private TalonSRX shooterTalon;
 
-    public shooterSubsystem(TalonSRX talonSRX) {
+    public ShooterSubsystem(TalonSRX talonSRX) {
         this.shooterTalon = talonSRX;
     }
 
