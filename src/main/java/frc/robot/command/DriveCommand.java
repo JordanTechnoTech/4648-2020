@@ -1,25 +1,41 @@
 package frc.robot.command;
 
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotMap;
 
-public class DriveCommand extends Command {
+public class DriveCommand extends CommandBase {
     public DriveCommand() {
-        requires(RobotMap.driveSubsystem);
+        addRequirements(RobotMap.driveSubsystem);
     }
 
     @Override
-    protected void execute() {
-        RobotMap.driveSubsystem.arcadeDrive(RobotMap.oi.controller0.getStickLeftYValue(), -RobotMap.oi.controller0.getStickLeftXValue());
+    public String getName(){
+        return "DriveCommand";
     }
 
     @Override
-    protected boolean isFinished() {
+    public void execute() {
+        log();
+        RobotMap.driveSubsystem.arcadeDrive(RobotMap.oi.controller0.getStickLeftYValue(),
+                -RobotMap.oi.controller0.getStickLeftXValue());
+
+    }
+
+    @Override
+    public boolean isFinished() {
+        SmartDashboard.putString("DriveCommandStatus", "finished");
         return false;
     }
 
-    @Override
+    
     public void end() {
+        SmartDashboard.putString("DriveCommandStatus", "end");
         RobotMap.driveSubsystem.arcadeDrive(0, 0);
+    }
+
+    public void log() {
+        SmartDashboard.putNumber("Right Stick X", RobotMap.oi.controller0.getStickRightXValue());
+        SmartDashboard.putNumber("Right Stick Y", RobotMap.oi.controller0.getStickRightYValue());
     }
 }

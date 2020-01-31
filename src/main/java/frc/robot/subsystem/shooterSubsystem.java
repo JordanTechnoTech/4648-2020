@@ -21,7 +21,7 @@ public class ShooterSubsystem extends Subsystem implements TechnoTechSubsystem {
     }
 
     public void setSpeed(double speed) {
-        shooterTalon.set(ControlMode.PercentOutput, speed);
+        shooterTalon.set(ControlMode.Velocity, speed * 500.0 * 4096 / 600);
     }
 
     

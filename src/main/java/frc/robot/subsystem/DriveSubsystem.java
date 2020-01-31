@@ -8,13 +8,12 @@
 package frc.robot.subsystem;
 
 import edu.wpi.first.wpilibj.Talon;
-import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
-import frc.robot.command.DriveCommand;
 
-public class DriveSubsystem extends Subsystem implements TechnoTechSubsystem {
+public class DriveSubsystem extends SubsystemBase implements TechnoTechSubsystem {
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
 	
@@ -32,10 +31,13 @@ public class DriveSubsystem extends Subsystem implements TechnoTechSubsystem {
 		this.rightDrive = rightDrive;
 	}
 
+	/*
 	public void initDefaultCommand() {
+		SmartDashboard.putString("Drive default set", "YES");
 		// Set the default command for a subsystem here.
 		setDefaultCommand(new DriveCommand());
 	}
+	*/
 
 	public void tankDrive(double leftSpeed, double rightSpeed) {
 		differentialDrive1.tankDrive(leftSpeed, rightSpeed);
