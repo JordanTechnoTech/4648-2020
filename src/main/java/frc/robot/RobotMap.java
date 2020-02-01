@@ -5,10 +5,10 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.Sendable;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Talon;
-// import frc.robot.subsystem.shooterSubsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.subsystem.BallStorageSubsystem;
 import frc.robot.subsystem.DriveSubsystem;
+import frc.robot.subsystem.ShooterSubsystem;
 
 public class RobotMap {
 
@@ -30,6 +30,9 @@ public class RobotMap {
 	public static TalonSRX rightIntakeBelt;
 	public static Solenoid intakeGate;
 
+	public static ShooterSubsystem shooterSubsystem;
+	public static TalonSRX shooterTalonSRX;
+
 	public static OI oi;
 
 
@@ -47,7 +50,9 @@ public class RobotMap {
 		leftIntakeBelt = new TalonSRX(1);
 		rightIntakeBelt = new TalonSRX(2);
 		intakeGate = new Solenoid(0);
+		shooterTalonSRX = new TalonSRX(3);
 		ballStorageSubsystem = new BallStorageSubsystem(roller, leftIntake, rightIntake, leftIntakeBelt, rightIntakeBelt, intakeGate);
+		shooterSubsystem = new ShooterSubsystem(leftIntake, rightIntake, leftIntakeBelt, rightIntakeBelt, intakeGate, shooterTalonSRX);
 		
 		oi = new OI();
 	}
