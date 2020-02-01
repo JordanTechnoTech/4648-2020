@@ -14,18 +14,23 @@ import frc.robot.subsystem.ShooterSubsystem;
 
 public class RobotMap {
 
-
+	//can bus mappings
 	public static int frontleftDriveMotor = 1;
 	public static int frontrightDriveMotor = 2;
 	public static int backleftDriveMotor = 3;
 	public static int backrightDriveMotor = 4;
+	public static int leftintakeBeltID = 5;
+	public static int rightIntakeBeltID = 6;
+	public static int shooterID = 7;
+	public static int intakegateID = 0;
+
 	public static WPI_TalonSRX frontLeftMotorController;
 	public static WPI_TalonSRX frontRightMotorController;
 	public static WPI_TalonSRX backLeftMotorController;
 	public static WPI_TalonSRX backRightMotorController;
-
 	public static SpeedControllerGroup leftControllers;
 	public static SpeedControllerGroup rightControllers;
+
 	public static DifferentialDrive drivetrain;
 	public static DriveSubsystem driveSubsystem;
 	public static final Sendable leftEncoder = null;
@@ -60,10 +65,10 @@ public class RobotMap {
 		roller = new Talon(0);
 		leftIntake = new Talon(1);
 		rightIntake =  new Talon(2);
-		leftIntakeBelt = new TalonSRX(1);
-		rightIntakeBelt = new TalonSRX(2);
-		intakeGate = new Solenoid(0);
-		shooterTalonSRX = new TalonSRX(3);
+		leftIntakeBelt = new TalonSRX(leftintakeBeltID);
+		rightIntakeBelt = new TalonSRX(rightIntakeBeltID);
+		intakeGate = new Solenoid(intakegateID);
+		shooterTalonSRX = new TalonSRX(shooterID);
 		ballStorageSubsystem = new BallStorageSubsystem(roller, leftIntake, rightIntake, leftIntakeBelt, rightIntakeBelt, intakeGate);
 		shooterSubsystem = new ShooterSubsystem(leftIntake, rightIntake, leftIntakeBelt, rightIntakeBelt, intakeGate, shooterTalonSRX);
 		
