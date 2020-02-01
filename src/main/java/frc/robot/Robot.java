@@ -13,8 +13,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.command.BallStorageCommand;
 import frc.robot.command.DriveCommand;
-import frc.robot.command.shooterCommand;
 import frc.robot.subsystem.TechnoTechSubsystem;
 
 import java.util.ArrayList;
@@ -61,8 +61,9 @@ public class Robot extends TimedRobot {
 
   public void initSubsystems() {
     subsystems.add(RobotMap.driveSubsystem);
-    subsystems.add(RobotMap.shooterSubsystem);
+    subsystems.add(RobotMap.ballStorageSubsystem);
     CommandScheduler.getInstance().setDefaultCommand(RobotMap.driveSubsystem, new DriveCommand());
+    CommandScheduler.getInstance().setDefaultCommand(RobotMap.ballStorageSubsystem, new BallStorageCommand());
     //CommandScheduler.getInstance().setDefaultCommand(RobotMap.shooterSubsystem, new shooterCommand(0));
     
   }
