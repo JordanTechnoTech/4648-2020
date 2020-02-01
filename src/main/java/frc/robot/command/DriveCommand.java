@@ -17,8 +17,7 @@ public class DriveCommand extends CommandBase {
     @Override
     public void execute() {
         log();
-        RobotMap.driveSubsystem.arcadeDrive(RobotMap.oi.controller0.getStickLeftYValue(),
-                -RobotMap.oi.controller0.getStickLeftXValue());
+        RobotMap.driveSubsystem.arcadeDrive(-RobotMap.oi.controller0.getStickLeftYValue(),RobotMap.oi.controller0.getStickLeftXValue());
 
     }
 

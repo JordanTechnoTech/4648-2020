@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.command.BallStorageCommand;
 import frc.robot.command.DriveCommand;
 import frc.robot.subsystem.TechnoTechSubsystem;
 
@@ -39,7 +40,7 @@ public class Robot extends TimedRobot {
   private Color oldColor = Color.kWhite;
   private Color newColor = Color.kWhite;
   private int changes = 0;
-  private String[] colors = { "RED", "YELLOW", "BLUE", "GREEN" };
+  private String[] colors = { "RED", "YELLOW", "BLUE", "GREEN", "NULL"};
   private int currentColor = 0;
   private int sensorColor = 2;
 
@@ -60,7 +61,11 @@ public class Robot extends TimedRobot {
 
   public void initSubsystems() {
     subsystems.add(RobotMap.driveSubsystem);
+    subsystems.add(RobotMap.ballStorageSubsystem);
     CommandScheduler.getInstance().setDefaultCommand(RobotMap.driveSubsystem, new DriveCommand());
+    CommandScheduler.getInstance().setDefaultCommand(RobotMap.ballStorageSubsystem, new BallStorageCommand());
+    //CommandScheduler.getInstance().setDefaultCommand(RobotMap.shooterSubsystem, new shooterCommand(0));
+    
   }
 
   /** 
@@ -102,6 +107,8 @@ public class Robot extends TimedRobot {
     if (values[0] >= 0.3 && values[1] >= 0.4 && values[2] <= 0.2) {
       currentColor = 1;
       newColor = Color.kYellow;
+    }else {
+      currentColor = 4;
     }
 
     //check if a color change has happened
