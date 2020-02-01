@@ -1,9 +1,11 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.Sendable;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.subsystem.BallStorageSubsystem;
@@ -13,14 +15,21 @@ import frc.robot.subsystem.ShooterSubsystem;
 public class RobotMap {
 
 
-	public static final Sendable leftEncoder = null;
-	public static final Sendable rightEncoder = null;
-	public static int rightDriveMotor = 1;
-	public static int leftDriveMotor = 0;
-	public static Talon leftDriveMotorController;
-	public static Talon rightDriveMotorController;
+	public static int frontleftDriveMotor = 1;
+	public static int frontrightDriveMotor = 2;
+	public static int backleftDriveMotor = 3;
+	public static int backrightDriveMotor = 4;
+	public static WPI_TalonSRX frontLeftMotorController;
+	public static WPI_TalonSRX frontRightMotorController;
+	public static WPI_TalonSRX backLeftMotorController;
+	public static WPI_TalonSRX backRightMotorController;
+
+	public static SpeedControllerGroup leftControllers;
+	public static SpeedControllerGroup rightControllers;
 	public static DifferentialDrive drivetrain;
 	public static DriveSubsystem driveSubsystem;
+	public static final Sendable leftEncoder = null;
+	public static final Sendable rightEncoder = null;
 
 	public static BallStorageSubsystem ballStorageSubsystem;
 	public static Talon roller;
@@ -39,11 +48,15 @@ public class RobotMap {
 
 	public static void init() {
 		// drive initialization
-		leftDriveMotorController = new Talon(leftDriveMotor);
-		rightDriveMotorController = new Talon(rightDriveMotor);
-		drivetrain = new DifferentialDrive(leftDriveMotorController, rightDriveMotorController);
-		driveSubsystem = new DriveSubsystem(leftDriveMotorController, rightDriveMotorController);
-
+		frontLeftMotorController = new WPI_TalonSRX(frontleftDriveMotor);
+		frontRightMotorController = new WPI_TalonSRX(frontrightDriveMotor);
+		backLeftMotorController = new WPI_TalonSRX(backleftDriveMotor);
+		backRightMotorController = new WPI_TalonSRX(backrightDriveMotor);
+		leftControllers = new SpeedControllerGroup(frontLeftMotorController, backLeftMotorController);
+		rightControllers = new SpeedControllerGroup(frontRightMotorController, backRightMotorController);
+		
+		drivetrain = new DifferentialDrive(leftControllers, rightControllers);
+		driveSubsystem = new DriveSubsystem(frontLeftMotorController, frontRightMotorController, backLeftMotorController, backRightMotorController);
 		roller = new Talon(0);
 		leftIntake = new Talon(1);
 		rightIntake =  new Talon(2);
