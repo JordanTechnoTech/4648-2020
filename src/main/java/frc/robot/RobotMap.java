@@ -41,14 +41,13 @@ public class RobotMap {
 		drivetrain = new DifferentialDrive(leftDriveMotorController, rightDriveMotorController);
 		driveSubsystem = new DriveSubsystem(leftDriveMotorController, rightDriveMotorController);
 
-		ballStorageSubsystem = new BallStorageSubsystem(roller, leftIntake, rightIntake, leftIntakeBelt, rightIntakeBelt, intakeGate);
 		roller = new Talon(0);
 		leftIntake = new Talon(1);
 		rightIntake =  new Talon(2);
 		leftIntakeBelt = new TalonSRX(1);
 		rightIntakeBelt = new TalonSRX(2);
 		intakeGate = new Solenoid(0);
-
+		ballStorageSubsystem = new BallStorageSubsystem(roller, leftIntake, rightIntake, leftIntakeBelt, rightIntakeBelt, intakeGate);
 		
 		oi = new OI();
 	}
