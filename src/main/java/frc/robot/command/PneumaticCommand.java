@@ -6,9 +6,9 @@ import frc.robot.RobotMap;
 
 public class PneumaticCommand extends CommandBase {
 
-    public Solenoid solenoid;
+    private Solenoid solenoid;
 
-    public PneumaticCommand(final Solenoid Solenoid) {
+    public PneumaticCommand( Solenoid Solenoid) {
         addRequirements(RobotMap.pneumaticSubsytem);
         this.solenoid = solenoid;
     }

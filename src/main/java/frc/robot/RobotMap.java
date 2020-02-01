@@ -77,7 +77,7 @@ public class RobotMap {
 
 	public static void init() {
 		// drive initialization
-		frontLeftMotorController = new WPI_TalonSRX(frontleftDriveMotor);
+		/*frontLeftMotorController = new WPI_TalonSRX(frontleftDriveMotor);
 		frontRightMotorController = new WPI_TalonSRX(frontrightDriveMotor);
 		backLeftMotorController = new WPI_TalonSRX(backleftDriveMotor);
 		backRightMotorController = new WPI_TalonSRX(backrightDriveMotor);
@@ -104,12 +104,12 @@ public class RobotMap {
 		colorSensorSolenoid = new Solenoid(colorWheelSolenoidID);
 		colorSensorSubsystem = new ColorSensorSubsystem(colorSensor, colorSensorSolenoid, colorWheelMotor);
 		
-
+*/
 		oi = new OI();
 
-		solenoid1 = new Solenoid(3);
-		solenoid2 = new Solenoid(4);
-		solenoid3 = new Solenoid(5);
+		solenoid1 = new Solenoid(0);
+		solenoid2 = new Solenoid(1);
+		solenoid3 = new Solenoid(3);
 		pneumaticSubsytem = new PneumaticSubsytem(solenoid1, solenoid2, solenoid3);
 	}
 }
