@@ -1,29 +1,27 @@
 package frc.robot.command;
 
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotMap;
 
-public class shooterCommand extends Command {
+public class ShooterCommand extends CommandBase {
+    public double speed;
 
-    private double speed;
-
-    public shooterCommand(double speed) {
+    public ShooterCommand(double speed) {
+        addRequirements(RobotMap.ShooterSubsystem);
         this.speed = speed;
-        requires(RobotMap.shooterSubsystem);
     }
 
     @Override
     public void execute() {
-        RobotMap.shooterSubsystem.setSpeed(speed);
+        RobotMap.ShooterSubsystem.setSpeed(speed);
     }
 
     @Override
-    protected boolean isFinished() {
+	public boolean isFinished() {
         return false;
     }
 
-    @Override
     public void end() {
-        RobotMap.shooterSubsystem.setSpeed(0);
+        
     }
 }
