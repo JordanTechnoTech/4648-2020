@@ -8,31 +8,39 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.RobotMap;
 
 public class BallStorageSubsystem extends SubsystemBase implements TechnoTechSubsystem {
-    private Talon Roller;
-    private Talon leftIntake;
-    private Talon rightIntake;
-    private TalonSRX leftIntakeBelt;
-    private TalonSRX rightIntakeBelt;
-
-    private Solenoid intakeGate = new Solenoid(0);
+    private Talon roller;
+	private Talon leftIntake;
+	private Talon rightIntake;
+	private TalonSRX leftIntakeBelt;
+	private TalonSRX rightIntakeBelt;
+	private Solenoid intakeGate;
 
     private double speed = 0.5;
 
-    public BallStorageSubsystem() {
-        addChild("Roller", (Talon) Roller);
-        addChild("leftIntake", (Talon) leftIntake);
-        addChild("rightIntake", (Talon) rightIntake);
-        addChild("leftIntakeBelt", (Sendable) leftIntakeBelt);
-        addChild("rightIntakeBelt", (Sendable) rightIntakeBelt);
+    public BallStorageSubsystem(Talon roller, Talon leftIntake, Talon rightIntake, TalonSRX leftIntakeBelt, TalonSRX rightIntakeBelt, Solenoid intakeGate) {
+        addChild("Roller", (Talon) RobotMap.roller);
+        addChild("leftIntake", (Talon) RobotMap.leftIntake);
+        addChild("rightIntake", (Talon) RobotMap.rightIntake);
+        addChild("leftIntakeBelt", (Sendable) RobotMap.leftIntakeBelt);
+        addChild("rightIntakeBelt", (Sendable) RobotMap.rightIntakeBelt);
+        addChild("intakeGate", (Solenoid) RobotMap.intakeGate);
+        this.roller = roller;
+        this.leftIntake = leftIntake;
+        this.rightIntake = rightIntake;
+        this.leftIntakeBelt = leftIntakeBelt;
+        this.rightIntakeBelt = rightIntakeBelt;
+        this.intakeGate = intakeGate;
+        
     }
 
     public void intake(boolean intakeState) {
         if (intakeState == true) {
             intakeGate.set(true);   //closes the gate
 
-            Roller.set(speed);
+            roller.set(speed);
             leftIntake.set(speed);
             rightIntake.set(speed);
 
@@ -42,7 +50,7 @@ public class BallStorageSubsystem extends SubsystemBase implements TechnoTechSub
         if(intakeState == false) {
             intakeGate.set(true);   //closes the gate
 
-            Roller.set(0);
+            roller.set(0);
             leftIntake.set(0);
             rightIntake.set(0);
 
@@ -52,7 +60,7 @@ public class BallStorageSubsystem extends SubsystemBase implements TechnoTechSub
     }
 
     public void log() {
-        SmartDashboard.putNumber("Intake Roller", Roller.getSpeed());
+        SmartDashboard.putNumber("Intake Roller", roller.getSpeed());
         SmartDashboard.putNumber("Left Intake Wheel", leftIntake.getSpeed());
         SmartDashboard.putNumber("RIght Intake Wheel", rightIntake.getSpeed());
         SmartDashboard.putNumber("Left Storage Belt", leftIntakeBelt.getMotorOutputPercent());
