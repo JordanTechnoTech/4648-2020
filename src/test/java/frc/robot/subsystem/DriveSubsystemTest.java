@@ -2,6 +2,7 @@ package frc.robot.subsystem;
 
 import org.junit.Test;
 
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import frc.robot.subsystem.DriveSubsystem;
 import frc.robot.RobotMap;
@@ -14,7 +15,8 @@ public class DriveSubsystemTest {
     public static int frontleftDriveMotor = 0;
     public static int frontrightDriveMotor = 1;
     public static int backleftDriveMotor = 2;
-	public static int backrightDriveMotor = 3;
+    public static int backrightDriveMotor = 3;
+    public static int driveShifterID = 0;
 
 	public static WPI_TalonSRX frontLeftMotorController;
     public static WPI_TalonSRX frontRightMotorController;
@@ -23,7 +25,8 @@ public class DriveSubsystemTest {
     
     public static SpeedControllerGroup leftControllers;
     public static SpeedControllerGroup rightControllers;
-	public static DriveSubsystem driveSubsystem;
+    public static DriveSubsystem driveSubsystem;
+    public static Solenoid driveShifter;
 
     //@Test
     public void testInit () {
@@ -33,9 +36,10 @@ public class DriveSubsystemTest {
 		backLeftMotorController = new WPI_TalonSRX(backleftDriveMotor);
 		backRightMotorController = new WPI_TalonSRX(backrightDriveMotor);
 		leftControllers = new SpeedControllerGroup(frontLeftMotorController, backLeftMotorController);
-		rightControllers = new SpeedControllerGroup(frontRightMotorController, backRightMotorController);
+        rightControllers = new SpeedControllerGroup(frontRightMotorController, backRightMotorController);
+        driveShifter = new Solenoid(driveShifterID);
 
-		driveSubsystem = new DriveSubsystem(frontLeftMotorController, frontRightMotorController, backLeftMotorController, backRightMotorController);
+		driveSubsystem = new DriveSubsystem(frontLeftMotorController, frontRightMotorController, backLeftMotorController, backRightMotorController, driveShifter);
         //when
         DriveSubsystem subject = driveSubsystem;
 

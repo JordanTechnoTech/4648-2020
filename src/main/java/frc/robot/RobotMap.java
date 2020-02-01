@@ -22,7 +22,8 @@ public class RobotMap {
 	public static int leftintakeBeltID = 5;
 	public static int rightIntakeBeltID = 6;
 	public static int shooterID = 7;
-	public static int intakegateID = 0;
+	public static int intakegateID = 1;
+	public static int driveShifterID = 0;
 
 	public static WPI_TalonSRX frontLeftMotorController;
 	public static WPI_TalonSRX frontRightMotorController;
@@ -30,6 +31,7 @@ public class RobotMap {
 	public static WPI_TalonSRX backRightMotorController;
 	public static SpeedControllerGroup leftControllers;
 	public static SpeedControllerGroup rightControllers;
+	public static Solenoid driveShifter;
 
 	public static DifferentialDrive drivetrain;
 	public static DriveSubsystem driveSubsystem;
@@ -59,9 +61,10 @@ public class RobotMap {
 		backRightMotorController = new WPI_TalonSRX(backrightDriveMotor);
 		leftControllers = new SpeedControllerGroup(frontLeftMotorController, backLeftMotorController);
 		rightControllers = new SpeedControllerGroup(frontRightMotorController, backRightMotorController);
+		driveShifter = new Solenoid(driveShifterID);
 		
 		drivetrain = new DifferentialDrive(leftControllers, rightControllers);
-		driveSubsystem = new DriveSubsystem(frontLeftMotorController, frontRightMotorController, backLeftMotorController, backRightMotorController);
+		driveSubsystem = new DriveSubsystem(frontLeftMotorController, frontRightMotorController, backLeftMotorController, backRightMotorController, driveShifter);
 		roller = new Talon(0);
 		leftIntake = new Talon(1);
 		rightIntake =  new Talon(2);

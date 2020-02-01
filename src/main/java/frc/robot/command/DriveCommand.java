@@ -17,8 +17,8 @@ public class DriveCommand extends CommandBase {
     @Override
     public void execute() {
         log();
-        RobotMap.driveSubsystem.arcadeDrive(-RobotMap.oi.controller0.getStickLeftYValue(),RobotMap.oi.controller0.getStickLeftXValue());
-
+        RobotMap.driveSubsystem.arcadeDrive(RobotMap.oi.controller0.getStickLeftYValue(),RobotMap.oi.controller0.getStickLeftXValue());
+        RobotMap.driveSubsystem.changeGear(RobotMap.oi.controller0.getXButtonValue());;
     }
 
     @Override
@@ -34,7 +34,7 @@ public class DriveCommand extends CommandBase {
     }
 
     public void log() {
-        SmartDashboard.putNumber("Right Stick X", RobotMap.oi.controller0.getStickRightXValue());
-        SmartDashboard.putNumber("Right Stick Y", RobotMap.oi.controller0.getStickRightYValue());
+        SmartDashboard.putNumber("Left Stick X", RobotMap.oi.controller0.getStickLeftXValue());
+        SmartDashboard.putNumber("Left Stick Y", RobotMap.oi.controller0.getStickLeftYValue());
     }
 }
