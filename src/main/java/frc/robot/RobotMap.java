@@ -107,9 +107,9 @@ public class RobotMap {
 */
 		oi = new OI();
 
-		solenoid1 = new Solenoid(0);
-		solenoid2 = new Solenoid(1);
+		//solenoid1 = new Solenoid(0);
+		//solenoid2 = new Solenoid(1);
 		solenoid3 = new Solenoid(3);
-		pneumaticSubsytem = new PneumaticSubsytem(solenoid1, solenoid2, solenoid3);
+		pneumaticSubsytem = new PneumaticSubsytem(/*solenoid1, solenoid2,*/ solenoid3);
 	}
 }

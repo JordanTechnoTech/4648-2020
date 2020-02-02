@@ -1,21 +1,28 @@
 package frc.robot.command;
 
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotMap;
 
+
 public class PneumaticCommand extends CommandBase {
+    private boolean toggleState;
 
-    private Solenoid solenoid;
-
-    public PneumaticCommand( Solenoid Solenoid) {
+    public PneumaticCommand() {
         addRequirements(RobotMap.pneumaticSubsytem);
-        this.solenoid = solenoid;
     }
 
     @Override
     public void execute() {
-        solenoid.set(true);
+        if(RobotMap.oi.controller1.getAButtonPressed()) {
+            if(toggleState) {
+                toggleState = false;
+            }
+            else {
+                toggleState = true;
+            }
+        }
+        
+        RobotMap.pneumaticSubsytem.execute(toggleState);
     }
 
     @Override
@@ -23,7 +30,4 @@ public class PneumaticCommand extends CommandBase {
         return false;
     }
 
-    public void end() {
-        solenoid.set(false);
-    }
 }

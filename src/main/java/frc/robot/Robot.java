@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.command.BallStorageCommand;
 import frc.robot.command.DriveCommand;
+import frc.robot.command.PneumaticCommand;
 import frc.robot.command.ShootCommand;
 import frc.robot.subsystem.TechnoTechSubsystem;
 
@@ -44,9 +45,10 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
     RobotMap.init();
-    initSubsystems();
+    //initSubsystems();
 
-    compressor.start();
+    CommandScheduler.getInstance().setDefaultCommand(RobotMap.pneumaticSubsytem, new PneumaticCommand());
+
   }
 
   public void initSubsystems() {
@@ -127,7 +129,6 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
       //RobotMap.drivetrain.arcadeDrive(RobotMap.oi.controller0.getStickLeftYValue(), RobotMap.oi.controller0.getStickLeftXValue());
     
-      CommandScheduler.getInstance().run();
       log();
   }
 
