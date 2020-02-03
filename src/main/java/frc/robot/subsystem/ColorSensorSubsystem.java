@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class ColorSensorSubsystem extends SubsystemBase implements TechnoTechSubsystem {
     private ColorSensorV3 colorSensor;
     private Solenoid colorSensorSolenoid;
-    private WPI_TalonSRX colorWheelMotor;
+    public WPI_TalonSRX colorWheelMotor;
 
     private Color detectedColor;
 
@@ -24,14 +24,6 @@ public class ColorSensorSubsystem extends SubsystemBase implements TechnoTechSub
         this.colorSensor = colorSensor;
         this.colorSensorSolenoid = colorSensorSolenoid;
         this.colorWheelMotor = colorWheelMotor;
-    }
-
-    public void rotate(int revolutions) {
-        /*
-        while() {
-            colorWheelMotor.set(ControlMode.Velocity, 0.25);
-        }
-        */
     }
 
     public Color getColor() {
