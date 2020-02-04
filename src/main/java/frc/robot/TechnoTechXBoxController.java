@@ -73,6 +73,9 @@ public class TechnoTechXBoxController {
     public boolean getLeftBumperValue(){
         return controller.getBumper(GenericHID.Hand.kLeft);
     }
+    public boolean getRightBumperValue(){
+        return controller.getBumper(GenericHID.Hand.kRight);
+    }
 
     public double getStickLeftXValue() {
         return controller.getX(GenericHID.Hand.kLeft);

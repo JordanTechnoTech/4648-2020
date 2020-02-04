@@ -13,7 +13,6 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.subsystem.BallStorageSubsystem;
 import frc.robot.subsystem.ColorSensorSubsystem;
 import frc.robot.subsystem.DriveSubsystem;
-import frc.robot.subsystem.PneumaticSubsytem;
 import frc.robot.subsystem.ShooterSubsystem;
 
 public class RobotMap {
@@ -32,6 +31,8 @@ public class RobotMap {
 	public static int driveShifterID = 0;
 	public static int intakegateID = 1;
 	public static int colorWheelSolenoidID = 2;
+	public static int leftIntakeID = 3;
+	public static int rightIntakeID = 4;
 
 	//Drivetrain Subsystem
 	public static WPI_TalonSRX frontLeftMotorController;
@@ -55,6 +56,8 @@ public class RobotMap {
 	public static TalonSRX leftIntakeBelt;
 	public static TalonSRX rightIntakeBelt;
 	public static Solenoid intakeGate;
+	public static Solenoid leftIntakePiston;
+	public static Solenoid rightIntakePiston;
 
 	//Shooter Subsystem
 	public static ShooterSubsystem shooterSubsystem;
@@ -68,16 +71,11 @@ public class RobotMap {
 
 	public static OI oi;
 
-	public static Solenoid solenoid1;
-	public static Solenoid solenoid2;
-	public static Solenoid solenoid3;
-	public static PneumaticSubsytem pneumaticSubsytem;
-
 
 
 	public static void init() {
 		// drive initialization
-		/*frontLeftMotorController = new WPI_TalonSRX(frontleftDriveMotor);
+		frontLeftMotorController = new WPI_TalonSRX(frontleftDriveMotor);
 		frontRightMotorController = new WPI_TalonSRX(frontrightDriveMotor);
 		backLeftMotorController = new WPI_TalonSRX(backleftDriveMotor);
 		backRightMotorController = new WPI_TalonSRX(backrightDriveMotor);
@@ -95,7 +93,9 @@ public class RobotMap {
 		rightIntakeBelt = new TalonSRX(rightIntakeBeltID);
 		intakeGate = new Solenoid(intakegateID);
 		shooterTalonSRX = new TalonSRX(shooterID);
-		ballStorageSubsystem = new BallStorageSubsystem(roller, leftIntake, rightIntake, leftIntakeBelt, rightIntakeBelt, intakeGate);
+		leftIntakePiston = new Solenoid(leftIntakeID);
+		rightIntakePiston = new Solenoid(rightIntakeID);
+		ballStorageSubsystem = new BallStorageSubsystem(roller, leftIntake, rightIntake, leftIntakeBelt, rightIntakeBelt, intakeGate, leftIntakePiston, rightIntakePiston);
 		shooterSubsystem = new ShooterSubsystem(leftIntake, rightIntake, leftIntakeBelt, rightIntakeBelt, intakeGate, shooterTalonSRX);
 		
 		//color sensor initialization
@@ -104,12 +104,6 @@ public class RobotMap {
 		colorSensorSolenoid = new Solenoid(colorWheelSolenoidID);
 		colorSensorSubsystem = new ColorSensorSubsystem(colorSensor, colorSensorSolenoid, colorWheelMotor);
 		
-*/
 		oi = new OI();
-
-		//solenoid1 = new Solenoid(0);
-		//solenoid2 = new Solenoid(1);
-		solenoid3 = new Solenoid(3);
-		pneumaticSubsytem = new PneumaticSubsytem(/*solenoid1, solenoid2,*/ solenoid3);
 	}
 }

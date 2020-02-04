@@ -11,8 +11,8 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.command.BallStorageCommand;
+import frc.robot.command.ColorSensorCommand;
 import frc.robot.command.DriveCommand;
-import frc.robot.command.PneumaticCommand;
 import frc.robot.command.ShootCommand;
 import frc.robot.subsystem.TechnoTechSubsystem;
 
@@ -43,9 +43,7 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
     RobotMap.init();
-    //initSubsystems();
-
-    CommandScheduler.getInstance().setDefaultCommand(RobotMap.pneumaticSubsytem, new PneumaticCommand());
+    initSubsystems();
 
   }
 
@@ -57,6 +55,7 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().setDefaultCommand(RobotMap.driveSubsystem, new DriveCommand());
     CommandScheduler.getInstance().setDefaultCommand(RobotMap.ballStorageSubsystem, new BallStorageCommand());
     CommandScheduler.getInstance().setDefaultCommand(RobotMap.shooterSubsystem, new ShootCommand());
+    CommandScheduler.getInstance().setDefaultCommand(RobotMap.colorSensorSubsystem, new ColorSensorCommand());
 
     
   }
@@ -125,8 +124,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-      //RobotMap.drivetrain.arcadeDrive(RobotMap.oi.controller0.getStickLeftYValue(), RobotMap.oi.controller0.getStickLeftXValue());
-    
       log();
   }
 

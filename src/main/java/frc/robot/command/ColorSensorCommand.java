@@ -11,8 +11,8 @@ public class ColorSensorCommand extends CommandBase {
 
     @Override
     public void execute() {
-        RobotMap.colorSensorSubsystem.rotate(RobotMap.oi.controller0.getAButtonValue(), 3);
-        RobotMap.colorSensorSubsystem.extend(RobotMap.oi.controller0.getBButtonValue());
+        RobotMap.colorSensorSubsystem.rotate(RobotMap.oi.controller0.getXButtonValue(), 3);
+        RobotMap.colorSensorSubsystem.extend(RobotMap.oi.controller0.getLeftBumperValue());
         
     }
 }

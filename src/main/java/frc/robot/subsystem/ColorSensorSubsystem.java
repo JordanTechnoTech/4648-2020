@@ -50,6 +50,8 @@ public class ColorSensorSubsystem extends SubsystemBase implements TechnoTechSub
     }
 
     public void extend(boolean state) {
+        
+        
         colorSensorSolenoid.set(state);
     }
 
