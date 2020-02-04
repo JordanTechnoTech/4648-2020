@@ -29,30 +29,24 @@ public class ColorSensorSubsystem extends SubsystemBase implements TechnoTechSub
         this.colorWheelMotor = colorWheelMotor;
     }
 
-    public void rotate(boolean state, int rotations) {
-        if(state == true) {
-            while(changes * 8 <= rotations) {
-                newColor = getColor();
-                colorWheelMotor.set(ControlMode.Velocity, 0.1);
+    public void rotate(int rotations) {
+        colorSensorSolenoid.set(true);
+        while(changes * 8 <= rotations) {
+            newColor = getColor();
+            colorWheelMotor.set(ControlMode.Velocity, 0.1);
 
-                //check if color change has occurred
-                if(oldColor != newColor) {
-                    changes = changes + 1;
-                }
-                oldColor = newColor;
+            //check if color change has occurred
+            if(oldColor != newColor) {
+                changes = changes + 1;
             }
-            colorWheelMotor.set(ControlMode.Velocity, 0);
+            oldColor = newColor;
         }
+        colorWheelMotor.set(ControlMode.Velocity, 0);
+        colorSensorSolenoid.set(false);
     }
 
-    public void resetCounter(boolean state) {
+    public void resetCounter() {
         changes = 0;
-    }
-
-    public void extend(boolean state) {
-        
-        
-        colorSensorSolenoid.set(state);
     }
 
     public Color getColor() {

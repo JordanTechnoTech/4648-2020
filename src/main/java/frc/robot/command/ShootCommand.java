@@ -11,6 +11,6 @@ public class ShootCommand extends CommandBase{
 
     @Override
     public void execute() {
-        //RobotMap.shooterSubsystem.shoot(RobotMap.oi.controller0.getBButtonPressed());
+        RobotMap.shooterSubsystem.shoot();
     }
 }

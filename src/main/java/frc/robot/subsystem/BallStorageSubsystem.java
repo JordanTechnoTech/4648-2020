@@ -40,8 +40,7 @@ public class BallStorageSubsystem extends SubsystemBase implements TechnoTechSub
         
     }
 
-    public void intake(boolean intakeState) {
-        if (intakeState == true) {
+    public void intake() {
             intakeGate.set(true);
 
             roller.set(speed);
@@ -50,8 +49,6 @@ public class BallStorageSubsystem extends SubsystemBase implements TechnoTechSub
 
             leftIntakeBelt.set(ControlMode.Velocity, speed);
             rightIntakeBelt.set(ControlMode.Velocity, speed);
-        }
-        if(intakeState == false) {
             intakeGate.set(true);
 
             roller.set(0);
@@ -60,12 +57,11 @@ public class BallStorageSubsystem extends SubsystemBase implements TechnoTechSub
 
             leftIntakeBelt.set(ControlMode.Velocity, 0);
             rightIntakeBelt.set(ControlMode.Velocity, 0);
-        }
     }
 
-    public void intakePneumatics(boolean state) {
-        leftIntakePiston.set(state);
-        rightIntakePiston.set(state);
+    public void intakePneumatics() {
+        leftIntakePiston.set(true);
+        rightIntakePiston.set(true);
     }
 
     public void log() {

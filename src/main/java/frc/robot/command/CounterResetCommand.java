@@ -3,14 +3,14 @@ package frc.robot.command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotMap;
 
-public class ColorSensorCommand extends CommandBase {
+public class CounterResetCommand extends CommandBase {
 
-    public ColorSensorCommand() {
+    public CounterResetCommand() {
         addRequirements(RobotMap.colorSensorSubsystem);
     }
-
+    
     @Override
     public void execute() {
-        RobotMap.colorSensorSubsystem.rotate(3);    
+        RobotMap.colorSensorSubsystem.resetCounter();
     }
 }

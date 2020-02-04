@@ -36,23 +36,13 @@ public class ShooterSubsystem extends SubsystemBase implements TechnoTechSubsyst
         this.shooterTalonSRX = shooterTalonSRX;
     }
 
-    public void shoot(boolean shootState) {
-        if(shootState == true) {
+    public void shoot() {
             shooterTalonSRX.set(ControlMode.Velocity, speed);
             intakeGate.set(false);
             leftIntakeBelt.set(ControlMode.Velocity, speed);
             rightIntakeBelt.set(ControlMode.Velocity, speed);
             leftIntake.set(speed);
             rightIntake.set(speed);
-        }
-        if(shootState == false) {
-            shooterTalonSRX.set(ControlMode.Velocity, 0);
-            intakeGate.set(true);
-            leftIntakeBelt.set(ControlMode.Velocity, 0);
-            rightIntakeBelt.set(ControlMode.Velocity, 0);
-            leftIntake.set(0);
-            rightIntake.set(0);
-        }
     }
 
 
