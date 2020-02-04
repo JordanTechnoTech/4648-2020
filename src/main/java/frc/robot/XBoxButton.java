@@ -1,8 +1,9 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj2.command.button.Button;
 
-public class XBoxButton extends edu.wpi.first.wpilibj.buttons.Button {
+public class XBoxButton extends Button {
   public static final int kBumperLeft = 5;
   public static final int kBumperRight = 6;
   public static final int kStickLeft = 9;

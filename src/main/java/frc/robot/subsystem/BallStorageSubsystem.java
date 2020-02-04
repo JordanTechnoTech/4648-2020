@@ -16,11 +16,13 @@ public class BallStorageSubsystem extends SubsystemBase implements TechnoTechSub
 	private Talon rightIntake;
 	private TalonSRX leftIntakeBelt;
 	private TalonSRX rightIntakeBelt;
-	private Solenoid intakeGate;
+    private Solenoid intakeGate;
+    private Solenoid leftIntakePiston;
+    private Solenoid rightIntakePiston;
 
     private double speed = 0.5;
 
-    public BallStorageSubsystem(Talon roller, Talon leftIntake, Talon rightIntake, TalonSRX leftIntakeBelt, TalonSRX rightIntakeBelt, Solenoid intakeGate) {
+    public BallStorageSubsystem(Talon roller, Talon leftIntake, Talon rightIntake, TalonSRX leftIntakeBelt, TalonSRX rightIntakeBelt, Solenoid intakeGate, Solenoid leftIntakePiston, Solenoid rightIntakePison) {
         addChild("Roller", (Talon) RobotMap.roller);
         addChild("leftIntake", (Talon) RobotMap.leftIntake);
         addChild("rightIntake", (Talon) RobotMap.rightIntake);
@@ -33,12 +35,13 @@ public class BallStorageSubsystem extends SubsystemBase implements TechnoTechSub
         this.leftIntakeBelt = leftIntakeBelt;
         this.rightIntakeBelt = rightIntakeBelt;
         this.intakeGate = intakeGate;
+        this.leftIntakePiston = leftIntakePiston;
+        this.rightIntakePiston = rightIntakePison;
         
     }
 
-    public void intake(boolean intakeState) {
-        if (intakeState == true) {
-            intakeGate.set(true);   //closes the gate
+    public void intake() {
+            intakeGate.set(true);
 
             roller.set(speed);
             leftIntake.set(speed);
@@ -46,9 +49,7 @@ public class BallStorageSubsystem extends SubsystemBase implements TechnoTechSub
 
             leftIntakeBelt.set(ControlMode.Velocity, speed);
             rightIntakeBelt.set(ControlMode.Velocity, speed);
-        }
-        if(intakeState == false) {
-            intakeGate.set(true);   //closes the gate
+            intakeGate.set(true);
 
             roller.set(0);
             leftIntake.set(0);
@@ -56,7 +57,11 @@ public class BallStorageSubsystem extends SubsystemBase implements TechnoTechSub
 
             leftIntakeBelt.set(ControlMode.Velocity, 0);
             rightIntakeBelt.set(ControlMode.Velocity, 0);
-        }
+    }
+
+    public void intakePneumatics() {
+        leftIntakePiston.set(true);
+        rightIntakePiston.set(true);
     }
 
     public void log() {

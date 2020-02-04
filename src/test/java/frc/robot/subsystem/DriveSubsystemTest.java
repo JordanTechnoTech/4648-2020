@@ -2,33 +2,51 @@ package frc.robot.subsystem;
 
 import org.junit.Test;
 
-import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import frc.robot.subsystem.DriveSubsystem;
 import frc.robot.RobotMap;
 
 import static org.junit.Assert.*;
 
-public class DriveSubsystemTest {
-    public static int rightDriveMotor = 1;
-	public static int leftDriveMotor = 0;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-	public static Talon leftDriveMotorController;
-	public static Talon rightDriveMotorController;
-	public static DriveSubsystem driveSubsystem;
+public class DriveSubsystemTest {
+    public static int frontleftDriveMotor = 0;
+    public static int frontrightDriveMotor = 1;
+    public static int backleftDriveMotor = 2;
+    public static int backrightDriveMotor = 3;
+    public static int driveShifterID = 0;
+
+	public static WPI_TalonSRX frontLeftMotorController;
+    public static WPI_TalonSRX frontRightMotorController;
+    public static WPI_TalonSRX backLeftMotorController;
+    public static WPI_TalonSRX backRightMotorController;
+    
+    public static SpeedControllerGroup leftControllers;
+    public static SpeedControllerGroup rightControllers;
+    public static DriveSubsystem driveSubsystem;
+    public static Solenoid driveShifter;
 
     //@Test
     public void testInit () {
         //setup
-        leftDriveMotorController = new Talon(leftDriveMotor);
-		rightDriveMotorController = new Talon(rightDriveMotor);
-		driveSubsystem = new DriveSubsystem(leftDriveMotorController, rightDriveMotorController);
+        frontLeftMotorController = new WPI_TalonSRX(frontleftDriveMotor);
+		frontRightMotorController = new WPI_TalonSRX(frontrightDriveMotor);
+		backLeftMotorController = new WPI_TalonSRX(backleftDriveMotor);
+		backRightMotorController = new WPI_TalonSRX(backrightDriveMotor);
+		leftControllers = new SpeedControllerGroup(frontLeftMotorController, backLeftMotorController);
+        rightControllers = new SpeedControllerGroup(frontRightMotorController, backRightMotorController);
+        driveShifter = new Solenoid(driveShifterID);
+
+		driveSubsystem = new DriveSubsystem(frontLeftMotorController, frontRightMotorController, backLeftMotorController, backRightMotorController, driveShifter);
         //when
         DriveSubsystem subject = driveSubsystem;
 
         //then
         assertEquals("DriveCommand", subject.getDefaultCommand().getName());
-        assertEquals(0.0, RobotMap.leftDriveMotorController.getSpeed(), 0.0);
-        assertEquals(0.0, RobotMap.rightDriveMotorController.getSpeed(), 0.0);
+        assertEquals(0.0, RobotMap.leftControllers.get(), 0.0);
+        assertEquals(0.0, RobotMap.rightControllers.get(), 0.0);
     }
 
     //@Test
@@ -41,7 +59,7 @@ public class DriveSubsystemTest {
 
         //then
         assertEquals("DriveCommand", subject.getDefaultCommand().getName());
-        assertEquals(0.25, RobotMap.leftDriveMotorController.getSpeed(), 0.0);
-        assertEquals(0.25, RobotMap.rightDriveMotorController.getSpeed(), 0.0);
+        assertEquals(0.0, RobotMap.leftControllers.get(), 0.0);
+        assertEquals(0.0, RobotMap.rightControllers.get(), 0.0);
     }
 }

@@ -7,7 +7,10 @@
 
 package frc.robot.subsystem;
 
-import edu.wpi.first.wpilibj.Talon;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
+import edu.wpi.first.wpilibj.Sendable;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -18,17 +21,26 @@ public class DriveSubsystem extends SubsystemBase implements TechnoTechSubsystem
 	// here. Call these from Commands.
 	
 	protected final DifferentialDrive differentialDrive1 = RobotMap.drivetrain;
-	private Talon leftDrive;
-	private Talon rightDrive;
+	private WPI_TalonSRX frontleftDrive;
+	private WPI_TalonSRX frontrightDrive;
+	private WPI_TalonSRX backleftDrive;
+	private WPI_TalonSRX backrightDrive;
+	private Solenoid driveShifter;
 
-	public DriveSubsystem(Talon leftDrive, Talon rightDrive) {
-		addChild("Left CIM", (Talon) leftDrive);
-		addChild("Right CIM", (Talon) rightDrive);
+	public DriveSubsystem(WPI_TalonSRX frontleftDrive, WPI_TalonSRX frontrightDrive, WPI_TalonSRX backleftDrive, WPI_TalonSRX backrightDrive, Solenoid driveShifter) {
+		addChild("Front Left CIM", (Sendable) frontleftDrive);
+		addChild("Front Right CIM", (Sendable) frontrightDrive);
+		addChild("Back Left CIM", (Sendable) backleftDrive);
+		addChild("Back Right CIM", (Sendable) backrightDrive);
 		differentialDrive1.setSafetyEnabled(false);
 		differentialDrive1.setExpiration(0.1);
 		differentialDrive1.setMaxOutput(1.0);
-		this.leftDrive = leftDrive;
-		this.rightDrive = rightDrive;
+		this.frontleftDrive = frontleftDrive;
+		this.frontrightDrive = frontrightDrive;
+		this.backleftDrive = backleftDrive;
+		this.backrightDrive = backrightDrive;
+		this.driveShifter = driveShifter;
+		
 	}
 
 	/*
@@ -47,9 +59,16 @@ public class DriveSubsystem extends SubsystemBase implements TechnoTechSubsystem
 		differentialDrive1.arcadeDrive(forwardSpeed, rotationSpeed);
 	}
 
+	public void changeGear(boolean state) {
+		driveShifter.set(state);
+	}
+
 	public void log() {	
-		SmartDashboard.putNumber("Left Speed", leftDrive.get());
-		SmartDashboard.putNumber("Right Speed", rightDrive.get());
+		SmartDashboard.putNumber("Front Left Speed", frontleftDrive.getMotorOutputPercent());
+		SmartDashboard.putNumber("Front Right Speed", frontrightDrive.getMotorOutputPercent());
+		SmartDashboard.putNumber("Back Left Speed", backleftDrive.getMotorOutputPercent());
+		SmartDashboard.putNumber("Back Right Speed", backrightDrive.getMotorOutputPercent());
+		SmartDashboard.putBoolean("Shifter Gear", driveShifter.get());
 		
 		//SmartDashboard.putNumber("Left Encoder", RobotMap.leftEncoder.get());
 		//SmartDashboard.putNumber("Right Encoder", RobotMap.rightEncoder.get());

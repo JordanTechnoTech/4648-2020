@@ -43,20 +43,38 @@ public class TechnoTechXBoxController {
     public double getStickRightXValue(){ return controller.getX(GenericHID.Hand.kRight);}
     public double getLeftTriggerValue(){ return controller.getTriggerAxis(GenericHID.Hand.kLeft);}
     public double getRightTriggerValue(){ return controller.getTriggerAxis(GenericHID.Hand.kRight);}
+    
     public boolean getAButtonValue(){
         return controller.getAButton();
     }
-    public boolean getLeftBumperValue(){
-        return controller.getBumper(GenericHID.Hand.kLeft);
-    }
-    public boolean getBButtonPressed(){
-        return controller.getBButtonPressed();
+    public boolean getBButtonValue(){
+        return controller.getBButton();
     }
     public boolean getXButtonValue(){
         return controller.getXButton();
     }
     public boolean getYButtonValue(){
         return controller.getYButton();
+    }
+
+    public boolean getBButtonPressed(){
+        return controller.getBButtonPressed();
+    }
+    public boolean getAButtonPressed(){
+        return controller.getAButtonPressed();
+    }
+    public boolean getXButtonPressed(){
+        return controller.getXButtonPressed();
+    }
+    public boolean getYButtonPressed(){
+        return controller.getYButtonPressed();
+    }
+
+    public boolean getLeftBumperValue(){
+        return controller.getBumper(GenericHID.Hand.kLeft);
+    }
+    public boolean getRightBumperValue(){
+        return controller.getBumper(GenericHID.Hand.kRight);
     }
 
     public double getStickLeftXValue() {
