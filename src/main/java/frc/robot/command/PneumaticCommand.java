@@ -13,7 +13,7 @@ public class PneumaticCommand extends CommandBase {
 
     @Override
     public void execute() {
-        if(RobotMap.oi.controller0.getBButtonPressed()) {
+        if(RobotMap.oi.controller0.getXButtonPressed()) {
             if(toggleState) {
                 toggleState = false;
             }

@@ -16,6 +16,9 @@ public class ColorSensorSubsystem extends SubsystemBase implements TechnoTechSub
     public WPI_TalonSRX colorWheelMotor;
 
     private Color detectedColor;
+    private Color oldColor = Color.kWhite;
+    private Color newColor = Color.kWhite;
+    private int changes = 0;
 
     public ColorSensorSubsystem(ColorSensorV3 colorSensor, Solenoid colorSensorSolenoid, WPI_TalonSRX colorWheelMotor) {
         addChild("Color Sensor", (Sendable) colorSensor);
@@ -24,6 +27,30 @@ public class ColorSensorSubsystem extends SubsystemBase implements TechnoTechSub
         this.colorSensor = colorSensor;
         this.colorSensorSolenoid = colorSensorSolenoid;
         this.colorWheelMotor = colorWheelMotor;
+    }
+
+    public void rotate(boolean state, int rotations) {
+        if(state == true) {
+            while(changes * 8 <= rotations) {
+                newColor = getColor();
+                colorWheelMotor.set(ControlMode.Velocity, 0.1);
+
+                //check if color change has occurred
+                if(oldColor != newColor) {
+                    changes = changes + 1;
+                }
+                oldColor = newColor;
+            }
+            colorWheelMotor.set(ControlMode.Velocity, 0);
+        }
+    }
+
+    public void resetCounter(boolean state) {
+        changes = 0;
+    }
+
+    public void extend(boolean state) {
+        colorSensorSolenoid.set(state);
     }
 
     public Color getColor() {
