@@ -10,12 +10,19 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import frc.robot.command.BallStorageCommand;
+import frc.robot.command.ColorSensorCommand;
+import frc.robot.command.IntakeCommand;
+import frc.robot.command.ShootCommand;
 import frc.robot.subsystem.BallStorageSubsystem;
 import frc.robot.subsystem.ColorSensorSubsystem;
 import frc.robot.subsystem.DriveSubsystem;
 import frc.robot.subsystem.ShooterSubsystem;
 
 public class RobotMap {
+	public static final TechnoTechXBoxController controller0 = new TechnoTechXBoxController(0);
+
+
 
 	//can bus mappings
 	public static int frontleftDriveMotor = 1;
@@ -69,7 +76,7 @@ public class RobotMap {
 	public static Solenoid colorSensorSolenoid;
 	public static ColorSensorSubsystem colorSensorSubsystem;
 
-	public static OI oi;
+	
 
 
 
@@ -103,7 +110,14 @@ public class RobotMap {
 		colorWheelMotor = new WPI_TalonSRX(colorWheelMotorID);
 		colorSensorSolenoid = new Solenoid(colorWheelSolenoidID);
 		colorSensorSubsystem = new ColorSensorSubsystem(colorSensor, colorSensorSolenoid, colorWheelMotor);
-		
-		oi = new OI();
+	
+		buttonbinding();
 	}
+	public static void buttonbinding(){
+		controller0.xButton.whenPressed(new ColorSensorCommand());
+		controller0.aButton.whenActive(new BallStorageCommand());
+		controller0.bButton.whenPressed(new ShootCommand());
+		controller0.lbButton.toggleWhenPressed(new IntakeCommand());
+	}
+
 }
