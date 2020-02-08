@@ -1,6 +1,7 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.revrobotics.ColorSensorV3;
 
@@ -58,10 +59,10 @@ public class RobotMap {
 	//Ball Storage Subsystem
 	public static BallStorageSubsystem ballStorageSubsystem;
 	public static Talon roller;
-	public static Talon leftIntake;
-	public static Talon rightIntake;
-	public static TalonSRX leftIntakeBelt;
-	public static TalonSRX rightIntakeBelt;
+	public static VictorSPX leftIntake;
+	public static VictorSPX rightIntake;
+	public static VictorSPX leftIntakeBelt;
+	public static VictorSPX rightIntakeBelt;
 	public static Solenoid intakeGate;
 	public static Solenoid leftIntakePiston;
 	public static Solenoid rightIntakePiston;
@@ -72,7 +73,7 @@ public class RobotMap {
 
 	//Color Sensor Subsystem
 	public static ColorSensorV3 colorSensor;
-	public static WPI_TalonSRX colorWheelMotor;
+	public static VictorSPX colorWheelMotor;
 	public static Solenoid colorSensorSolenoid;
 	public static ColorSensorSubsystem colorSensorSubsystem;
 
@@ -94,10 +95,10 @@ public class RobotMap {
 		
 		//intake initialization
 		roller = new Talon(0);
-		leftIntake = new Talon(1);
-		rightIntake =  new Talon(2);
-		leftIntakeBelt = new TalonSRX(leftintakeBeltID);
-		rightIntakeBelt = new TalonSRX(rightIntakeBeltID);
+		leftIntake = new VictorSPX(1);
+		rightIntake =  new VictorSPX(2);
+		leftIntakeBelt = new VictorSPX(leftintakeBeltID);
+		rightIntakeBelt = new VictorSPX(rightIntakeBeltID);
 		intakeGate = new Solenoid(intakegateID);
 		shooterTalonSRX = new TalonSRX(shooterID);
 		leftIntakePiston = new Solenoid(leftIntakeID);
@@ -107,7 +108,7 @@ public class RobotMap {
 		
 		//color sensor initialization
 		colorSensor = new ColorSensorV3(I2C.Port.kOnboard);
-		colorWheelMotor = new WPI_TalonSRX(colorWheelMotorID);
+		colorWheelMotor = new VictorSPX(colorWheelMotorID);
 		colorSensorSolenoid = new Solenoid(colorWheelSolenoidID);
 		colorSensorSubsystem = new ColorSensorSubsystem(colorSensor, colorSensorSolenoid, colorWheelMotor);
 	

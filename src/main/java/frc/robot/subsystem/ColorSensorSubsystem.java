@@ -1,7 +1,7 @@
 package frc.robot.subsystem;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.ColorSensorV3;
 
 import edu.wpi.first.wpilibj.Sendable;
@@ -13,14 +13,14 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class ColorSensorSubsystem extends SubsystemBase implements TechnoTechSubsystem {
     private ColorSensorV3 colorSensor;
     private Solenoid colorSensorSolenoid;
-    public WPI_TalonSRX colorWheelMotor;
+    public VictorSPX colorWheelMotor;
 
     private Color detectedColor;
     private Color oldColor = Color.kWhite;
     private Color newColor = Color.kWhite;
     private int changes = 0;
 
-    public ColorSensorSubsystem(ColorSensorV3 colorSensor, Solenoid colorSensorSolenoid, WPI_TalonSRX colorWheelMotor) {
+    public ColorSensorSubsystem(ColorSensorV3 colorSensor, Solenoid colorSensorSolenoid, VictorSPX colorWheelMotor) {
         addChild("Color Sensor", (Sendable) colorSensor);
         addChild("Solenoid", (Solenoid) colorSensorSolenoid);
         addChild("Color Wheel Motor", (Sendable) colorWheelMotor);
@@ -80,5 +80,6 @@ public class ColorSensorSubsystem extends SubsystemBase implements TechnoTechSub
         SmartDashboard.putNumber("Green", detectedColor.green);
         SmartDashboard.putNumber("Blue", detectedColor.blue);
         SmartDashboard.putNumber("IR", colorSensor.getIR());
+        SmartDashboard.putNumber("Color Wheel SPX", colorWheelMotor.getMotorOutputPercent());
 	}
 }
