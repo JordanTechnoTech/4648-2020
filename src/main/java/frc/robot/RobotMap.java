@@ -77,7 +77,6 @@ public class RobotMap {
 	public static ColorSensorSubsystem colorSensorSubsystem;
 
 	
-	public static OI oi;
 
 
 
