@@ -2,28 +2,28 @@ package frc.robot.subsystem;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj.Sendable;
 import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 
 public class ShooterSubsystem extends SubsystemBase implements TechnoTechSubsystem {
 
-	private Talon leftIntake;
-	private Talon rightIntake;
-	private TalonSRX leftIntakeBelt;
-	private TalonSRX rightIntakeBelt;
+	private VictorSPX leftIntake;
+	private VictorSPX rightIntake;
+	private VictorSPX leftIntakeBelt;
+	private VictorSPX rightIntakeBelt;
     private Solenoid intakeGate;
     private TalonSRX shooterTalonSRX;
 
     private double speed = 0.5;
 
-    public ShooterSubsystem(Talon leftIntake, Talon rightIntake, TalonSRX leftIntakeBelt, TalonSRX rightIntakeBelt, Solenoid intakeGate, TalonSRX shooterTalonSRX) {
-        addChild("leftIntake", (Talon) RobotMap.leftIntake);
-        addChild("rightIntake", (Talon) RobotMap.rightIntake);
+    public ShooterSubsystem(VictorSPX leftIntake, VictorSPX rightIntake, VictorSPX leftIntakeBelt, VictorSPX rightIntakeBelt, Solenoid intakeGate, TalonSRX shooterTalonSRX) {
+        addChild("leftIntake", (Sendable) RobotMap.leftIntake);
+        addChild("rightIntake", (Sendable) RobotMap.rightIntake);
         addChild("leftIntakeBelt", (Sendable) RobotMap.leftIntakeBelt);
         addChild("rightIntakeBelt", (Sendable) RobotMap.rightIntakeBelt);
         addChild("intakeGate", (Solenoid) RobotMap.intakeGate);
@@ -41,15 +41,15 @@ public class ShooterSubsystem extends SubsystemBase implements TechnoTechSubsyst
             intakeGate.set(false);
             leftIntakeBelt.set(ControlMode.Velocity, speed);
             rightIntakeBelt.set(ControlMode.Velocity, speed);
-            leftIntake.set(speed);
-            rightIntake.set(speed);
+            leftIntake.set(ControlMode.Velocity, speed);
+            rightIntake.set(ControlMode.Velocity, speed);
     }
 
 
     @Override
 	public void log() {
-        SmartDashboard.putNumber("Left Intake Wheel", leftIntake.getSpeed());
-        SmartDashboard.putNumber("RIght Intake Wheel", rightIntake.getSpeed());
+        SmartDashboard.putNumber("Left Intake Wheel", leftIntake.getMotorOutputPercent());
+        SmartDashboard.putNumber("RIght Intake Wheel", rightIntake.getMotorOutputPercent());
         SmartDashboard.putNumber("Left Storage Belt", leftIntakeBelt.getMotorOutputPercent());
         SmartDashboard.putNumber("Right Storage Belt", rightIntakeBelt.getMotorOutputPercent());
         SmartDashboard.putNumber("Shooter Wheel", shooterTalonSRX.getMotorOutputPercent());
