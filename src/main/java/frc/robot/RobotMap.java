@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.command.BallStorageCommand;
 import frc.robot.command.ColorSensorCommand;
 import frc.robot.command.IntakeCommand;
@@ -23,19 +24,23 @@ import frc.robot.subsystem.ShooterSubsystem;
 public class RobotMap {
 	public static final TechnoTechXBoxController controller0 = new TechnoTechXBoxController(0);
 
-
-
 	//can bus mappings
+
+	//TALON
 	public static int frontleftDriveMotor = 1;
 	public static int frontrightDriveMotor = 2;
 	public static int backleftDriveMotor = 3;
 	public static int backrightDriveMotor = 4;
-	public static int leftintakeBeltID = 5;
-	public static int rightIntakeBeltID = 6;
 	public static int shooterID = 7;
+
+	//VICTOR
+	public static int leftintakeBeltID = 2;
+	public static int rightIntakeBeltID = 1;
+	public static int leftIntakeSPXID = 3;
+	public static int rightIntakeSPXID = 4;
 	public static int colorWheelMotorID = 8;
 	
-	//pwn mappings
+	//pwm mappings
 	public static int driveShifterID = 0;
 	public static int intakegateID = 1;
 	public static int colorWheelSolenoidID = 2;
@@ -77,16 +82,13 @@ public class RobotMap {
 	public static Solenoid colorSensorSolenoid;
 	public static ColorSensorSubsystem colorSensorSubsystem;
 
-	
-
-
-
 	public static void init() {
 		// drive initialization
 		frontLeftMotorController = new WPI_TalonSRX(frontleftDriveMotor);
 		frontRightMotorController = new WPI_TalonSRX(frontrightDriveMotor);
 		backLeftMotorController = new WPI_TalonSRX(backleftDriveMotor);
 		backRightMotorController = new WPI_TalonSRX(backrightDriveMotor);
+		backLeftMotorController.setInverted(true);
 		leftControllers = new SpeedControllerGroup(frontLeftMotorController, backLeftMotorController);
 		rightControllers = new SpeedControllerGroup(frontRightMotorController, backRightMotorController);
 		driveShifter = new Solenoid(driveShifterID);
@@ -95,9 +97,10 @@ public class RobotMap {
 		
 		//intake initialization
 		roller = new Talon(0);
-		leftIntake = new VictorSPX(1);
-		rightIntake =  new VictorSPX(2);
+		leftIntake = new VictorSPX(leftIntakeSPXID);
+		rightIntake =  new VictorSPX(rightIntakeSPXID);
 		leftIntakeBelt = new VictorSPX(leftintakeBeltID);
+		leftIntakeBelt.setInverted(true);
 		rightIntakeBelt = new VictorSPX(rightIntakeBeltID);
 		intakeGate = new Solenoid(intakegateID);
 		shooterTalonSRX = new TalonSRX(shooterID);
@@ -108,7 +111,7 @@ public class RobotMap {
 		
 		//color sensor initialization
 		colorSensor = new ColorSensorV3(I2C.Port.kOnboard);
-		colorWheelMotor = new VictorSPX(colorWheelMotorID);
+		// colorWheelMotor = new VictorSPX(colorWheelMotorID);
 		colorSensorSolenoid = new Solenoid(colorWheelSolenoidID);
 		colorSensorSubsystem = new ColorSensorSubsystem(colorSensor, colorSensorSolenoid, colorWheelMotor);
 	
@@ -116,9 +119,15 @@ public class RobotMap {
 	}
 	public static void buttonbinding(){
 		controller0.xButton.whenPressed(new ColorSensorCommand());
-		controller0.aButton.whenActive(new BallStorageCommand());
-		controller0.bButton.whenPressed(new ShootCommand());
+		controller0.aButton.whileHeld(new BallStorageCommand());
+		controller0.bButton.whileHeld(new ShootCommand());
 		controller0.lbButton.toggleWhenPressed(new IntakeCommand());
+	}
+
+	public static void logButtonState(){
+		SmartDashboard.putBoolean("aButton", controller0.aButton.get());
+		SmartDashboard.putBoolean("bButton", controller0.bButton.get());
+		SmartDashboard.putBoolean("lbButton", controller0.lbButton.get());
 	}
 
 }

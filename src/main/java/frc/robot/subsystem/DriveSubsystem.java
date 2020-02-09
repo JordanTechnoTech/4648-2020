@@ -9,7 +9,6 @@ package frc.robot.subsystem;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-import edu.wpi.first.wpilibj.Sendable;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -28,10 +27,10 @@ public class DriveSubsystem extends SubsystemBase implements TechnoTechSubsystem
 	private Solenoid driveShifter;
 
 	public DriveSubsystem(WPI_TalonSRX frontleftDrive, WPI_TalonSRX frontrightDrive, WPI_TalonSRX backleftDrive, WPI_TalonSRX backrightDrive, Solenoid driveShifter) {
-		addChild("Front Left CIM", (Sendable) frontleftDrive);
-		addChild("Front Right CIM", (Sendable) frontrightDrive);
-		addChild("Back Left CIM", (Sendable) backleftDrive);
-		addChild("Back Right CIM", (Sendable) backrightDrive);
+		addChild("Front Left CIM", frontleftDrive);
+		addChild("Front Right CIM", frontrightDrive);
+		addChild("Back Left CIM", backleftDrive);
+		addChild("Back Right CIM", backrightDrive);
 		differentialDrive1.setSafetyEnabled(false);
 		differentialDrive1.setExpiration(0.1);
 		differentialDrive1.setMaxOutput(1.0);

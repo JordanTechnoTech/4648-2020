@@ -4,7 +4,6 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.ColorSensorV3;
 
-import edu.wpi.first.wpilibj.Sendable;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
@@ -21,9 +20,9 @@ public class ColorSensorSubsystem extends SubsystemBase implements TechnoTechSub
     private int changes = 0;
 
     public ColorSensorSubsystem(ColorSensorV3 colorSensor, Solenoid colorSensorSolenoid, VictorSPX colorWheelMotor) {
-        addChild("Color Sensor", (Sendable) colorSensor);
-        addChild("Solenoid", (Solenoid) colorSensorSolenoid);
-        addChild("Color Wheel Motor", (Sendable) colorWheelMotor);
+        //addChild("Color Sensor", colorSensor);
+        addChild("Solenoid", colorSensorSolenoid);
+        //addChild("Color Wheel Motor", colorWheelMotor);
         this.colorSensor = colorSensor;
         this.colorSensorSolenoid = colorSensorSolenoid;
         this.colorWheelMotor = colorWheelMotor;
@@ -76,10 +75,15 @@ public class ColorSensorSubsystem extends SubsystemBase implements TechnoTechSub
 
     @Override
 	public void log() {
-        SmartDashboard.putNumber("Red", detectedColor.red);
-        SmartDashboard.putNumber("Green", detectedColor.green);
-        SmartDashboard.putNumber("Blue", detectedColor.blue);
-        SmartDashboard.putNumber("IR", colorSensor.getIR());
-        SmartDashboard.putNumber("Color Wheel SPX", colorWheelMotor.getMotorOutputPercent());
-	}
+        if(detectedColor != null) {
+            SmartDashboard.putNumber("Red", detectedColor.red);
+            SmartDashboard.putNumber("Green", detectedColor.green);
+            SmartDashboard.putNumber("Blue", detectedColor.blue);
+            SmartDashboard.putNumber("IR", colorSensor.getIR());
+        }
+        if(colorWheelMotor != null){
+            SmartDashboard.putNumber("Color Wheel SPX", colorWheelMotor.getMotorOutputPercent());
+    
+        }
+    }
 }
