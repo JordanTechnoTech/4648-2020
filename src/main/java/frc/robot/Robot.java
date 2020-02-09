@@ -46,7 +46,6 @@ public class Robot extends TimedRobot {
     m_robotContainer = new RobotContainer();
     RobotMap.init();
     initSubsystems();
-
   }
 
   public void initSubsystems() {
@@ -55,11 +54,9 @@ public class Robot extends TimedRobot {
     subsystems.add(RobotMap.shooterSubsystem);
     subsystems.add(RobotMap.colorSensorSubsystem);
     CommandScheduler.getInstance().setDefaultCommand(RobotMap.driveSubsystem, new DriveCommand());
-    CommandScheduler.getInstance().setDefaultCommand(RobotMap.ballStorageSubsystem, new BallStorageCommand());
-    CommandScheduler.getInstance().setDefaultCommand(RobotMap.shooterSubsystem, new ShootCommand());
-    CommandScheduler.getInstance().setDefaultCommand(RobotMap.colorSensorSubsystem, new ColorSensorCommand());
-
-    
+    // CommandScheduler.getInstance().setDefaultCommand(RobotMap.ballStorageSubsystem, new BallStorageCommand());
+    // CommandScheduler.getInstance().setDefaultCommand(RobotMap.shooterSubsystem, new ShootCommand());
+    // CommandScheduler.getInstance().setDefaultCommand(RobotMap.colorSensorSubsystem, new ColorSensorCommand());
   }
 
   /** 
@@ -131,6 +128,7 @@ public class Robot extends TimedRobot {
 
   private void log() {
     subsystems.forEach(TechnoTechSubsystem::log);
+    RobotMap.logButtonState();
     SmartDashboard.putData("Reset Rotations", new CounterResetCommand());
   }
 

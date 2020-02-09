@@ -3,7 +3,6 @@ package frc.robot.subsystem;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
-import edu.wpi.first.wpilibj.Sendable;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -23,12 +22,12 @@ public class BallStorageSubsystem extends SubsystemBase implements TechnoTechSub
     private double speed = 0.5;
 
     public BallStorageSubsystem(Talon roller, VictorSPX leftIntake, VictorSPX rightIntake, VictorSPX leftIntakeBelt, VictorSPX rightIntakeBelt, Solenoid intakeGate, Solenoid leftIntakePiston, Solenoid rightIntakePison) {
-        addChild("Roller", (Talon) RobotMap.roller);
-        addChild("leftIntake", (Sendable) RobotMap.leftIntake);
-        addChild("rightIntake", (Sendable) RobotMap.rightIntake);
-        addChild("leftIntakeBelt", (Sendable) RobotMap.leftIntakeBelt);
-        addChild("rightIntakeBelt", (Sendable) RobotMap.rightIntakeBelt);
-        addChild("intakeGate", (Solenoid) RobotMap.intakeGate);
+        addChild("Roller", RobotMap.roller);
+        //addChild("leftIntake", RobotMap.leftIntake);
+        //addChild("rightIntake", RobotMap.rightIntake);
+        //addChild("leftIntakeBelt", RobotMap.leftIntakeBelt);
+        //addChild("rightIntakeBelt", RobotMap.rightIntakeBelt);
+        addChild("intakeGate", RobotMap.intakeGate);
         this.roller = roller;
         this.leftIntake = leftIntake;
         this.rightIntake = rightIntake;
@@ -44,19 +43,24 @@ public class BallStorageSubsystem extends SubsystemBase implements TechnoTechSub
             intakeGate.set(true);
 
             roller.set(speed);
-            leftIntake.set(ControlMode.Velocity, speed);
-            rightIntake.set(ControlMode.Velocity, speed);
+            leftIntake.set(ControlMode.PercentOutput, speed);
+            rightIntake.set(ControlMode.PercentOutput, speed);
 
-            leftIntakeBelt.set(ControlMode.Velocity, speed);
-            rightIntakeBelt.set(ControlMode.Velocity, speed);
+            leftIntakeBelt.set(ControlMode.PercentOutput, speed);
+            rightIntakeBelt.set(ControlMode.PercentOutput, speed);
             intakeGate.set(true);
 
-            roller.set(0);
-            leftIntake.set(ControlMode.Velocity, 0);
-            rightIntake.set(ControlMode.Velocity, 0);
+           
+    }
 
-            leftIntakeBelt.set(ControlMode.Velocity, 0);
-            rightIntakeBelt.set(ControlMode.Velocity, 0);
+    public void stop(){
+        roller.set(0);
+        leftIntake.set(ControlMode.PercentOutput, 0);
+        rightIntake.set(ControlMode.PercentOutput, 0);
+
+        leftIntakeBelt.set(ControlMode.PercentOutput, 0);
+        rightIntakeBelt.set(ControlMode.PercentOutput, 0);
+        intakeGate.set(false);
     }
 
     public void intakePneumatics() {

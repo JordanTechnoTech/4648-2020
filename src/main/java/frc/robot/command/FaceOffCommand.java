@@ -11,7 +11,7 @@ public class FaceOffCommand extends CommandBase {
     LimelightCamera limelightCamera = new LimelightCamera();
     double cameraFail;
     LimeLightValues limeLightValues;
-    private boolean finished = false;
+    //private boolean finished = false;
 
     //public FaceOffCommand(Target atarget) {
         //this.target = atarget;
@@ -19,7 +19,7 @@ public class FaceOffCommand extends CommandBase {
 
     @Override
     public void initialize() {
-        finished = false;
+        //finished = false;
         LimelightCamera.setLightMode(LimelightCamera.ledMode.ON);
         LimelightCamera.setPipeline(0);
         LimelightCamera.setCameraMode(LimelightCamera.cameraMode.VISION);
