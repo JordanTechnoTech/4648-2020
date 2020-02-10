@@ -1,6 +1,7 @@
 package frc.robot.subsystem;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
@@ -18,7 +19,7 @@ public class ShooterSubsystem extends SubsystemBase implements TechnoTechSubsyst
     private Solenoid intakeGate;
     private TalonSRX shooterTalonSRX;
 
-    private double speed = 0.5;
+    private double speed = 0.6;
     private double shooterSpeed = 0.8;
 
 
@@ -35,20 +36,22 @@ public class ShooterSubsystem extends SubsystemBase implements TechnoTechSubsyst
         this.rightIntakeBelt = rightIntakeBelt;
         this.intakeGate = intakeGate;
         this.shooterTalonSRX = shooterTalonSRX;
+        this.shooterTalonSRX.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
     }
 
     public void shoot() {
             shooterTalonSRX.set(ControlMode.PercentOutput, shooterSpeed);
-            intakeGate.set(false);
+            intakeGate.set(true);
             leftIntakeBelt.set(ControlMode.PercentOutput, speed);
             rightIntakeBelt.set(ControlMode.PercentOutput, speed);
             leftIntake.set(ControlMode.PercentOutput, speed);
             rightIntake.set(ControlMode.PercentOutput, speed);
+
     }
 
     public void stop(){
         shooterTalonSRX.set(ControlMode.PercentOutput, 0.0);
-        intakeGate.set(true);
+        intakeGate.set(false);
         leftIntakeBelt.set(ControlMode.PercentOutput, 0.0);
         rightIntakeBelt.set(ControlMode.PercentOutput, 0.0);
         leftIntake.set(ControlMode.PercentOutput, 0.0);
@@ -64,7 +67,6 @@ public class ShooterSubsystem extends SubsystemBase implements TechnoTechSubsyst
         SmartDashboard.putNumber("Right Storage Belt", rightIntakeBelt.getMotorOutputPercent());
         SmartDashboard.putNumber("Shooter Wheel", shooterTalonSRX.getMotorOutputPercent());
         SmartDashboard.putNumber("Shooter Wheel sensor velocity", shooterTalonSRX.getSelectedSensorVelocity());
-        // SmartDashboard.putNumber("Shooter Wheel trajectory velocity", shooterTalonSRX.getActiveTrajectoryVelocity());
         SmartDashboard.putBoolean("Pneumatic Gate", intakeGate.get());
     }
 }

@@ -69,6 +69,7 @@ public class RobotMap {
 	public static VictorSPX leftIntakeBelt;
 	public static VictorSPX rightIntakeBelt;
 	public static Solenoid intakeGate;
+	public static Solenoid rightIntakeGate;
 	public static Solenoid leftIntakePiston;
 	public static Solenoid rightIntakePiston;
 
@@ -120,7 +121,7 @@ public class RobotMap {
 	public static void buttonbinding(){
 		controller0.xButton.whenPressed(new ColorSensorCommand());
 		controller0.aButton.whileHeld(new BallStorageCommand());
-		controller0.bButton.whileHeld(new ShootCommand());
+		controller0.bButton.toggleWhenPressed(new ShootCommand());
 		controller0.lbButton.toggleWhenPressed(new IntakeCommand());
 	}
 
