@@ -40,7 +40,7 @@ public class BallStorageSubsystem extends SubsystemBase implements TechnoTechSub
     }
 
     public void intake() {
-            intakeGate.set(true);
+            intakeGate.set(false);
 
             roller.set(speed);
             leftIntake.set(ControlMode.PercentOutput, speed);
@@ -48,7 +48,6 @@ public class BallStorageSubsystem extends SubsystemBase implements TechnoTechSub
 
             leftIntakeBelt.set(ControlMode.PercentOutput, speed);
             rightIntakeBelt.set(ControlMode.PercentOutput, speed);
-            intakeGate.set(true);
 
            
     }
