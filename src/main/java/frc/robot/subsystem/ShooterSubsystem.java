@@ -24,12 +24,7 @@ public class ShooterSubsystem extends SubsystemBase implements TechnoTechSubsyst
 
 
     public ShooterSubsystem(VictorSPX leftIntake, VictorSPX rightIntake, VictorSPX leftIntakeBelt, VictorSPX rightIntakeBelt, Solenoid intakeGate, TalonSRX shooterTalonSRX) {
-        //addChild("leftIntake", RobotMap.leftIntake);
-        //addChild("rightIntake", RobotMap.rightIntake);
-        //addChild("leftIntakeBelt", RobotMap.leftIntakeBelt);
-        //addChild("rightIntakeBelt", RobotMap.rightIntakeBelt);
         addChild("intakeGate", RobotMap.intakeGate);
-        //addChild("shooterTalonSRX", RobotMap.shooterTalonSRX);
         this.leftIntake = leftIntake;
         this.rightIntake = rightIntake;
         this.leftIntakeBelt = leftIntakeBelt;
