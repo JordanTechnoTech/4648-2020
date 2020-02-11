@@ -119,7 +119,7 @@ public class RobotMap {
 		buttonbinding();
 	}
 	public static void buttonbinding(){
-		controller0.xButton.whenPressed(new ColorSensorCommand());
+		controller0.xButton.toggleWhenPressed(new ColorSensorCommand());
 		controller0.aButton.whileHeld(new BallStorageCommand());
 		controller0.bButton.toggleWhenPressed(new ShootCommand());
 		controller0.lbButton.toggleWhenPressed(new IntakeCommand());
