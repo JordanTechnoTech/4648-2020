@@ -2,12 +2,13 @@ package frc.robot.subsystem;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.RobotMap;
 
 public class ShooterSubsystem extends SubsystemBase implements TechnoTechSubsystem {
@@ -17,13 +18,13 @@ public class ShooterSubsystem extends SubsystemBase implements TechnoTechSubsyst
 	private VictorSPX leftIntakeBelt;
 	private VictorSPX rightIntakeBelt;
     private Solenoid intakeGate;
-    private TalonSRX shooterTalonSRX;
+    private WPI_TalonSRX shooterTalonSRX;
 
     private double speed = 0.6;
-    private double shooterSpeed = 0.8;
+    private double shooterSpeed = 1000;
 
 
-    public ShooterSubsystem(VictorSPX leftIntake, VictorSPX rightIntake, VictorSPX leftIntakeBelt, VictorSPX rightIntakeBelt, Solenoid intakeGate, TalonSRX shooterTalonSRX) {
+    public ShooterSubsystem(VictorSPX leftIntake, VictorSPX rightIntake, VictorSPX leftIntakeBelt, VictorSPX rightIntakeBelt, Solenoid intakeGate, WPI_TalonSRX shooterTalonSRX) {
         addChild("intakeGate", RobotMap.intakeGate);
         this.leftIntake = leftIntake;
         this.rightIntake = rightIntake;
@@ -31,16 +32,32 @@ public class ShooterSubsystem extends SubsystemBase implements TechnoTechSubsyst
         this.rightIntakeBelt = rightIntakeBelt;
         this.intakeGate = intakeGate;
         this.shooterTalonSRX = shooterTalonSRX;
-        this.shooterTalonSRX.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
+        
+        
+        this.shooterTalonSRX.configFactoryDefault();
+        this.shooterTalonSRX.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
+        this.shooterTalonSRX.setSensorPhase(true);
+
+        this.shooterTalonSRX.configNominalOutputForward(0, Constants.kTimeoutMs);
+		this.shooterTalonSRX.configNominalOutputReverse(0, Constants.kTimeoutMs);
+		this.shooterTalonSRX.configPeakOutputForward(1, Constants.kTimeoutMs);
+		this.shooterTalonSRX.configPeakOutputReverse(-1, Constants.kTimeoutMs);
+		/* Config the Velocity closed loop gains in slot0 */
+		this.shooterTalonSRX.config_kF(Constants.kPIDLoopIdx, Constants.kGains_Velocit.kF, Constants.kTimeoutMs);
+		this.shooterTalonSRX.config_kP(Constants.kPIDLoopIdx, Constants.kGains_Velocit.kP, Constants.kTimeoutMs);
+		this.shooterTalonSRX.config_kI(Constants.kPIDLoopIdx, Constants.kGains_Velocit.kI, Constants.kTimeoutMs);
+		this.shooterTalonSRX.config_kD(Constants.kPIDLoopIdx, Constants.kGains_Velocit.kD, Constants.kTimeoutMs);
+    
     }
 
-    public void shoot() {
-            shooterTalonSRX.set(ControlMode.PercentOutput, shooterSpeed);
-            intakeGate.set(true);
-            leftIntakeBelt.set(ControlMode.PercentOutput, speed);
-            rightIntakeBelt.set(ControlMode.PercentOutput, speed);
-            leftIntake.set(ControlMode.PercentOutput, speed);
-            rightIntake.set(ControlMode.PercentOutput, speed);
+    public void shoot(Double shooterSpeed) {
+        this.shooterSpeed = shooterSpeed;
+        shooterTalonSRX.set(ControlMode.Velocity, shooterSpeed);
+        intakeGate.set(true);
+        leftIntakeBelt.set(ControlMode.PercentOutput, speed);
+        rightIntakeBelt.set(ControlMode.PercentOutput, speed);
+        leftIntake.set(ControlMode.PercentOutput, speed);
+        rightIntake.set(ControlMode.PercentOutput, speed);
 
     }
 

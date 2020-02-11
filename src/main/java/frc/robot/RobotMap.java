@@ -1,6 +1,5 @@
 package frc.robot;
 
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.revrobotics.ColorSensorV3;
@@ -72,7 +71,7 @@ public class RobotMap {
 
 	//Shooter Subsystem
 	public static ShooterSubsystem shooterSubsystem;
-	public static TalonSRX shooterTalonSRX;
+	public static WPI_TalonSRX shooterTalonSRX;
 
 	//Color Sensor Subsystem
 	public static ColorSensorV3 colorSensor;
@@ -101,7 +100,7 @@ public class RobotMap {
 		leftIntakeBelt.setInverted(true);
 		rightIntakeBelt = new VictorSPX(rightIntakeBeltID);
 		intakeGate = new Solenoid(intakegateID);
-		shooterTalonSRX = new TalonSRX(shooterID);
+		shooterTalonSRX = new WPI_TalonSRX(shooterID);
 		leftIntakePiston = new Solenoid(leftIntakeID);
 		rightIntakePiston = new Solenoid(rightIntakeID);
 		ballStorageSubsystem = new BallStorageSubsystem(roller, leftIntake, rightIntake, leftIntakeBelt, rightIntakeBelt, intakeGate, leftIntakePiston, rightIntakePiston);

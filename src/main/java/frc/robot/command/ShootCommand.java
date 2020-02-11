@@ -5,14 +5,17 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotMap;
 
 public class ShootCommand extends CommandBase{
-    
+    private double speed;
+
+
     public ShootCommand() {
         addRequirements(RobotMap.shooterSubsystem);
     }
 
     @Override
     public void execute() {
-        RobotMap.shooterSubsystem.shoot();
+        speed = SmartDashboard.getNumber("Test Speed", 500);
+        RobotMap.shooterSubsystem.shoot(speed);
         SmartDashboard.putString("Shoot Command state","execute");
     }
 
