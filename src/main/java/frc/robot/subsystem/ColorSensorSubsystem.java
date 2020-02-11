@@ -1,5 +1,7 @@
 package frc.robot.subsystem;
 
+import java.util.Arrays;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.ColorSensorV3;
@@ -28,20 +30,18 @@ public class ColorSensorSubsystem extends SubsystemBase implements TechnoTechSub
         this.colorWheelMotor = colorWheelMotor;
     }
 
-    public void rotate(int rotations) {
-        colorSensorSolenoid.set(true);
-        while(changes * 8 <= rotations) {
+    public void detectChanges() {
             newColor = getColor();
-            colorWheelMotor.set(ControlMode.Velocity, 0.1);
 
             //check if color change has occurred
             if(oldColor != newColor) {
                 changes = changes + 1;
             }
             oldColor = newColor;
-        }
-        colorWheelMotor.set(ControlMode.Velocity, 0);
-        colorSensorSolenoid.set(false);
+    }
+
+    public void raise(boolean state) {
+        colorSensorSolenoid.set(state);
     }
 
     public void resetCounter() {
@@ -52,23 +52,26 @@ public class ColorSensorSubsystem extends SubsystemBase implements TechnoTechSub
         detectedColor  = colorSensor.getColor();
         double[] values = {detectedColor.red, detectedColor.green, detectedColor.blue};
 
-        //check if color is RED
-        if (values[0] >= 0.5 && values[1] <= 0.35 && values[2] <= 0.2) {
+        double maxValue = Arrays.stream(values).max().getAsDouble();
+
+        if(maxValue == values[0]) {
+            SmartDashboard.putString("Color", "RED");
             return Color.kFirstRed;
-        }else 
-        //check if color detected is GREEN
-        if (values[0] <= 0.2 && values[1]>= 0.4 && values[2] <= 0.3) {
-            return Color.kForestGreen;
-        }else 
-        //check if color detected is BLUE
-        if (values[0] <= 0.2 && values[1] >= 0.2 && values[2] >= 0.4) {
+        }
+        if(maxValue == values[1] && values[0] < 0.3 && values[2] < 0.3) {
+            SmartDashboard.putString("Color", "GREEN");
+            return Color.kDarkGreen;
+        }
+        if(maxValue == values[1] && values[2] >= 0.3) {
+            SmartDashboard.putString("Color", "BLUE");
             return Color.kBlue;
-        }else 
-        //check if color detected is YELLOW
-        if (values[0] >= 0.3 && values[1] >= 0.4 && values[2] <= 0.2) {
+        }
+        if(maxValue == values[1] && values[0] >= 0.3) {
+            SmartDashboard.putString("Color", "YELLOW");
             return Color.kYellow;
         }
         else {
+            SmartDashboard.putString("Color", "UNKNOWN");
             return Color.kAntiqueWhite;
         }
     }
@@ -85,5 +88,6 @@ public class ColorSensorSubsystem extends SubsystemBase implements TechnoTechSub
             SmartDashboard.putNumber("Color Wheel SPX", colorWheelMotor.getMotorOutputPercent());
     
         }
+        SmartDashboard.putNumber("Color Changes", changes);
     }
 }

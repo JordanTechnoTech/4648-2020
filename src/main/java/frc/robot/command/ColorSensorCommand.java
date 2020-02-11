@@ -11,6 +11,11 @@ public class ColorSensorCommand extends CommandBase {
 
     @Override
     public void execute() {
-        //RobotMap.colorSensorSubsystem.rotate(3);    
+        RobotMap.colorSensorSubsystem.raise(true);
+    }
+
+    @Override
+    public void end(boolean interrupted) {
+        RobotMap.colorSensorSubsystem.raise(false);
     }
 }
