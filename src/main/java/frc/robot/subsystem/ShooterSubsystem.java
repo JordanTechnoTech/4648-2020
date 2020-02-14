@@ -61,7 +61,7 @@ public class ShooterSubsystem extends SubsystemBase implements TechnoTechSubsyst
 
         shooterTalonSRX.set(ControlMode.Velocity, shooterSpeed);
         intakeGate.set(true);
-        //leftIntakeBelt.set(ControlMode.PercentOutput, speed);
+        leftIntakeBelt.set(ControlMode.PercentOutput, speed);
         rightIntakeBelt.set(ControlMode.PercentOutput, speed);
         leftIntake.set(ControlMode.PercentOutput, speed);
         rightIntake.set(ControlMode.PercentOutput, speed);
