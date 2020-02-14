@@ -1,12 +1,10 @@
 package frc.robot;
 
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.revrobotics.ColorSensorV3;
 
 import edu.wpi.first.wpilibj.I2C;
-import edu.wpi.first.wpilibj.Sendable;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Talon;
@@ -58,8 +56,6 @@ public class RobotMap {
 
 	public static DifferentialDrive drivetrain;
 	public static DriveSubsystem driveSubsystem;
-	public static final Sendable leftEncoder = null;
-	public static final Sendable rightEncoder = null;
 
 	//Ball Storage Subsystem
 	public static BallStorageSubsystem ballStorageSubsystem;
@@ -75,7 +71,7 @@ public class RobotMap {
 
 	//Shooter Subsystem
 	public static ShooterSubsystem shooterSubsystem;
-	public static TalonSRX shooterTalonSRX;
+	public static WPI_TalonSRX shooterTalonSRX;
 
 	//Color Sensor Subsystem
 	public static ColorSensorV3 colorSensor;
@@ -104,7 +100,7 @@ public class RobotMap {
 		leftIntakeBelt.setInverted(true);
 		rightIntakeBelt = new VictorSPX(rightIntakeBeltID);
 		intakeGate = new Solenoid(intakegateID);
-		shooterTalonSRX = new TalonSRX(shooterID);
+		shooterTalonSRX = new WPI_TalonSRX(shooterID);
 		leftIntakePiston = new Solenoid(leftIntakeID);
 		rightIntakePiston = new Solenoid(rightIntakeID);
 		ballStorageSubsystem = new BallStorageSubsystem(roller, leftIntake, rightIntake, leftIntakeBelt, rightIntakeBelt, intakeGate, leftIntakePiston, rightIntakePiston);

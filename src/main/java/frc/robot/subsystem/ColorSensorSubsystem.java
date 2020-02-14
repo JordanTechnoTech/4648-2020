@@ -22,9 +22,7 @@ public class ColorSensorSubsystem extends SubsystemBase implements TechnoTechSub
     private int changes = 0;
 
     public ColorSensorSubsystem(ColorSensorV3 colorSensor, Solenoid colorSensorSolenoid, VictorSPX colorWheelMotor) {
-        //addChild("Color Sensor", colorSensor);
         addChild("Solenoid", colorSensorSolenoid);
-        //addChild("Color Wheel Motor", colorWheelMotor);
         this.colorSensor = colorSensor;
         this.colorSensorSolenoid = colorSensorSolenoid;
         this.colorWheelMotor = colorWheelMotor;

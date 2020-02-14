@@ -42,14 +42,6 @@ public class DriveSubsystem extends SubsystemBase implements TechnoTechSubsystem
 		
 	}
 
-	/*
-	public void initDefaultCommand() {
-		SmartDashboard.putString("Drive default set", "YES");
-		// Set the default command for a subsystem here.
-		setDefaultCommand(new DriveCommand());
-	}
-	*/
-
 	public void tankDrive(double leftSpeed, double rightSpeed) {
 		differentialDrive1.tankDrive(leftSpeed, rightSpeed);
 	}
@@ -69,7 +61,7 @@ public class DriveSubsystem extends SubsystemBase implements TechnoTechSubsystem
 		SmartDashboard.putNumber("Back Right Speed", backrightDrive.getMotorOutputPercent());
 		SmartDashboard.putBoolean("Shifter Gear", driveShifter.get());
 		
-		//SmartDashboard.putNumber("Left Encoder", RobotMap.leftEncoder.get());
-		//SmartDashboard.putNumber("Right Encoder", RobotMap.rightEncoder.get());
+		SmartDashboard.putNumber("Left Encoder", backleftDrive.getSelectedSensorVelocity());
+		SmartDashboard.putNumber("Right Encoder", backrightDrive.getSelectedSensorVelocity());
 	}
 }
