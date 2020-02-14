@@ -1,12 +1,12 @@
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.revrobotics.ColorSensorV3;
 
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -50,8 +50,6 @@ public class RobotMap {
 	public static WPI_TalonSRX frontRightMotorController;
 	public static WPI_TalonSRX backLeftMotorController;
 	public static WPI_TalonSRX backRightMotorController;
-	public static SpeedControllerGroup leftControllers;
-	public static SpeedControllerGroup rightControllers;
 	public static Solenoid driveShifter;
 
 	public static DifferentialDrive drivetrain;
@@ -85,11 +83,12 @@ public class RobotMap {
 		frontRightMotorController = new WPI_TalonSRX(frontrightDriveMotor);
 		backLeftMotorController = new WPI_TalonSRX(backleftDriveMotor);
 		backRightMotorController = new WPI_TalonSRX(backrightDriveMotor);
+		backLeftMotorController.set(ControlMode.Follower, frontleftDriveMotor);
+		backRightMotorController.set(ControlMode.Follower, frontrightDriveMotor);
 		backLeftMotorController.setInverted(true);
-		leftControllers = new SpeedControllerGroup(frontLeftMotorController, backLeftMotorController);
-		rightControllers = new SpeedControllerGroup(frontRightMotorController, backRightMotorController);
+		
 		driveShifter = new Solenoid(driveShifterID);
-		drivetrain = new DifferentialDrive(leftControllers, rightControllers);
+		drivetrain = new DifferentialDrive(frontLeftMotorController, frontRightMotorController);
 		driveSubsystem = new DriveSubsystem(frontLeftMotorController, frontRightMotorController, backLeftMotorController, backRightMotorController, driveShifter);
 		
 		//intake initialization
@@ -108,7 +107,7 @@ public class RobotMap {
 		
 		//color sensor initialization
 		colorSensor = new ColorSensorV3(I2C.Port.kOnboard);
-		// colorWheelMotor = new VictorSPX(colorWheelMotorID);
+		//colorWheelMotor = new VictorSPX(colorWheelMotorID);
 		colorSensorSolenoid = new Solenoid(colorWheelSolenoidID);
 		colorSensorSubsystem = new ColorSensorSubsystem(colorSensor, colorSensorSolenoid, colorWheelMotor);
 	
@@ -119,6 +118,7 @@ public class RobotMap {
 		controller0.aButton.whileHeld(new BallStorageCommand());
 		controller0.bButton.toggleWhenPressed(new ShootCommand());
 		controller0.lbButton.toggleWhenPressed(new IntakeCommand());
+		controller0.yButton.toggleWhenPressed(new AutonomousCommand());
 	}
 
 	public static void logButtonState(){
