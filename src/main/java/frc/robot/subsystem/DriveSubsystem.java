@@ -26,8 +26,8 @@ public class DriveSubsystem extends SubsystemBase implements TechnoTechSubsystem
 	protected final DifferentialDrive differentialDrive1 = RobotMap.drivetrain;
 	public WPI_TalonSRX frontleftDrive;
 	public WPI_TalonSRX frontrightDrive;
-	private WPI_TalonSRX backleftDrive;
-	private WPI_TalonSRX backrightDrive;
+	public WPI_TalonSRX backleftDrive;
+	public WPI_TalonSRX backrightDrive;
 	private Solenoid driveShifter;
 
 	public DriveSubsystem(WPI_TalonSRX frontleftDrive, WPI_TalonSRX frontrightDrive, WPI_TalonSRX backleftDrive, WPI_TalonSRX backrightDrive, Solenoid driveShifter) {
@@ -64,7 +64,7 @@ public class DriveSubsystem extends SubsystemBase implements TechnoTechSubsystem
 		//srx.configFactoryDefault();
         srx.setSensorPhase(true);
 		
-		double kP = SmartDashboard.getNumber("Drive P", 0);
+		double kP = SmartDashboard.getNumber("Drive P", 0.25);
         double kI = SmartDashboard.getNumber("Drive I", 0);
         double kD = SmartDashboard.getNumber("Drive D", 0);
 
@@ -91,7 +91,7 @@ public class DriveSubsystem extends SubsystemBase implements TechnoTechSubsystem
 
 	public void driveDistance(double distance) {
 		//backleftDrive.set(ControlMode.PercentOutput, -0.1);
-		backrightDrive.set(ControlMode.Position, -0.1);
+		backrightDrive.set(ControlMode.Position, -1);
 		
 	}
 
