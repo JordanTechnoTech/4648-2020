@@ -1,6 +1,7 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.revrobotics.ColorSensorV3;
@@ -10,6 +11,7 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.command.AutonomousCommand;
 import frc.robot.command.BallStorageCommand;
 import frc.robot.command.ColorSensorCommand;
 import frc.robot.command.IntakeCommand;
@@ -83,12 +85,14 @@ public class RobotMap {
 		frontRightMotorController = new WPI_TalonSRX(frontrightDriveMotor);
 		backLeftMotorController = new WPI_TalonSRX(backleftDriveMotor);
 		backRightMotorController = new WPI_TalonSRX(backrightDriveMotor);
-		backLeftMotorController.set(ControlMode.Follower, frontleftDriveMotor);
-		backRightMotorController.set(ControlMode.Follower, frontrightDriveMotor);
+		frontLeftMotorController.set(ControlMode.Follower, backleftDriveMotor);
+		frontRightMotorController.set(ControlMode.Follower, backrightDriveMotor);
+		
+		frontLeftMotorController.setInverted(false);
 		backLeftMotorController.setInverted(true);
 		
 		driveShifter = new Solenoid(driveShifterID);
-		drivetrain = new DifferentialDrive(frontLeftMotorController, frontRightMotorController);
+		drivetrain = new DifferentialDrive(backLeftMotorController, backRightMotorController);
 		driveSubsystem = new DriveSubsystem(frontLeftMotorController, frontRightMotorController, backLeftMotorController, backRightMotorController, driveShifter);
 		
 		//intake initialization

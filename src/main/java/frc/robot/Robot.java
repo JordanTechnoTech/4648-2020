@@ -51,7 +51,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Shooter D", 20);
 
     SmartDashboard.putNumber("Auto Distance", 1);
-    SmartDashboard.putNumber("Drive P", 2);
+    SmartDashboard.putNumber("Drive P", 10);
     SmartDashboard.putNumber("Drive I", 0);
     SmartDashboard.putNumber("Drive D", 0);
 
@@ -105,7 +105,7 @@ public class Robot extends TimedRobot {
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
-      m_autonomousCommand.schedule();
+      m_autonomousCommand.schedule(false);
     }
   }
 

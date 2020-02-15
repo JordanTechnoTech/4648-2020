@@ -48,17 +48,25 @@ public class DriveSubsystem extends SubsystemBase implements TechnoTechSubsystem
 		configureTalonSRX(this.frontrightDrive);
 		configureTalonSRX(this.backleftDrive);
 		configureTalonSRX(this.backrightDrive);
-		
+
+		this.backleftDrive.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
+		this.backrightDrive.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
+
+		frontleftDrive.setInverted(false);
+		backleftDrive.setInverted(true);
+
+		frontleftDrive.set(ControlMode.Follower, 3);
+		frontrightDrive.set(ControlMode.Follower, 4);
+
 	}
 
 	public void configureTalonSRX(WPI_TalonSRX srx) {
-		srx.configFactoryDefault();
-        srx.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
+		//srx.configFactoryDefault();
         srx.setSensorPhase(true);
 		
-		double kP = SmartDashboard.getNumber("Drive P", 2);
-        double kI = SmartDashboard.getNumber("Drive I", 0.001);
-        double kD = SmartDashboard.getNumber("Drive D", 20);
+		double kP = SmartDashboard.getNumber("Drive P", 0);
+        double kI = SmartDashboard.getNumber("Drive I", 0);
+        double kD = SmartDashboard.getNumber("Drive D", 0);
 
         Gains kGains_Velocit = new Gains( kP, kI, kD, 1023.0/7200.0,  300,  1.00);
 		
@@ -82,8 +90,9 @@ public class DriveSubsystem extends SubsystemBase implements TechnoTechSubsystem
 	}
 
 	public void driveDistance(double distance) {
-		frontleftDrive.set(ControlMode.Position, distance);
-		frontrightDrive.set(ControlMode.Position, distance);
+		//backleftDrive.set(ControlMode.PercentOutput, -0.1);
+		backrightDrive.set(ControlMode.Position, -0.1);
+		
 	}
 
 	public void changeGear(boolean state) {
