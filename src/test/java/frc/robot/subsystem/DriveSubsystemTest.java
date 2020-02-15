@@ -45,8 +45,8 @@ public class DriveSubsystemTest {
 
         //then
         assertEquals("DriveCommand", subject.getDefaultCommand().getName());
-        assertEquals(0.0, RobotMap.leftControllers.get(), 0.0);
-        assertEquals(0.0, RobotMap.rightControllers.get(), 0.0);
+        assertEquals(0.0, RobotMap.frontLeftMotorController.get(), 0.0);
+        assertEquals(0.0, RobotMap.frontRightMotorController.get(), 0.0);
     }
 
     //@Test
@@ -59,7 +59,7 @@ public class DriveSubsystemTest {
 
         //then
         assertEquals("DriveCommand", subject.getDefaultCommand().getName());
-        assertEquals(0.0, RobotMap.leftControllers.get(), 0.0);
-        assertEquals(0.0, RobotMap.rightControllers.get(), 0.0);
+        assertEquals(0.0, RobotMap.frontLeftMotorController.get(), 0.0);
+        assertEquals(0.0, RobotMap.frontRightMotorController.get(), 0.0);
     }
 }

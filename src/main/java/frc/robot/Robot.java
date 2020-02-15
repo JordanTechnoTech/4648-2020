@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.command.ColorCommand;
+import frc.robot.command.BallStorageCommand;
 import frc.robot.command.CounterResetCommand;
 import frc.robot.command.DriveCommand;
 import frc.robot.command.ShootCommand;
@@ -46,9 +46,17 @@ public class Robot extends TimedRobot {
     RobotMap.init();
     initSubsystems();
     SmartDashboard.putNumber("Test Speed", 1000);
-    SmartDashboard.putNumber("P", 2);
-    SmartDashboard.putNumber("I", 0.001);
-    SmartDashboard.putNumber("D", 5);
+    SmartDashboard.putNumber("Shooter P", 2);
+    SmartDashboard.putNumber("Shooter I", 0.001);
+    SmartDashboard.putNumber("Shooter D", 20);
+
+    SmartDashboard.putNumber("Auto Distance", 1);
+    SmartDashboard.putNumber("Drive P", 10);
+    SmartDashboard.putNumber("Drive I", 0);
+    SmartDashboard.putNumber("Drive D", 0);
+
+    
+
   }
 
   public void initSubsystems() {
@@ -57,7 +65,7 @@ public class Robot extends TimedRobot {
     subsystems.add(RobotMap.shooterSubsystem);
     subsystems.add(RobotMap.colorSensorSubsystem);
     CommandScheduler.getInstance().setDefaultCommand(RobotMap.driveSubsystem, new DriveCommand());
-    CommandScheduler.getInstance().setDefaultCommand(RobotMap.colorSensorSubsystem, new ColorCommand());
+    CommandScheduler.getInstance().setDefaultCommand(RobotMap.ballStorageSubsystem, new BallStorageCommand());
   }
 
   /** 
@@ -74,6 +82,7 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
+    RobotMap.colorSensorSubsystem.detectChanges();
     
   }
 
@@ -97,7 +106,7 @@ public class Robot extends TimedRobot {
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
-      m_autonomousCommand.schedule();
+      m_autonomousCommand.schedule(false);
     }
   }
 
