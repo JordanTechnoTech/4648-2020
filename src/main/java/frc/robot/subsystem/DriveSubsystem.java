@@ -91,8 +91,12 @@ public class DriveSubsystem extends SubsystemBase implements TechnoTechSubsystem
 
 	public void driveDistance(double distance) {
 		//backleftDrive.set(ControlMode.PercentOutput, -0.1);
-		backrightDrive.set(ControlMode.Position, -1);
-		
+		this.backleftDrive.setSelectedSensorPosition(0, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
+		//this.frontleftDrive.setSelectedSensorPosition(0, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
+		this.backrightDrive.setSelectedSensorPosition(0, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
+		//this.frontrightDrive.setSelectedSensorPosition(0, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
+		backrightDrive.set(ControlMode.Position, distance);
+		backleftDrive.set(ControlMode.Position, distance);
 	}
 
 	public void changeGear(boolean state) {
