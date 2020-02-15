@@ -28,6 +28,14 @@ public class ColorSensorSubsystem extends SubsystemBase implements TechnoTechSub
         this.colorWheelMotor = colorWheelMotor;
     }
 
+    public void spinWheel(double rotations) {
+        if(changes * 8 <= rotations) {
+            colorWheelMotor.set(ControlMode.PercentOutput, 0.1);
+        }else {
+            colorWheelMotor.set(ControlMode.PercentOutput, 0.0);
+        }
+    }
+
     public void detectChanges() {
             newColor = getColor();
 

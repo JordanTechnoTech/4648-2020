@@ -1,7 +1,6 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.revrobotics.ColorSensorV3;
@@ -10,12 +9,11 @@ import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.command.AutonomousCommand;
-import frc.robot.command.BallStorageCommand;
+import frc.robot.command.ColorCommand;
 import frc.robot.command.ColorSensorCommand;
 import frc.robot.command.IntakeCommand;
 import frc.robot.command.ShootCommand;
+import frc.robot.command.StorageCommand;
 import frc.robot.subsystem.BallStorageSubsystem;
 import frc.robot.subsystem.ColorSensorSubsystem;
 import frc.robot.subsystem.DriveSubsystem;
@@ -23,8 +21,9 @@ import frc.robot.subsystem.ShooterSubsystem;
 
 public class RobotMap {
 	public static final TechnoTechXBoxController controller0 = new TechnoTechXBoxController(0);
+	public static final TechnoTechXBoxController controller1 = new TechnoTechXBoxController(1);
 
-	//can bus mappings
+	
 
 	//TALON
 	public static int frontleftDriveMotor = 1;
@@ -106,8 +105,8 @@ public class RobotMap {
 		shooterTalonSRX = new WPI_TalonSRX(shooterID);
 		leftIntakePiston = new Solenoid(leftIntakeID);
 		rightIntakePiston = new Solenoid(rightIntakeID);
-		ballStorageSubsystem = new BallStorageSubsystem(roller, leftIntake, rightIntake, leftIntakeBelt, rightIntakeBelt, intakeGate, leftIntakePiston, rightIntakePiston);
-		shooterSubsystem = new ShooterSubsystem(leftIntake, rightIntake, leftIntakeBelt, rightIntakeBelt, intakeGate, shooterTalonSRX);
+		ballStorageSubsystem = new BallStorageSubsystem(roller, leftIntake, rightIntake, leftIntakeBelt, rightIntakeBelt, leftIntakePiston, rightIntakePiston);
+		shooterSubsystem = new ShooterSubsystem(shooterTalonSRX);
 		
 		//color sensor initialization
 		colorSensor = new ColorSensorV3(I2C.Port.kOnboard);
@@ -118,17 +117,17 @@ public class RobotMap {
 		buttonbinding();
 	}
 	public static void buttonbinding(){
-		controller0.xButton.toggleWhenPressed(new ColorSensorCommand());
-		controller0.aButton.whileHeld(new BallStorageCommand());
-		controller0.bButton.toggleWhenPressed(new ShootCommand());
-		controller0.lbButton.toggleWhenPressed(new IntakeCommand());
-		controller0.yButton.toggleWhenPressed(new AutonomousCommand());
+		controller1.bButton.toggleWhenPressed(new ShootCommand());			//toggles flywheel on or off
+		controller1.xButton.toggleWhenPressed(new ColorCommand());			//toggles colorwheel motor
+		controller1.aButton.toggleWhenPressed(new StorageCommand());		//toggles storage pistons
+
+		controller1.lbButton.toggleWhenPressed(new IntakeCommand());		//toggles pistons to lower intake
+		controller1.rbButton.toggleWhenPressed(new ColorSensorCommand());	//toggle colorsensor piston
+		
 	}
 
 	public static void logButtonState(){
-		SmartDashboard.putBoolean("aButton", controller0.aButton.get());
-		SmartDashboard.putBoolean("bButton", controller0.bButton.get());
-		SmartDashboard.putBoolean("lbButton", controller0.lbButton.get());
+		
 	}
 
 }

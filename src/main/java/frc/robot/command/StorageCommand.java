@@ -3,12 +3,12 @@ package frc.robot.command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotMap;
 
-public class IntakeCommand extends CommandBase {
+public class StorageCommand extends CommandBase {
 
-    public IntakeCommand() {
+    public StorageCommand() {
         addRequirements(RobotMap.ballStorageSubsystem);
     }
-    
+
     @Override
     public void execute() {
         RobotMap.ballStorageSubsystem.intakePneumatics(true);
