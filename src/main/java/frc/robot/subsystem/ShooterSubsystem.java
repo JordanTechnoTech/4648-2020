@@ -28,11 +28,12 @@ public class ShooterSubsystem extends SubsystemBase implements TechnoTechSubsyst
     }
 
     public void shoot(Double shooterSpeed) {
-        double kP = SmartDashboard.getNumber("Shooter P", 1);
-        double kI = SmartDashboard.getNumber("Shooter", 0.001);
-        double kD = SmartDashboard.getNumber("Shooter", 10);
+        double kP = SmartDashboard.getNumber("Shooter P", 0);
+        double kI = SmartDashboard.getNumber("Shooter I", 0.0);
+        double kD = SmartDashboard.getNumber("Shooter D", 0);
+        double kF = SmartDashboard.getNumber("Shooter FF", 0.05);
 
-        Gains kGains_Velocit = new Gains( kP, kI, kD, 1023.0/7200.0,  300,  1.00);
+        Gains kGains_Velocit = new Gains( kP, kI, kD, kF,  0,  1.00);
 
         this.shooterTalonSRX.configNominalOutputForward(0, Constants.kTimeoutMs);
 		this.shooterTalonSRX.configNominalOutputReverse(0, Constants.kTimeoutMs);

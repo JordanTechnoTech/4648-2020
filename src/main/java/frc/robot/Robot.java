@@ -44,10 +44,11 @@ public class Robot extends TimedRobot {
     m_robotContainer = new RobotContainer();
     RobotMap.init();
     initSubsystems();
-    SmartDashboard.putNumber("Test Speed", 6000);
-    SmartDashboard.putNumber("Shooter P", 2);
-    SmartDashboard.putNumber("Shooter I", 0.001);
-    SmartDashboard.putNumber("Shooter D", 200);
+    SmartDashboard.putNumber("Test Speed", 8000);
+    SmartDashboard.putNumber("Shooter P", 1.5);
+    SmartDashboard.putNumber("Shooter I", 0.00005);
+    SmartDashboard.putNumber("Shooter D", 0.1);
+    SmartDashboard.putNumber("Shooter FF", 0.055);
 
     SmartDashboard.putNumber("Auto Distance", 1);
     SmartDashboard.putNumber("Drive P", 10);
