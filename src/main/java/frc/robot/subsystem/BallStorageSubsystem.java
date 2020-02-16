@@ -42,7 +42,6 @@ public class BallStorageSubsystem extends SubsystemBase implements TechnoTechSub
         leftIntakeBelt.set(ControlMode.PercentOutput, beltSpeed * 0.5f);
         rightIntakeBelt.set(ControlMode.PercentOutput, beltSpeed * 0.5f);
 
-        intakeGate.set(RobotMap.controller1.startButton.get());
     }
 
     public void gate(boolean state) {

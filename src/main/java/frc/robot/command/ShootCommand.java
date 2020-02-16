@@ -6,24 +6,31 @@ import frc.robot.RobotMap;
 
 public class ShootCommand extends CommandBase{
     private double speed;
+    private boolean state;
 
 
-    public ShootCommand() {
+    public ShootCommand(boolean state) {
         addRequirements(RobotMap.shooterSubsystem);
+        this.state = state;
     }
 
     @Override
     public void execute() {
-        speed = (SmartDashboard.getNumber("distance", 120) * 3) + 7100;
-        //speed = (SmartDashboard.getNumber("Test Speed",8000));
-        RobotMap.shooterSubsystem.shoot(speed);
+        if(state) {
+            //speed = ((SmartDashboard.getNumber("distance", 50) * 3) + 7100)/0.86;
+            speed = SmartDashboard.getNumber("Test Speed", 8000);
+            RobotMap.shooterSubsystem.shoot(speed);
+        }else {
+            RobotMap.shooterSubsystem.stop();
+        }
         SmartDashboard.putString("Shoot Command state","execute");
-        SmartDashboard.putNumber("Shooter Target Speed",speed);
+            SmartDashboard.putNumber("Shooter Target Speed", speed);
     }
 
     @Override
-    public void end(boolean interrupted) {
-        RobotMap.shooterSubsystem.stop();
-        SmartDashboard.putString("Shoot Command state","end");
+    public boolean isFinished() {
+        return true;
     }
+
+
 }

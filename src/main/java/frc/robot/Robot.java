@@ -13,7 +13,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.command.CounterResetCommand;
 import frc.robot.command.DriveCommand;
-import frc.robot.command.ShootCommand;
 import frc.robot.subsystem.TechnoTechSubsystem;
 
 import java.util.ArrayList;
@@ -137,7 +136,6 @@ public class Robot extends TimedRobot {
     subsystems.forEach(TechnoTechSubsystem::log);
     RobotMap.logButtonState();
     SmartDashboard.putData("Reset Rotations", new CounterResetCommand());
-    SmartDashboard.putData("Shoot", new ShootCommand());
   }
 
   @Override

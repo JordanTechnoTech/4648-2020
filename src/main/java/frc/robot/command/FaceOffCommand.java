@@ -13,23 +13,21 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class FaceOffCommand extends CommandBase {
     
     public static List<RangeValue> turnSpeedRangeValues = Arrays.asList(
-            new RangeValue(-999, 1, 0.0),
-            new RangeValue(1, 5, -.023),
-            new RangeValue(5, 10, -.025),
-            new RangeValue(10, 15, -.03),
-            new RangeValue(15, 9999, -.035)
+            new RangeValue(-999, 1.5, 0.0),
+            new RangeValue(1.5, 2.5, -.18),
+            new RangeValue(2.5, 5, -.14),
+            new RangeValue(5, 10, -.085),
+            new RangeValue(10, 15, -.07),
+            new RangeValue(15, 9999, -.05)
     );
-
-    public double trueDistance;
-
-
 
     LimelightCamera limelightCamera = new LimelightCamera();
     double cameraFail;
     LimeLightValues limeLightValues;
-    private boolean finished = false;
 
     FaceOffCommand.Target target;
+
+    private long commandStartTime;
 
     public FaceOffCommand(Target atarget) {
         this.target = atarget;
@@ -38,9 +36,12 @@ public class FaceOffCommand extends CommandBase {
     @Override
     public void initialize() {
         //finished = false;
+        SmartDashboard.putString("Faceoffcommand", "initializing");
         LimelightCamera.setLightMode(LimelightCamera.ledMode.ON);
         LimelightCamera.setPipeline(1);
         LimelightCamera.setCameraMode(LimelightCamera.cameraMode.VISION);
+
+        commandStartTime = System.currentTimeMillis();
 
         super.initialize();
     }
@@ -50,14 +51,13 @@ public class FaceOffCommand extends CommandBase {
         limeLightValues = limelightCamera.poll();
         //Gets the distance from the camera to the target
         double limelightDistance = LimelightCamera.getDistance(target.getHeight(), limeLightValues.getTargetVertical());
-        trueDistance = limelightDistance * 0.86;
         
-        SmartDashboard.putNumber("distance", trueDistance);
+        SmartDashboard.putNumber("distance", limelightDistance);
         SmartDashboard.putNumber("cachedTA", limeLightValues.ta);
         SmartDashboard.putNumber("cachedTX", limeLightValues.tx);
         SmartDashboard.putNumber("cachedTY", limeLightValues.ty);
         SmartDashboard.putNumber("cachedTS", limeLightValues.ts);
-
+        SmartDashboard.putString("Faceoffcommand", "executing");
         if (!limeLightValues.hasTarget()) {
             cameraFail = cameraFail + 1;
             SmartDashboard.putNumber("CameraFail", cameraFail);
@@ -67,7 +67,7 @@ public class FaceOffCommand extends CommandBase {
             SmartDashboard.putNumber("limelightSkew", limeLightValues.getTargetSkew());
             SmartDashboard.putNumber("faceOffTTurnSpeed", turnSpeed);
 
-            RobotMap.driveSubsystem.arcadeDrive(0, -turnSpeed * 2f);
+            RobotMap.driveSubsystem.arcadeDrive(0, -turnSpeed);
         }
     }
 
@@ -100,12 +100,18 @@ public class FaceOffCommand extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        if (finished) {
+        float tx = (float) limeLightValues.getTargetHorizontal();
+        float angle = Math.abs(tx);
+        
+        if (angle < 1.5 && commandStartTime + 1750 < System.currentTimeMillis()) {
             LimelightCamera.setLightMode(LimelightCamera.ledMode.OFF);
             LimelightCamera.setPipeline(1);
             LimelightCamera.setCameraMode(LimelightCamera.cameraMode.CAMERA);
+            RobotMap.driveSubsystem.arcadeDrive(0, 0);
+            SmartDashboard.putString("Faceoffcommand", "finished");
+            return true;
         }
-        return finished;
+        return false;
     }
 
     @Override

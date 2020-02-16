@@ -9,12 +9,11 @@ import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import frc.robot.command.BallStorageCommand;
-import frc.robot.command.ColorCommand;
 import frc.robot.command.ColorSensorCommand;
 import frc.robot.command.FaceOffCommand;
 import frc.robot.command.IntakeCommand;
 import frc.robot.command.ShootCommand;
+import frc.robot.command.ShootCommandGroup;
 import frc.robot.subsystem.BallStorageSubsystem;
 import frc.robot.subsystem.ColorSensorSubsystem;
 import frc.robot.subsystem.DriveSubsystem;
@@ -118,14 +117,15 @@ public class RobotMap {
 		buttonbinding();
 	}
 	public static void buttonbinding(){
-		controller1.bButton.toggleWhenPressed(new ShootCommand());			//toggles flywheel on or off
-		controller1.xButton.toggleWhenPressed(new ColorCommand());			//toggles colorwheel motor
-		//controller1.aButton.toggleWhenPressed(new StorageCommand());		//toggles storage1 pistons
 
 		controller1.lbButton.toggleWhenPressed(new IntakeCommand());		//toggles pistons to lower intake
 		controller1.rbButton.toggleWhenPressed(new ColorSensorCommand());	//toggle colorsensor piston
-		controller1.aButton.toggleWhenPressed(new BallStorageCommand());	//toggles belts, start button releases gate
-		controller0.yButton.toggleWhenPressed(new FaceOffCommand(FaceOffCommand.Target.TOP_OUTER_HOLE));
+
+		controller0.yButton.toggleWhenPressed(new FaceOffCommand(FaceOffCommand.Target.TOP_OUTER_HOLE));	//toggles face off command
+		controller0.bButton.whenPressed(new ShootCommand(false));
+		controller0.aButton.whenPressed(new ShootCommand(true));
+
+		controller1.aButton.whenPressed(new ShootCommandGroup());
 		
 	}
 

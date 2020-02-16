@@ -5,17 +5,20 @@ import frc.robot.RobotMap;
 
 public class StorageCommand extends CommandBase {
 
-    public StorageCommand() {
+    private boolean state;
+
+    public StorageCommand(boolean state) {
         addRequirements(RobotMap.ballStorageSubsystem);
+        this.state = state;
     }
 
     @Override
     public void execute() {
-        RobotMap.ballStorageSubsystem.gate(true);
+        RobotMap.ballStorageSubsystem.gate(state);
     }
 
     @Override
-    public void end(boolean interrupted) {
-        RobotMap.ballStorageSubsystem.gate(false);
+    public boolean isFinished() {
+        return true;
     }
 }

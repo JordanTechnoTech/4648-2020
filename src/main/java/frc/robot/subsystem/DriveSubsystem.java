@@ -55,8 +55,8 @@ public class DriveSubsystem extends SubsystemBase implements TechnoTechSubsystem
 		frontleftDrive.setInverted(false);
 		backleftDrive.setInverted(true);
 
-		frontleftDrive.set(ControlMode.Follower, 3);
-		frontrightDrive.set(ControlMode.Follower, 4);
+		//frontleftDrive.set(ControlMode.Follower, 3);
+		//frontrightDrive.set(ControlMode.Follower, 4);
 
 	}
 
