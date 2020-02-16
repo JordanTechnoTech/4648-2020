@@ -11,11 +11,11 @@ public class StorageCommand extends CommandBase {
 
     @Override
     public void execute() {
-        RobotMap.ballStorageSubsystem.intakePneumatics(true);
+        RobotMap.ballStorageSubsystem.gate(true);
     }
 
     @Override
     public void end(boolean interrupted) {
-        RobotMap.ballStorageSubsystem.intakePneumatics(false);
+        RobotMap.ballStorageSubsystem.gate(false);
     }
 }

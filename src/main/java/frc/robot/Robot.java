@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.command.BallStorageCommand;
 import frc.robot.command.CounterResetCommand;
 import frc.robot.command.DriveCommand;
 import frc.robot.command.ShootCommand;
@@ -45,17 +44,15 @@ public class Robot extends TimedRobot {
     m_robotContainer = new RobotContainer();
     RobotMap.init();
     initSubsystems();
-    SmartDashboard.putNumber("Test Speed", 1000);
+    SmartDashboard.putNumber("Test Speed", 6000);
     SmartDashboard.putNumber("Shooter P", 2);
     SmartDashboard.putNumber("Shooter I", 0.001);
-    SmartDashboard.putNumber("Shooter D", 20);
+    SmartDashboard.putNumber("Shooter D", 200);
 
     SmartDashboard.putNumber("Auto Distance", 1);
     SmartDashboard.putNumber("Drive P", 10);
     SmartDashboard.putNumber("Drive I", 0);
     SmartDashboard.putNumber("Drive D", 0);
-
-    
 
   }
 
@@ -65,7 +62,6 @@ public class Robot extends TimedRobot {
     subsystems.add(RobotMap.shooterSubsystem);
     subsystems.add(RobotMap.colorSensorSubsystem);
     CommandScheduler.getInstance().setDefaultCommand(RobotMap.driveSubsystem, new DriveCommand());
-    CommandScheduler.getInstance().setDefaultCommand(RobotMap.ballStorageSubsystem, new BallStorageCommand());
   }
 
   /** 

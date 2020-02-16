@@ -20,6 +20,8 @@ public class FaceOffCommand extends CommandBase {
             new RangeValue(15, 9999, -.035)
     );
 
+    public double trueDistance;
+
 
 
     LimelightCamera limelightCamera = new LimelightCamera();
@@ -47,9 +49,10 @@ public class FaceOffCommand extends CommandBase {
     public void execute() {
         limeLightValues = limelightCamera.poll();
         //Gets the distance from the camera to the target
-        double distance = LimelightCamera.getDistance(target.getHeight(), limeLightValues.getTargetVertical());
+        double limelightDistance = LimelightCamera.getDistance(target.getHeight(), limeLightValues.getTargetVertical());
+        trueDistance = limelightDistance * 0.86;
         
-        SmartDashboard.putNumber("distance", distance);
+        SmartDashboard.putNumber("distance", trueDistance);
         SmartDashboard.putNumber("cachedTA", limeLightValues.ta);
         SmartDashboard.putNumber("cachedTX", limeLightValues.tx);
         SmartDashboard.putNumber("cachedTY", limeLightValues.ty);
@@ -64,7 +67,7 @@ public class FaceOffCommand extends CommandBase {
             SmartDashboard.putNumber("limelightSkew", limeLightValues.getTargetSkew());
             SmartDashboard.putNumber("faceOffTTurnSpeed", turnSpeed);
 
-            RobotMap.driveSubsystem.arcadeDrive(0, turnSpeed);
+            RobotMap.driveSubsystem.arcadeDrive(0, -turnSpeed * 2f);
         }
     }
 
@@ -91,6 +94,7 @@ public class FaceOffCommand extends CommandBase {
         } else if (tx < 1.0) { //target is moving left
             steering_adjust = (Kp * heading_error);
         }
+        
         return steering_adjust;
     }
 
@@ -113,7 +117,7 @@ public class FaceOffCommand extends CommandBase {
     }
 
     public enum Target {
-        TOP_OUTER_HOLE(71.0d);
+        TOP_OUTER_HOLE(89.0d);
 
         private final double height;
 

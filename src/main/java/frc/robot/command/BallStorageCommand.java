@@ -12,7 +12,7 @@ public class BallStorageCommand extends CommandBase {
 
     @Override
     public void execute() {
-        RobotMap.ballStorageSubsystem.intake(RobotMap.controller1.getRightTriggerValue() - RobotMap.controller1.getLeftTriggerValue());
+        RobotMap.ballStorageSubsystem.intake(0.5);
         SmartDashboard.putString("BallStorageCommand state","execute");
     }
 

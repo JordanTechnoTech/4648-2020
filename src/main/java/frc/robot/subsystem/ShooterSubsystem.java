@@ -28,9 +28,9 @@ public class ShooterSubsystem extends SubsystemBase implements TechnoTechSubsyst
     }
 
     public void shoot(Double shooterSpeed) {
-        double kP = SmartDashboard.getNumber("Drive P", 2);
-        double kI = SmartDashboard.getNumber("Drive I", 0.001);
-        double kD = SmartDashboard.getNumber("Drive D", 20);
+        double kP = SmartDashboard.getNumber("Shooter P", 1);
+        double kI = SmartDashboard.getNumber("Shooter", 0.001);
+        double kD = SmartDashboard.getNumber("Shooter", 10);
 
         Gains kGains_Velocit = new Gains( kP, kI, kD, 1023.0/7200.0,  300,  1.00);
 
@@ -57,5 +57,6 @@ public class ShooterSubsystem extends SubsystemBase implements TechnoTechSubsyst
     @Override
 	public void log() {
         SmartDashboard.putNumber("Shooter Wheel sensor velocity", shooterTalonSRX.getSelectedSensorVelocity());
+        SmartDashboard.putNumber("Shooter Ouput", shooterTalonSRX.getMotorOutputPercent());
     }
 }
