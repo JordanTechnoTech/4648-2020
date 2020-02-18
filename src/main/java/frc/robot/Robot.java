@@ -11,8 +11,11 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.command.BallStorageCommand;
 import frc.robot.command.CounterResetCommand;
 import frc.robot.command.DriveCommand;
+import frc.robot.command.ShootCommand;
+import frc.robot.command.StorageCommand;
 import frc.robot.subsystem.TechnoTechSubsystem;
 
 import java.util.ArrayList;
@@ -122,6 +125,9 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    new BallStorageCommand(false).execute();
+    new ShootCommand(false).execute();
+    new StorageCommand(false).execute();
   }
 
   /**

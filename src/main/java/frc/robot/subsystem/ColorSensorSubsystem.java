@@ -29,9 +29,9 @@ public class ColorSensorSubsystem extends SubsystemBase implements TechnoTechSub
         this.colorWheelMotor = colorWheelMotor;
     }
 
-    public void spinWheel(boolean state) {
-        if(state) {
-            colorWheelMotor.set(ControlMode.PercentOutput, 0.5);
+    public void spinWheel(double distance) {
+        if(changes < distance * 8) {
+            colorWheelMotor.set(ControlMode.PercentOutput, 0.25);
         }else {
             colorWheelMotor.set(ControlMode.PercentOutput, 0.0);
         }

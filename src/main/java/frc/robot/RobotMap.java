@@ -118,7 +118,7 @@ public class RobotMap {
 	}
 	public static void buttonbinding(){
 
-		controller0.lbButton.toggleWhenPressed(new IntakeCommand());		//toggles pistons to lower intake
+		//controller0.lbButton.toggleWhenPressed(new IntakeCommand());		//toggles pistons to lower intake
 		controller0.rbButton.toggleWhenPressed(new ColorSensorCommand());	//toggle colorsensor piston
 
 		//controller0.yButton.toggleWhenPressed(new FaceOffCommand(FaceOffCommand.Target.TOP_OUTER_HOLE));	//toggles face off command
@@ -126,6 +126,7 @@ public class RobotMap {
 		controller0.aButton.whenPressed(new BallStorageCommand(true));
 
 		controller0.yButton.whenPressed(new ShootCommandGroup());
+		controller0.xButton.toggleWhenPressed(new ColorCommand());
 		
 	}
 
