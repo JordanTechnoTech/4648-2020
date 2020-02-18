@@ -9,6 +9,8 @@ import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import frc.robot.command.BallStorageCommand;
+import frc.robot.command.ColorCommand;
 import frc.robot.command.ColorSensorCommand;
 import frc.robot.command.FaceOffCommand;
 import frc.robot.command.IntakeCommand;
@@ -31,13 +33,13 @@ public class RobotMap {
 	public static int backleftDriveMotor = 3;
 	public static int backrightDriveMotor = 4;
 	public static int shooterID = 7;
+	public static int colorWheelMotorID = 6;
 
 	//VICTOR
-	public static int leftintakeBeltID = 2;
-	public static int rightIntakeBeltID = 1;
-	public static int leftIntakeSPXID = 3;
-	public static int rightIntakeSPXID = 4;
-	public static int colorWheelMotorID = 8;
+	public static int leftintakeBeltID = 1;
+	public static int rightIntakeBeltID = 2;
+	public static int intakeSPXID = 3;
+	
 	
 	//pwm mappings
 	//public static int driveShifterID = 0;  
@@ -59,8 +61,7 @@ public class RobotMap {
 	//Ball Storage Subsystem
 	public static BallStorageSubsystem ballStorageSubsystem;
 	public static Talon roller;
-	public static VictorSPX leftIntake;
-	public static VictorSPX rightIntake;
+	public static VictorSPX intake;
 	public static VictorSPX leftIntakeBelt;
 	public static VictorSPX rightIntakeBelt;
 	public static Solenoid intakeGate;
@@ -74,7 +75,7 @@ public class RobotMap {
 
 	//Color Sensor Subsystem
 	public static ColorSensorV3 colorSensor;
-	public static VictorSPX colorWheelMotor;
+	public static WPI_TalonSRX colorWheelMotor;
 	public static Solenoid colorSensorSolenoid;
 	public static ColorSensorSubsystem colorSensorSubsystem;
 
@@ -96,8 +97,7 @@ public class RobotMap {
 		
 		//intake initialization
 		roller = new Talon(0);
-		leftIntake = new VictorSPX(leftIntakeSPXID);
-		rightIntake =  new VictorSPX(rightIntakeSPXID);
+		intake = new VictorSPX(intakeSPXID);
 		leftIntakeBelt = new VictorSPX(leftintakeBeltID);
 		leftIntakeBelt.setInverted(true);
 		rightIntakeBelt = new VictorSPX(rightIntakeBeltID);
@@ -105,12 +105,12 @@ public class RobotMap {
 		shooterTalonSRX = new WPI_TalonSRX(shooterID);
 		leftIntakePiston = new Solenoid(leftIntakeID);
 		rightIntakePiston = new Solenoid(rightIntakeID);
-		ballStorageSubsystem = new BallStorageSubsystem(roller, leftIntake, rightIntake, leftIntakeBelt, rightIntakeBelt, leftIntakePiston, rightIntakePiston, intakeGate);
+		ballStorageSubsystem = new BallStorageSubsystem(roller, intake, leftIntakeBelt, rightIntakeBelt, leftIntakePiston, rightIntakePiston, intakeGate);
 		shooterSubsystem = new ShooterSubsystem(shooterTalonSRX);
 		
 		//color sensor initialization
 		colorSensor = new ColorSensorV3(I2C.Port.kOnboard);
-		//colorWheelMotor = new VictorSPX(colorWheelMotorID);
+		colorWheelMotor = new WPI_TalonSRX(colorWheelMotorID);
 		colorSensorSolenoid = new Solenoid(colorWheelSolenoidID);
 		colorSensorSubsystem = new ColorSensorSubsystem(colorSensor, colorSensorSolenoid, colorWheelMotor);
 	
@@ -118,14 +118,14 @@ public class RobotMap {
 	}
 	public static void buttonbinding(){
 
-		controller1.lbButton.toggleWhenPressed(new IntakeCommand());		//toggles pistons to lower intake
-		controller1.rbButton.toggleWhenPressed(new ColorSensorCommand());	//toggle colorsensor piston
+		controller0.lbButton.toggleWhenPressed(new IntakeCommand());		//toggles pistons to lower intake
+		controller0.rbButton.toggleWhenPressed(new ColorSensorCommand());	//toggle colorsensor piston
 
-		controller0.yButton.toggleWhenPressed(new FaceOffCommand(FaceOffCommand.Target.TOP_OUTER_HOLE));	//toggles face off command
-		controller0.bButton.whenPressed(new ShootCommand(false));
-		controller0.aButton.whenPressed(new ShootCommand(true));
+		//controller0.yButton.toggleWhenPressed(new FaceOffCommand(FaceOffCommand.Target.TOP_OUTER_HOLE));	//toggles face off command
+		controller0.bButton.whenPressed(new BallStorageCommand(false));
+		controller0.aButton.whenPressed(new BallStorageCommand(true));
 
-		controller1.aButton.whenPressed(new ShootCommandGroup());
+		controller0.yButton.whenPressed(new ShootCommandGroup());
 		
 	}
 

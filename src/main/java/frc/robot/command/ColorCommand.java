@@ -12,11 +12,11 @@ public class ColorCommand extends CommandBase {
     @Override
     public void execute() {
         RobotMap.colorSensorSubsystem.resetCounter();
-        RobotMap.colorSensorSubsystem.spinWheel(4);
+        RobotMap.colorSensorSubsystem.spinWheel(true);
     }
 
     @Override
     public void end(boolean interrupted) {
-        
+        RobotMap.colorSensorSubsystem.spinWheel(false);
     }
 }

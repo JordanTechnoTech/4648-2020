@@ -10,16 +10,15 @@ public class ShootCommandGroup extends SequentialCommandGroup {
         addCommands(
         new FaceOffCommand(FaceOffCommand.Target.TOP_OUTER_HOLE), new SmartDashboardCommand("Shoot Command Group", "Shooter Wheel"), new ShootCommand(true),    //faceoff && wheel on
         new WaitCommand(1), new SmartDashboardCommand("Shoot Command Group", "Intake Belts on"), new BallStorageCommand(true),    //belts on
-        new WaitCommand(1), new SmartDashboardCommand("Shoot Command Group", "Gate off"), new StorageCommand(true),     //gate off and 1st Ball
-        new WaitCommand(1), new SmartDashboardCommand("Shoot Command Group", "Intake Belts off"), new BallStorageCommand(false),
-        new WaitCommand(1), new SmartDashboardCommand("Shoot Command Group", "Intake Belts on"), new BallStorageCommand(true),  //2nd Ball
-        new WaitCommand(1), new SmartDashboardCommand("Shoot Command Group", "Intake Belts off"), new BallStorageCommand(false),
-        new WaitCommand(1), new SmartDashboardCommand("Shoot Command Group", "Intake Belts on"), new BallStorageCommand(true),  //3rd Ball
-        new WaitCommand(1), new SmartDashboardCommand("Shoot Command Group", "Intake Belts off"), new BallStorageCommand(false),
-        new WaitCommand(1), new SmartDashboardCommand("Shoot Command Group", "Intake Belts on"), new BallStorageCommand(true),  //4th Ball
-        new WaitCommand(1), new SmartDashboardCommand("Shoot Command Group", "Intake Belts off"), new BallStorageCommand(false),
-        new WaitCommand(1), new SmartDashboardCommand("Shoot Command Group", "Intake Belts on"), new BallStorageCommand(true),  //5th Ball
-        new WaitCommand(1), new SmartDashboardCommand("Shoot Command Group", "Intake Belts off"), new BallStorageCommand(false));
+        new WaitCommand(1), new SmartDashboardCommand("Shoot Command Group", "Gate off"), new StorageCommand(true),     //gate open and 1st Ball
+        new WaitCommand(0.5), new SmartDashboardCommand("Shoot Command Group", "Gate on"), new StorageCommand(false),
+        new WaitCommand(1), new SmartDashboardCommand("Shoot Command Group", "Gate off"), new StorageCommand(true),     //gate open and 2nd Ball
+        new WaitCommand(0.5), new SmartDashboardCommand("Shoot Command Group", "Gate on"), new StorageCommand(false),
+        new WaitCommand(1), new SmartDashboardCommand("Shoot Command Group", "Gate off"), new StorageCommand(true),     //gate open and 3rd Ball
+        new WaitCommand(0.5), new SmartDashboardCommand("Shoot Command Group", "Gate on"), new StorageCommand(false),
+        new WaitCommand(1), new SmartDashboardCommand("Shoot Command Group", "Gate off"), new StorageCommand(true),     //gate open and 4th Ball
+        new WaitCommand(0.5), new SmartDashboardCommand("Shoot Command Group", "Gate on"), new StorageCommand(false),
+        new BallStorageCommand(false), new ShootCommand(false));
     }
 
     @Override
@@ -30,7 +29,5 @@ public class ShootCommandGroup extends SequentialCommandGroup {
     @Override
     public void end(boolean interrupted) {
         SmartDashboard.putString("Shoot Command Group", "finished");
-        new StorageCommand(false).execute();
-        new ShootCommand(false).execute();
     }
 }

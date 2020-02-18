@@ -11,8 +11,7 @@ import frc.robot.RobotMap;
 
 public class BallStorageSubsystem extends SubsystemBase implements TechnoTechSubsystem {
     private Talon roller;
-	private VictorSPX leftIntake;
-	private VictorSPX rightIntake;
+	private VictorSPX intake;
 	private VictorSPX leftIntakeBelt;
 	private VictorSPX rightIntakeBelt;
     private Solenoid leftIntakePiston;
@@ -21,11 +20,10 @@ public class BallStorageSubsystem extends SubsystemBase implements TechnoTechSub
 
     private double speed = 0.5;
 
-    public BallStorageSubsystem(Talon roller, VictorSPX leftIntake, VictorSPX rightIntake, VictorSPX leftIntakeBelt, VictorSPX rightIntakeBelt, Solenoid leftIntakePiston, Solenoid rightIntakePison, Solenoid intakeGate) {
+    public BallStorageSubsystem(Talon roller, VictorSPX intake, VictorSPX leftIntakeBelt, VictorSPX rightIntakeBelt, Solenoid leftIntakePiston, Solenoid rightIntakePison, Solenoid intakeGate) {
         addChild("Roller", RobotMap.roller);
         this.roller = roller;
-        this.leftIntake = leftIntake;
-        this.rightIntake = rightIntake;
+        this.intake = intake;
         this.leftIntakeBelt = leftIntakeBelt;
         this.rightIntakeBelt = rightIntakeBelt;
         this.leftIntakePiston = leftIntakePiston;
@@ -36,8 +34,7 @@ public class BallStorageSubsystem extends SubsystemBase implements TechnoTechSub
 
     public void intake(double beltSpeed) {
         roller.set(speed);
-        leftIntake.set(ControlMode.PercentOutput, beltSpeed * 0.5f);
-        rightIntake.set(ControlMode.PercentOutput, beltSpeed * 0.5f);
+        intake.set(ControlMode.PercentOutput, beltSpeed * 2f);
 
         leftIntakeBelt.set(ControlMode.PercentOutput, beltSpeed * 0.5f);
         rightIntakeBelt.set(ControlMode.PercentOutput, beltSpeed * 0.5f);
@@ -50,8 +47,7 @@ public class BallStorageSubsystem extends SubsystemBase implements TechnoTechSub
 
     public void stop(){
         roller.set(0);
-        leftIntake.set(ControlMode.PercentOutput, 0);
-        rightIntake.set(ControlMode.PercentOutput, 0);
+        intake.set(ControlMode.PercentOutput, 0);
 
         leftIntakeBelt.set(ControlMode.PercentOutput, 0);
         rightIntakeBelt.set(ControlMode.PercentOutput, 0);
@@ -64,8 +60,7 @@ public class BallStorageSubsystem extends SubsystemBase implements TechnoTechSub
 
     public void log() {
         SmartDashboard.putNumber("Intake Roller", roller.getSpeed());
-        SmartDashboard.putNumber("Left Intake Wheel", leftIntake.getMotorOutputPercent());
-        SmartDashboard.putNumber("RIght Intake Wheel", rightIntake.getMotorOutputPercent());
+        SmartDashboard.putNumber("Left Intake Wheel", intake.getMotorOutputPercent());
         SmartDashboard.putNumber("Left Storage Belt", leftIntakeBelt.getMotorOutputPercent());
         SmartDashboard.putNumber("Right Storage Belt", rightIntakeBelt.getMotorOutputPercent());
     }

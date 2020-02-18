@@ -18,7 +18,7 @@ public class DriveCommand extends CommandBase {
     public void execute() {
         log();
 
-        RobotMap.driveSubsystem.arcadeDrive(-RobotMap.controller0.getRightTriggerValue() + RobotMap.controller0.getLeftTriggerValue(), -RobotMap.controller0.getStickLeftXValue());
+        RobotMap.driveSubsystem.arcadeDrive(-RobotMap.controller0.getRightTriggerValue() + RobotMap.controller0.getLeftTriggerValue(), -RobotMap.controller0.getStickLeftXValue() * 0.5f);
         RobotMap.driveSubsystem.changeGear(RobotMap.controller0.getYButtonValue());
     }
 
