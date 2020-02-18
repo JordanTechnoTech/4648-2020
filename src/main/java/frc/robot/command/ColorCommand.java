@@ -12,6 +12,7 @@ public class ColorCommand extends CommandBase {
     @Override
     public void initialize() {
         RobotMap.colorSensorSubsystem.resetCounter();
+        RobotMap.colorSensorSubsystem.raise(true);
         super.initialize();
     }
 

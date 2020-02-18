@@ -14,7 +14,7 @@ public class ShooterSubsystem extends SubsystemBase implements TechnoTechSubsyst
 
     private WPI_TalonSRX shooterTalonSRX;
 
-    private double shooterSpeed = 1000;
+    private double shooterSpeed;
 
 
     public ShooterSubsystem(WPI_TalonSRX shooterTalonSRX) {
