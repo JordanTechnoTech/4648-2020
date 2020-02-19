@@ -14,9 +14,9 @@ public class FaceOffCommand extends CommandBase {
     
     public static List<RangeValue> turnSpeedRangeValues = Arrays.asList(
             new RangeValue(-999, 1.5, 0.0),
-            new RangeValue(1.5, 2.5, .13),
-            new RangeValue(2.5, 5, -.125),
-            new RangeValue(5, 10, -.055),
+            new RangeValue(1.5, 2.5, .148),
+            new RangeValue(2.5, 5, -.127),
+            new RangeValue(5, 10, -.052),
             new RangeValue(10, 15, -.03),
             new RangeValue(15, 30, -.025),
             new RangeValue(30, 999, -0.1)
