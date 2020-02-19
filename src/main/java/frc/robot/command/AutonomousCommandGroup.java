@@ -13,8 +13,8 @@ public class AutonomousCommandGroup extends SequentialCommandGroup{
         addRequirements(RobotMap.driveSubsystem);
 
         addCommands(
-            //new AutoDriveCommand(0.5, 0), new WaitCommand(0.25),
-            new AutoDriveCommand(0, 0.5), new WaitCommand(1.75),
+            new AutoDriveCommand(0.7, 0), new WaitCommand(1.5),
+            new AutoDriveCommand(0, 0.7), new WaitCommand(0.5),
             new AutoDriveCommand(0, 0)
         );
     }

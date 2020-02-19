@@ -125,7 +125,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    new BallStorageCommand(false).execute();
+    new BallStorageCommand(false, 0).execute();
     new ShootCommand(false).execute();
     new StorageCommand(false).execute();
   }

@@ -119,8 +119,8 @@ public class RobotMap {
 		controller0.rbButton.toggleWhenPressed(new ColorSensorCommand());	//toggle colorsensor piston
 
 		//controller0.yButton.toggleWhenPressed(new FaceOffCommand(FaceOffCommand.Target.TOP_OUTER_HOLE));	//toggles face off command
-		controller0.bButton.whenPressed(new BallStorageCommand(false));
-		controller0.aButton.whenPressed(new BallStorageCommand(true));
+		controller0.bButton.whenPressed(new BallStorageCommand(false, 0));
+		controller0.aButton.whenPressed(new BallStorageCommand(true, 0.5));
 
 		controller0.yButton.whenPressed(new ShootCommandGroup());
 		controller0.xButton.toggleWhenPressed(new ColorCommand());
