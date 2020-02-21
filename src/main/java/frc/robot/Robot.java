@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.command.BallStorageCommand;
 import frc.robot.command.CounterResetCommand;
 import frc.robot.command.DriveCommand;
+import frc.robot.command.RaiseHook;
 import frc.robot.command.ShootCommand;
 import frc.robot.command.StorageCommand;
 import frc.robot.subsystem.TechnoTechSubsystem;
@@ -65,6 +66,7 @@ public class Robot extends TimedRobot {
     subsystems.add(RobotMap.shooterSubsystem);
     subsystems.add(RobotMap.colorSensorSubsystem);
     CommandScheduler.getInstance().setDefaultCommand(RobotMap.driveSubsystem, new DriveCommand());
+    CommandScheduler.getInstance().setDefaultCommand(RobotMap.climberSubsystem, new RaiseHook());
   }
 
   /** 

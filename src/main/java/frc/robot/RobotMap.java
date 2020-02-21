@@ -12,8 +12,10 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.command.BallStorageCommand;
 import frc.robot.command.ColorCommand;
 import frc.robot.command.ColorSensorCommand;
+import frc.robot.command.RaiseRobot;
 import frc.robot.command.ShootCommandGroup;
 import frc.robot.subsystem.BallStorageSubsystem;
+import frc.robot.subsystem.ClimberSubsystem;
 import frc.robot.subsystem.ColorSensorSubsystem;
 import frc.robot.subsystem.DriveSubsystem;
 import frc.robot.subsystem.ShooterSubsystem;
@@ -31,6 +33,8 @@ public class RobotMap {
 	public static int backrightDriveMotor = 4;
 	public static int shooterID = 7;
 	public static int colorWheelMotorID = 6;
+	public static int hookMotorID = 8;
+	public static int climberMotorID = 9;
 
 	//VICTOR
 	public static int leftintakeBeltID = 1;
@@ -76,6 +80,11 @@ public class RobotMap {
 	public static Solenoid colorSensorSolenoid;
 	public static ColorSensorSubsystem colorSensorSubsystem;
 
+	//climber subsystem
+	public static WPI_TalonSRX climberSRX;
+	public static WPI_TalonSRX hookMotor;
+	public static ClimberSubsystem climberSubsystem;
+
 	public static void init() {
 		// drive initialization
 		frontLeftMotorController = new WPI_TalonSRX(frontleftDriveMotor);
@@ -110,20 +119,26 @@ public class RobotMap {
 		colorWheelMotor = new WPI_TalonSRX(colorWheelMotorID);
 		colorSensorSolenoid = new Solenoid(colorWheelSolenoidID);
 		colorSensorSubsystem = new ColorSensorSubsystem(colorSensor, colorSensorSolenoid, colorWheelMotor);
+
+		//climber init
+		climberSRX = new WPI_TalonSRX(climberMotorID);
+		hookMotor = new WPI_TalonSRX(hookMotorID);
+		climberSubsystem = new ClimberSubsystem(climberSRX, hookMotor);
 	
 		buttonbinding();
 	}
-	public static void buttonbinding(){
+	public static void buttonbinding() {
 
 		//controller0.lbButton.toggleWhenPressed(new IntakeCommand());		//toggles pistons to lower intake
 		controller0.rbButton.toggleWhenPressed(new ColorSensorCommand());	//toggle colorsensor piston
 
-		//controller0.yButton.toggleWhenPressed(new FaceOffCommand(FaceOffCommand.Target.TOP_OUTER_HOLE));	//toggles face off command
 		controller0.bButton.whenPressed(new BallStorageCommand(false, 0));
 		controller0.aButton.whenPressed(new BallStorageCommand(true, 0.5));
 
 		controller0.yButton.whenPressed(new ShootCommandGroup());
 		controller0.xButton.toggleWhenPressed(new ColorCommand());
+
+		controller0.startButton.whenPressed(new RaiseRobot());
 		
 	}
 
