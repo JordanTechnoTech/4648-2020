@@ -15,6 +15,7 @@ import frc.robot.command.BallStorageCommand;
 import frc.robot.command.CounterResetCommand;
 import frc.robot.command.DriveCommand;
 import frc.robot.command.ShootCommand;
+import frc.robot.command.StorageCommand;
 import frc.robot.subsystem.TechnoTechSubsystem;
 
 import java.util.ArrayList;
@@ -45,17 +46,16 @@ public class Robot extends TimedRobot {
     m_robotContainer = new RobotContainer();
     RobotMap.init();
     initSubsystems();
-    SmartDashboard.putNumber("Test Speed", 1000);
-    SmartDashboard.putNumber("Shooter P", 2);
-    SmartDashboard.putNumber("Shooter I", 0.001);
-    SmartDashboard.putNumber("Shooter D", 20);
+    SmartDashboard.putNumber("Test Speed", 8000);
+    SmartDashboard.putNumber("Shooter P", 1.5);
+    SmartDashboard.putNumber("Shooter I", 0.00005);
+    SmartDashboard.putNumber("Shooter D", 0.1);
+    SmartDashboard.putNumber("Shooter FF", 0.055);
 
     SmartDashboard.putNumber("Auto Distance", 1);
     SmartDashboard.putNumber("Drive P", 10);
     SmartDashboard.putNumber("Drive I", 0);
     SmartDashboard.putNumber("Drive D", 0);
-
-    
 
   }
 
@@ -65,7 +65,6 @@ public class Robot extends TimedRobot {
     subsystems.add(RobotMap.shooterSubsystem);
     subsystems.add(RobotMap.colorSensorSubsystem);
     CommandScheduler.getInstance().setDefaultCommand(RobotMap.driveSubsystem, new DriveCommand());
-    CommandScheduler.getInstance().setDefaultCommand(RobotMap.ballStorageSubsystem, new BallStorageCommand());
   }
 
   /** 
@@ -126,6 +125,9 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    new BallStorageCommand(false, 0).execute();
+    new ShootCommand(false).execute();
+    new StorageCommand(false).execute();
   }
 
   /**
@@ -140,7 +142,6 @@ public class Robot extends TimedRobot {
     subsystems.forEach(TechnoTechSubsystem::log);
     RobotMap.logButtonState();
     SmartDashboard.putData("Reset Rotations", new CounterResetCommand());
-    SmartDashboard.putData("Shoot", new ShootCommand());
   }
 
   @Override

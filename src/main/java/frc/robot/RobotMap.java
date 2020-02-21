@@ -9,11 +9,10 @@ import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import frc.robot.command.BallStorageCommand;
 import frc.robot.command.ColorCommand;
 import frc.robot.command.ColorSensorCommand;
-import frc.robot.command.IntakeCommand;
-import frc.robot.command.ShootCommand;
-import frc.robot.command.StorageCommand;
+import frc.robot.command.ShootCommandGroup;
 import frc.robot.subsystem.BallStorageSubsystem;
 import frc.robot.subsystem.ColorSensorSubsystem;
 import frc.robot.subsystem.DriveSubsystem;
@@ -31,17 +30,17 @@ public class RobotMap {
 	public static int backleftDriveMotor = 3;
 	public static int backrightDriveMotor = 4;
 	public static int shooterID = 7;
+	public static int colorWheelMotorID = 6;
 
 	//VICTOR
-	public static int leftintakeBeltID = 2;
-	public static int rightIntakeBeltID = 1;
-	public static int leftIntakeSPXID = 3;
-	public static int rightIntakeSPXID = 4;
-	public static int colorWheelMotorID = 8;
+	public static int leftintakeBeltID = 1;
+	public static int rightIntakeBeltID = 2;
+	public static int intakeSPXID = 3;
+	
 	
 	//pwm mappings
-	public static int driveShifterID = 0;
-	public static int intakegateID = 1;
+	//public static int driveShifterID = 0;  
+	public static int intakegateID = 0;
 	public static int colorWheelSolenoidID = 2;
 	public static int leftIntakeID = 3;
 	public static int rightIntakeID = 4;
@@ -59,8 +58,7 @@ public class RobotMap {
 	//Ball Storage Subsystem
 	public static BallStorageSubsystem ballStorageSubsystem;
 	public static Talon roller;
-	public static VictorSPX leftIntake;
-	public static VictorSPX rightIntake;
+	public static VictorSPX intake;
 	public static VictorSPX leftIntakeBelt;
 	public static VictorSPX rightIntakeBelt;
 	public static Solenoid intakeGate;
@@ -74,7 +72,7 @@ public class RobotMap {
 
 	//Color Sensor Subsystem
 	public static ColorSensorV3 colorSensor;
-	public static VictorSPX colorWheelMotor;
+	public static WPI_TalonSRX colorWheelMotor;
 	public static Solenoid colorSensorSolenoid;
 	public static ColorSensorSubsystem colorSensorSubsystem;
 
@@ -90,14 +88,13 @@ public class RobotMap {
 		frontLeftMotorController.setInverted(false);
 		backLeftMotorController.setInverted(true);
 		
-		driveShifter = new Solenoid(driveShifterID);
+		//driveShifter = new Solenoid(driveShifterID);
 		drivetrain = new DifferentialDrive(backLeftMotorController, backRightMotorController);
 		driveSubsystem = new DriveSubsystem(frontLeftMotorController, frontRightMotorController, backLeftMotorController, backRightMotorController, driveShifter);
 		
 		//intake initialization
 		roller = new Talon(0);
-		leftIntake = new VictorSPX(leftIntakeSPXID);
-		rightIntake =  new VictorSPX(rightIntakeSPXID);
+		intake = new VictorSPX(intakeSPXID);
 		leftIntakeBelt = new VictorSPX(leftintakeBeltID);
 		leftIntakeBelt.setInverted(true);
 		rightIntakeBelt = new VictorSPX(rightIntakeBeltID);
@@ -105,24 +102,28 @@ public class RobotMap {
 		shooterTalonSRX = new WPI_TalonSRX(shooterID);
 		leftIntakePiston = new Solenoid(leftIntakeID);
 		rightIntakePiston = new Solenoid(rightIntakeID);
-		ballStorageSubsystem = new BallStorageSubsystem(roller, leftIntake, rightIntake, leftIntakeBelt, rightIntakeBelt, leftIntakePiston, rightIntakePiston);
+		ballStorageSubsystem = new BallStorageSubsystem(roller, intake, leftIntakeBelt, rightIntakeBelt, leftIntakePiston, rightIntakePiston, intakeGate);
 		shooterSubsystem = new ShooterSubsystem(shooterTalonSRX);
 		
 		//color sensor initialization
 		colorSensor = new ColorSensorV3(I2C.Port.kOnboard);
-		//colorWheelMotor = new VictorSPX(colorWheelMotorID);
+		colorWheelMotor = new WPI_TalonSRX(colorWheelMotorID);
 		colorSensorSolenoid = new Solenoid(colorWheelSolenoidID);
 		colorSensorSubsystem = new ColorSensorSubsystem(colorSensor, colorSensorSolenoid, colorWheelMotor);
 	
 		buttonbinding();
 	}
 	public static void buttonbinding(){
-		controller1.bButton.toggleWhenPressed(new ShootCommand());			//toggles flywheel on or off
-		controller1.xButton.toggleWhenPressed(new ColorCommand());			//toggles colorwheel motor
-		controller1.aButton.toggleWhenPressed(new StorageCommand());		//toggles storage pistons
 
-		controller1.lbButton.toggleWhenPressed(new IntakeCommand());		//toggles pistons to lower intake
-		controller1.rbButton.toggleWhenPressed(new ColorSensorCommand());	//toggle colorsensor piston
+		//controller0.lbButton.toggleWhenPressed(new IntakeCommand());		//toggles pistons to lower intake
+		controller0.rbButton.toggleWhenPressed(new ColorSensorCommand());	//toggle colorsensor piston
+
+		//controller0.yButton.toggleWhenPressed(new FaceOffCommand(FaceOffCommand.Target.TOP_OUTER_HOLE));	//toggles face off command
+		controller0.bButton.whenPressed(new BallStorageCommand(false, 0));
+		controller0.aButton.whenPressed(new BallStorageCommand(true, 0.5));
+
+		controller0.yButton.whenPressed(new ShootCommandGroup());
+		controller0.xButton.toggleWhenPressed(new ColorCommand());
 		
 	}
 

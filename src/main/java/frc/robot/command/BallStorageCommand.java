@@ -1,25 +1,30 @@
 package frc.robot.command;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotMap;
 
 public class BallStorageCommand extends CommandBase {
+    private boolean state;
+    private double speed;
 
-    public BallStorageCommand() {
+    public BallStorageCommand(boolean state, double speed) {
         addRequirements(RobotMap.ballStorageSubsystem);
+        this.state = state;
+        this.speed = speed;
     }
 
     @Override
     public void execute() {
-        RobotMap.ballStorageSubsystem.intake(RobotMap.controller1.getRightTriggerValue() - RobotMap.controller1.getLeftTriggerValue());
-        SmartDashboard.putString("BallStorageCommand state","execute");
+        if(state) {
+            RobotMap.ballStorageSubsystem.intake(speed);
+        }else {
+            RobotMap.ballStorageSubsystem.stop();
+        }
     }
 
     @Override
-    public void end(boolean interrupted) {
-        RobotMap.ballStorageSubsystem.stop();
-        SmartDashboard.putString("BallStorageCommand state","end");
+    public boolean isFinished() {
+        return true;
     }
 
 }

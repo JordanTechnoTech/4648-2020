@@ -3,7 +3,7 @@ package frc.robot.subsystem;
 import java.util.Arrays;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.revrobotics.ColorSensorV3;
 
 import edu.wpi.first.wpilibj.Solenoid;
@@ -14,23 +14,23 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class ColorSensorSubsystem extends SubsystemBase implements TechnoTechSubsystem {
     private ColorSensorV3 colorSensor;
     private Solenoid colorSensorSolenoid;
-    public VictorSPX colorWheelMotor;
+    public WPI_TalonSRX colorWheelMotor;
 
     private Color detectedColor;
     private Color oldColor = Color.kWhite;
     private Color newColor = Color.kWhite;
     private int changes = 0;
 
-    public ColorSensorSubsystem(ColorSensorV3 colorSensor, Solenoid colorSensorSolenoid, VictorSPX colorWheelMotor) {
+    public ColorSensorSubsystem(ColorSensorV3 colorSensor, Solenoid colorSensorSolenoid, WPI_TalonSRX colorWheelMotor) {
         addChild("Solenoid", colorSensorSolenoid);
         this.colorSensor = colorSensor;
         this.colorSensorSolenoid = colorSensorSolenoid;
         this.colorWheelMotor = colorWheelMotor;
     }
 
-    public void spinWheel(double rotations) {
-        if(changes * 8 <= rotations) {
-            colorWheelMotor.set(ControlMode.PercentOutput, 0.1);
+    public void spinWheel(double distance) {
+        if(changes < distance * 8) {
+            colorWheelMotor.set(ControlMode.PercentOutput, 0.25);
         }else {
             colorWheelMotor.set(ControlMode.PercentOutput, 0.0);
         }

@@ -3,22 +3,24 @@ package frc.robot.command;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.RobotMap;
 
-public class AutonomousCommand extends CommandBase{
+public class AutonomousCommandGroup extends SequentialCommandGroup{
 
-    private double distance;
-
-    public AutonomousCommand() {
+    public AutonomousCommandGroup() {
         addRequirements(RobotMap.driveSubsystem);
-        distance = SmartDashboard.getNumber("Auto Distance", 1);
+
+        addCommands(
+            new AutoDriveCommand(-0.7, -.1), new WaitCommand(.5), new AutoDriveCommand(0, 0),
+            new WaitCommand(1), new ShootCommandGroup()
+        );
     }
 
     @Override
     public void execute() {
-        RobotMap.driveSubsystem.driveDistance(distance);
-        SmartDashboard.putBoolean("Auto command", true);
+        super.execute();
     }
 
     public void end() {
