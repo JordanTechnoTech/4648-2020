@@ -13,11 +13,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class FaceOffCommand extends CommandBase {
     
     public static List<RangeValue> turnSpeedRangeValues = Arrays.asList(
-            new RangeValue(-999, 1.5, 0.0),
-            new RangeValue(1.5, 2.5, .148),
-            new RangeValue(2.5, 5, -.127),
-            new RangeValue(5, 10, -.052),
-            new RangeValue(10, 15, -.03),
+            new RangeValue(-999, 1, 0.0),
+            new RangeValue(1, 1.5, 0.27),
+            new RangeValue(1.5, 2.5, .157),
+            new RangeValue(2.5, 5, -.128),
+            new RangeValue(5, 10, -.056),
+            new RangeValue(10, 15, -.04),
             new RangeValue(15, 30, -.025),
             new RangeValue(30, 999, -0.1)
     );
@@ -27,6 +28,7 @@ public class FaceOffCommand extends CommandBase {
     LimeLightValues limeLightValues;
 
     FaceOffCommand.Target target;
+    private double limelightDistance;
 
     private long commandStartTime;
 
@@ -51,7 +53,7 @@ public class FaceOffCommand extends CommandBase {
     public void execute() {
         limeLightValues = limelightCamera.poll();
         //Gets the distance from the camera to the target
-        double limelightDistance = LimelightCamera.getDistance(target.getHeight(), limeLightValues.getTargetVertical());
+        limelightDistance = LimelightCamera.getDistance(target.getHeight(), limeLightValues.getTargetVertical());
         
         SmartDashboard.putNumber("distance", limelightDistance);
         SmartDashboard.putNumber("cachedTA", limeLightValues.ta);
@@ -104,7 +106,7 @@ public class FaceOffCommand extends CommandBase {
         float tx = (float) limeLightValues.getTargetHorizontal();
         float angle = Math.abs(tx);
         
-        if (angle < 2 && commandStartTime + 1750 < System.currentTimeMillis()) {
+        if (angle < (1.5 - (0.005 * limelightDistance)) && commandStartTime + 1750 < System.currentTimeMillis() && limeLightValues.hasTarget()) {
             LimelightCamera.setLightMode(LimelightCamera.ledMode.OFF);
             LimelightCamera.setPipeline(1);
             LimelightCamera.setCameraMode(LimelightCamera.cameraMode.CAMERA);
