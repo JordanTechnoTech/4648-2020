@@ -8,7 +8,9 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.command.BallStorageCommand;
@@ -35,6 +37,8 @@ public class Robot extends TimedRobot {
 
   List<TechnoTechSubsystem> subsystems = new ArrayList<>();
 
+  private SendableChooser<Color> chooser;
+
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -56,6 +60,13 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Drive P", 10);
     SmartDashboard.putNumber("Drive I", 0);
     SmartDashboard.putNumber("Drive D", 0);
+
+    chooser.setDefaultOption("Red", Color.kFirstRed);
+    chooser.addOption("Yellow", Color.kYellow);
+    chooser.addOption("Blue", Color.kBlue);
+    chooser.addOption("Green", Color.kGreen);
+
+    SmartDashboard.putData("Color", chooser);
   }
 
   public void initSubsystems() {
