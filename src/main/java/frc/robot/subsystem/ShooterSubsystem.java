@@ -14,8 +14,6 @@ public class ShooterSubsystem extends SubsystemBase implements TechnoTechSubsyst
 
     private WPI_TalonSRX shooterTalonSRX;
 
-    private double shooterSpeed;
-
 
     public ShooterSubsystem(WPI_TalonSRX shooterTalonSRX) {
         addChild("intakeGate", RobotMap.intakeGate);
@@ -45,7 +43,6 @@ public class ShooterSubsystem extends SubsystemBase implements TechnoTechSubsyst
 		this.shooterTalonSRX.config_kI(Constants.kPIDLoopIdx, kGains_Velocit.kI, Constants.kTimeoutMs);
 		this.shooterTalonSRX.config_kD(Constants.kPIDLoopIdx, kGains_Velocit.kD, Constants.kTimeoutMs);
         
-        this.shooterSpeed = shooterSpeed;
 
         shooterTalonSRX.set(ControlMode.Velocity, shooterSpeed);
     }

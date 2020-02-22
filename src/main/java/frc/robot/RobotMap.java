@@ -13,8 +13,6 @@ import frc.robot.command.BallStorageCommand;
 import frc.robot.command.ColorCommand;
 import frc.robot.command.ColorSensorCommand;
 import frc.robot.command.FaceOffCommand;
-import frc.robot.command.RaiseRobot;
-import frc.robot.command.ShootCommand;
 import frc.robot.command.ShootCommandGroup;
 import frc.robot.command.FaceOffCommand.Target;
 import frc.robot.subsystem.BallStorageSubsystem;

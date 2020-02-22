@@ -29,7 +29,7 @@ public class DriveSubsystem extends SubsystemBase implements TechnoTechSubsystem
 	public WPI_TalonSRX frontrightDrive;
 	public WPI_TalonSRX backleftDrive;
 	public WPI_TalonSRX backrightDrive;
-	private Solenoid driveShifter;
+	public Solenoid driveShifter;
 
 	public DriveSubsystem(WPI_TalonSRX frontleftDrive, WPI_TalonSRX frontrightDrive, WPI_TalonSRX backleftDrive, WPI_TalonSRX backrightDrive, Solenoid driveShifter) {
 		addChild("Front Left CIM", frontleftDrive);

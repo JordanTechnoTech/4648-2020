@@ -18,8 +18,6 @@ public class BallStorageSubsystem extends SubsystemBase implements TechnoTechSub
     private Solenoid rightIntakePiston;
     private Solenoid intakeGate;
 
-    private double speed = 0.5;
-
     public BallStorageSubsystem(Talon roller, VictorSPX intake, VictorSPX leftIntakeBelt, VictorSPX rightIntakeBelt, Solenoid leftIntakePiston, Solenoid rightIntakePison, Solenoid intakeGate) {
         addChild("Roller", RobotMap.roller);
         this.roller = roller;
