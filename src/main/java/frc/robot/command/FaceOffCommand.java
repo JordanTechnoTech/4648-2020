@@ -14,13 +14,13 @@ public class FaceOffCommand extends CommandBase {
     
     public static List<RangeValue> turnSpeedRangeValues = Arrays.asList(
             new RangeValue(-999, 1, 0.0),
-            new RangeValue(1, 1.5, 0.27),
-            new RangeValue(1.5, 2.5, .17),
-            new RangeValue(2.5, 5, -.12),
-            new RangeValue(5, 10, -.056),
-            new RangeValue(10, 15, -.04),
-            new RangeValue(15, 30, -.025),
-            new RangeValue(30, 999, -0.05)
+            new RangeValue(1, 1.5, -0.32),
+            new RangeValue(1.5, 2.5, -0.2),
+            new RangeValue(2.5, 5, -0.12),
+            new RangeValue(5, 10, -0.055),
+            new RangeValue(10, 15, -0.034),
+            new RangeValue(15, 25, -0.02),
+            new RangeValue(25, 999, -0.015)
     );
 
     LimelightCamera limelightCamera = new LimelightCamera();
@@ -64,7 +64,7 @@ public class FaceOffCommand extends CommandBase {
         if (!limeLightValues.hasTarget()) {
             cameraFail = cameraFail + 1;
             SmartDashboard.putNumber("CameraFail", cameraFail);
-        } else {
+        } else if (commandStartTime + 1000 < System.currentTimeMillis()){
             double turnSpeed = getTurnSpeed(limeLightValues);
 
             SmartDashboard.putNumber("limelightSkew", limeLightValues.getTargetSkew());

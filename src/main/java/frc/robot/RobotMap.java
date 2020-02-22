@@ -12,9 +12,11 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.command.BallStorageCommand;
 import frc.robot.command.ColorCommand;
 import frc.robot.command.ColorSensorCommand;
+import frc.robot.command.FaceOffCommand;
 import frc.robot.command.RaiseRobot;
 import frc.robot.command.ShootCommand;
 import frc.robot.command.ShootCommandGroup;
+import frc.robot.command.FaceOffCommand.Target;
 import frc.robot.subsystem.BallStorageSubsystem;
 import frc.robot.subsystem.ClimberSubsystem;
 import frc.robot.subsystem.ColorSensorSubsystem;
@@ -140,8 +142,7 @@ public class RobotMap {
 		controller0.xButton.toggleWhenPressed(new ColorCommand());
 
 		//controller0.startButton.whenPressed(new RaiseRobot());
-		controller0.backButton.whenPressed(new ShootCommand(true));
-		
+		controller0.backButton.whenPressed(new FaceOffCommand(Target.TOP_OUTER_HOLE));
 	}
 
 	public static void logButtonState(){
