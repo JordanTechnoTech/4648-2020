@@ -13,6 +13,7 @@ import frc.robot.command.BallStorageCommand;
 import frc.robot.command.ColorCommand;
 import frc.robot.command.ColorSensorCommand;
 import frc.robot.command.RaiseRobot;
+import frc.robot.command.ShootCommand;
 import frc.robot.command.ShootCommandGroup;
 import frc.robot.subsystem.BallStorageSubsystem;
 import frc.robot.subsystem.ClimberSubsystem;
@@ -121,9 +122,9 @@ public class RobotMap {
 		colorSensorSubsystem = new ColorSensorSubsystem(colorSensor, colorSensorSolenoid, colorWheelMotor);
 
 		//climber init
-		climberSRX = new WPI_TalonSRX(climberMotorID);
-		hookMotor = new WPI_TalonSRX(hookMotorID);
-		climberSubsystem = new ClimberSubsystem(climberSRX, hookMotor);
+		// climberSRX = new WPI_TalonSRX(climberMotorID);
+		// hookMotor = new WPI_TalonSRX(hookMotorID);
+		// climberSubsystem = new ClimberSubsystem(climberSRX, hookMotor);
 	
 		buttonbinding();
 	}
@@ -135,10 +136,11 @@ public class RobotMap {
 		controller0.bButton.whenPressed(new BallStorageCommand(false, 0));
 		controller0.aButton.whenPressed(new BallStorageCommand(true, 0.5));
 
-		controller0.yButton.whenPressed(new ShootCommandGroup());
+		controller0.yButton.toggleWhenPressed(new ShootCommandGroup());
 		controller0.xButton.toggleWhenPressed(new ColorCommand());
 
-		controller0.startButton.whenPressed(new RaiseRobot());
+		//controller0.startButton.whenPressed(new RaiseRobot());
+		controller0.backButton.whenPressed(new ShootCommand(true));
 		
 	}
 

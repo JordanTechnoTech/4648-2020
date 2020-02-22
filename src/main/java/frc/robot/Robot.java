@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.command.BallStorageCommand;
 import frc.robot.command.CounterResetCommand;
 import frc.robot.command.DriveCommand;
+import frc.robot.command.IntakeBeltCommand;
 import frc.robot.command.RaiseHook;
 import frc.robot.command.ShootCommand;
 import frc.robot.command.StorageCommand;
@@ -49,15 +50,14 @@ public class Robot extends TimedRobot {
     initSubsystems();
     SmartDashboard.putNumber("Test Speed", 8000);
     SmartDashboard.putNumber("Shooter P", 1.5);
-    SmartDashboard.putNumber("Shooter I", 0.00005);
-    SmartDashboard.putNumber("Shooter D", 0.1);
-    SmartDashboard.putNumber("Shooter FF", 0.055);
+    SmartDashboard.putNumber("Shooter I", 0.000001);
+    SmartDashboard.putNumber("Shooter D", 0.6);
+    SmartDashboard.putNumber("Shooter FF", 0.0575);
 
     SmartDashboard.putNumber("Auto Distance", 1);
     SmartDashboard.putNumber("Drive P", 10);
     SmartDashboard.putNumber("Drive I", 0);
     SmartDashboard.putNumber("Drive D", 0);
-
   }
 
   public void initSubsystems() {
@@ -66,7 +66,7 @@ public class Robot extends TimedRobot {
     subsystems.add(RobotMap.shooterSubsystem);
     subsystems.add(RobotMap.colorSensorSubsystem);
     CommandScheduler.getInstance().setDefaultCommand(RobotMap.driveSubsystem, new DriveCommand());
-    CommandScheduler.getInstance().setDefaultCommand(RobotMap.climberSubsystem, new RaiseHook());
+    //CommandScheduler.getInstance().setDefaultCommand(RobotMap.climberSubsystem, new RaiseHook());
   }
 
   /** 

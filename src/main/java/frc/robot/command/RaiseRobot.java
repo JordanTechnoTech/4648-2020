@@ -7,7 +7,7 @@ import frc.robot.RobotMap;
 public class RaiseRobot extends CommandBase {
 
     public RaiseRobot() {
-        addRequirements(RobotMap.climberSubsystem);
+        //addRequirements(RobotMap.climberSubsystem);
     }
 
     @Override

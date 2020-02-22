@@ -15,12 +15,12 @@ public class FaceOffCommand extends CommandBase {
     public static List<RangeValue> turnSpeedRangeValues = Arrays.asList(
             new RangeValue(-999, 1, 0.0),
             new RangeValue(1, 1.5, 0.27),
-            new RangeValue(1.5, 2.5, .157),
-            new RangeValue(2.5, 5, -.128),
+            new RangeValue(1.5, 2.5, .17),
+            new RangeValue(2.5, 5, -.12),
             new RangeValue(5, 10, -.056),
             new RangeValue(10, 15, -.04),
             new RangeValue(15, 30, -.025),
-            new RangeValue(30, 999, -0.1)
+            new RangeValue(30, 999, -0.05)
     );
 
     LimelightCamera limelightCamera = new LimelightCamera();

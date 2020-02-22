@@ -6,6 +6,7 @@ import frc.robot.RobotMap;
 public class BallStorageCommand extends CommandBase {
     private boolean state;
     private double speed;
+    private double beltSpeed;
 
     public BallStorageCommand(boolean state, double speed) {
         addRequirements(RobotMap.ballStorageSubsystem);
@@ -17,6 +18,7 @@ public class BallStorageCommand extends CommandBase {
     public void execute() {
         if(state) {
             RobotMap.ballStorageSubsystem.intake(speed);
+            RobotMap.ballStorageSubsystem.belts(speed);
         }else {
             RobotMap.ballStorageSubsystem.stop();
         }
