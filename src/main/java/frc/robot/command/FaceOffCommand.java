@@ -15,12 +15,12 @@ public class FaceOffCommand extends CommandBase {
     public static List<RangeValue> turnSpeedRangeValues = Arrays.asList(
             new RangeValue(-999, 1, 0.0),
             new RangeValue(1, 1.5, -0.32),
-            new RangeValue(1.5, 2.5, -0.2),
-            new RangeValue(2.5, 5, -0.12),
+            new RangeValue(1.5, 2.5, -0.22),
+            new RangeValue(2.5, 5, -0.13),
             new RangeValue(5, 10, -0.055),
             new RangeValue(10, 15, -0.034),
             new RangeValue(15, 25, -0.02),
-            new RangeValue(25, 999, -0.015)
+            new RangeValue(25, 999, -0.02)
     );
 
     LimelightCamera limelightCamera = new LimelightCamera();
@@ -106,7 +106,7 @@ public class FaceOffCommand extends CommandBase {
         float tx = (float) limeLightValues.getTargetHorizontal();
         float angle = Math.abs(tx);
         
-        if (angle < (1.5 - (0.005 * limelightDistance)) && commandStartTime + 1750 < System.currentTimeMillis() && limeLightValues.hasTarget()) {
+        if (angle < (1.5 - (0.005 * limelightDistance)) && commandStartTime + 1500 < System.currentTimeMillis() && limeLightValues.hasTarget()) {
             LimelightCamera.setLightMode(LimelightCamera.ledMode.OFF);
             LimelightCamera.setPipeline(1);
             LimelightCamera.setCameraMode(LimelightCamera.cameraMode.CAMERA);

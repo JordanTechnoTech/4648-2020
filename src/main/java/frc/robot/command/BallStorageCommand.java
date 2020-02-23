@@ -17,7 +17,7 @@ public class BallStorageCommand extends CommandBase {
     public void execute() {
         if(state) {
             RobotMap.ballStorageSubsystem.intake(speed);
-            RobotMap.ballStorageSubsystem.belts(speed);
+            RobotMap.ballStorageSubsystem.belts(speed * 0.75f);
         }else {
             RobotMap.ballStorageSubsystem.stop();
         }

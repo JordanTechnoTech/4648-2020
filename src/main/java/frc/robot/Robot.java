@@ -48,6 +48,7 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+    chooser = new SendableChooser<Color>();
     RobotMap.init();
     initSubsystems();
     SmartDashboard.putNumber("Test Speed", 8000);
