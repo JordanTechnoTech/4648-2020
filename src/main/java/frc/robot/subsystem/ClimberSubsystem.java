@@ -1,16 +1,16 @@
 package frc.robot.subsystem;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ClimberSubsystem extends SubsystemBase implements TechnoTechSubsystem {
 
-	WPI_TalonSRX climberSRX;
-	WPI_TalonSRX hookMotor;
+	VictorSPX climberSRX;
+	VictorSPX hookMotor;
 
-	public ClimberSubsystem(WPI_TalonSRX climberSRX, WPI_TalonSRX hookMotor) {
+	public ClimberSubsystem(VictorSPX climberSRX, VictorSPX hookMotor) {
 		this.climberSRX = climberSRX;
 		this.hookMotor = hookMotor;
 	}
