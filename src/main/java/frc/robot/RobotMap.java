@@ -39,8 +39,8 @@ public class RobotMap {
 	//VICTOR
 	public static int intakeBeltsID = 1;
 	public static int intakeSPXID = 2;
-	public static int hookMotorID = 3;
-	public static int climberMotorID = 4;
+	public static int hookMotorID = 4;
+	public static int climberMotorID = 3;
 	
 	//pwm mappings
 	public static int intakegateID = 0;

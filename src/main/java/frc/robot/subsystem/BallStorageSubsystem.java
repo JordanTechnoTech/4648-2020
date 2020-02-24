@@ -20,7 +20,7 @@ public class BallStorageSubsystem extends SubsystemBase implements TechnoTechSub
     }
 
     public void intake(double beltSpeed) {
-        intake.set(ControlMode.PercentOutput, beltSpeed * 2f);
+        intake.set(ControlMode.PercentOutput, beltSpeed * 0.5f);
 
     }
 
