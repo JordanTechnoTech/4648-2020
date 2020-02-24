@@ -139,32 +139,31 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
     String[] splitByFrame = recordedString.split("|");
-    String mostRecentFrame = "";
+    String mostRecentFrame = splitByFrame[0];
 
     for(int i = 0; i < splitByFrame.length; i++) {
       if((Double)Double.parseDouble(splitByFrame[i].split(",")[0]) < t.get()) {
         mostRecentFrame = splitByFrame[i];
-
-        String[] mostRecentFrameSplit = mostRecentFrame.split(",");
-
-        double turn = Double.parseDouble(mostRecentFrameSplit[1]);
-        double rightTrigger = Double.parseDouble(mostRecentFrameSplit[2]);
-        double leftTrigger = Double.parseDouble(mostRecentFrameSplit[3]);
-        boolean yButton = Boolean.parseBoolean(mostRecentFrameSplit[4]);
-        boolean state = false;
-
-        RobotMap.driveSubsystem.arcadeDrive(-rightTrigger + leftTrigger, -turn);
-      
-        if(yButton && state == false) {
-          new ShootCommandGroup().schedule();
-          state = !state;
-        }
-        if(yButton && state == true) {
-          new ShootCommandGroup().cancel();
-          state = !state;
-        }
       }
-      
+    }
+
+    String[] mostRecentFrameSplit = mostRecentFrame.split(",");
+
+    double turn = Double.parseDouble(mostRecentFrameSplit[1]);
+    double rightTrigger = Double.parseDouble(mostRecentFrameSplit[2]);
+    double leftTrigger = Double.parseDouble(mostRecentFrameSplit[3]);
+    boolean yButton = Boolean.parseBoolean(mostRecentFrameSplit[4]);
+    boolean state = false;
+
+    RobotMap.driveSubsystem.arcadeDrive(-rightTrigger + leftTrigger, -turn);
+  
+    if(yButton && state == false) {
+      new ShootCommandGroup().schedule();
+      state = !state;
+    }
+    if(yButton && state == true) {
+      new ShootCommandGroup().cancel();
+      state = !state;
     }
   }
 

@@ -17,8 +17,8 @@ public class FaceOffCommand extends CommandBase {
             new RangeValue(1, 1.5, -0.32),
             new RangeValue(1.5, 2.5, -0.22),
             new RangeValue(2.5, 5, -0.12),
-            new RangeValue(5, 10, -0.055),
-            new RangeValue(10, 15, -0.034),
+            new RangeValue(5, 10, -0.045),
+            new RangeValue(10, 15, -0.028),
             new RangeValue(15, 25, -0.02),
             new RangeValue(25, 999, -0.02)
     );
