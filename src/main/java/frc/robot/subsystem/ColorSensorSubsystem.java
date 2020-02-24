@@ -17,6 +17,8 @@ public class ColorSensorSubsystem extends SubsystemBase implements TechnoTechSub
     public WPI_TalonSRX colorWheelMotor;
 
     private Color detectedColor;
+    private Color[] colors = {Color.kRed, Color.kYellow, Color.kBlue, Color.kGreen};
+    private int ID = 0;
     private Color oldColor = Color.kWhite;
     private Color newColor = Color.kWhite;
     private int changes = 0;
@@ -34,6 +36,16 @@ public class ColorSensorSubsystem extends SubsystemBase implements TechnoTechSub
         }else {
             colorWheelMotor.set(ControlMode.PercentOutput, 0.0);
         }
+    }
+
+    public Color goToColor(Color color) {
+        Color sensColor = colors[ID + 2];
+        if(sensColor != newColor) {
+            colorWheelMotor.set(ControlMode.PercentOutput, 0.25);
+        }else {
+            colorWheelMotor.set(ControlMode.PercentOutput, 0);
+        }
+        return sensColor;
     }
 
     public void detectChanges() {
@@ -62,18 +74,22 @@ public class ColorSensorSubsystem extends SubsystemBase implements TechnoTechSub
 
         if(maxValue == values[0]) {
             SmartDashboard.putString("Color", "RED");
-            return Color.kFirstRed;
+            ID = 0;
+            return Color.kRed;
         }
         if(maxValue == values[1] && values[0] < 0.3 && values[2] < 0.3) {
             SmartDashboard.putString("Color", "GREEN");
-            return Color.kDarkGreen;
+            ID = 3;
+            return Color.kGreen;
         }
         if(maxValue == values[1] && values[2] >= 0.3) {
             SmartDashboard.putString("Color", "BLUE");
+            ID = 2;
             return Color.kBlue;
         }
         if(maxValue == values[1] && values[0] >= 0.3) {
             SmartDashboard.putString("Color", "YELLOW");
+            ID = 1;
             return Color.kYellow;
         }
         else {

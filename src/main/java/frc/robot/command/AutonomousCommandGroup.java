@@ -13,8 +13,11 @@ public class AutonomousCommandGroup extends SequentialCommandGroup{
         addRequirements(RobotMap.driveSubsystem);
 
         addCommands(
-            new AutoDriveCommand(-0.7, -.1), new WaitCommand(.5), new AutoDriveCommand(0, 0),
-            new WaitCommand(1), new ShootCommandGroup()
+            new AutoDriveCommand(.6, 0), new WaitCommand(0.5), new AutoDriveCommand(-0.6, 0), new WaitCommand(0.5), new AutoDriveCommand(0, 0),
+            new ShootCommandGroup(), new BallStorageCommand(false, 0), new WaitCommand(0.3),
+            new AutoDriveCommand(-0.6, 0), new WaitCommand(0.6), new AutoDriveCommand(0, -0.6), new WaitCommand(0.8),
+            new AutoDriveCommand(0.5, 0.09), new WaitCommand(1.5), new BallStorageCommand(true, 0.5), new WaitCommand(1),
+            new AutoDriveCommand(0.5, 0), new WaitCommand(2.7), new AutoDriveCommand(-0.4, 0), new BallStorageCommand(false, 0)
         );
     }
 

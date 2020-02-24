@@ -7,13 +7,16 @@ import com.revrobotics.ColorSensorV3;
 
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.command.BallStorageCommand;
 import frc.robot.command.ColorCommand;
 import frc.robot.command.ColorSensorCommand;
+import frc.robot.command.FaceOffCommand;
+import frc.robot.command.RaiseRobot;
 import frc.robot.command.ShootCommandGroup;
+import frc.robot.command.FaceOffCommand.Target;
 import frc.robot.subsystem.BallStorageSubsystem;
+import frc.robot.subsystem.ClimberSubsystem;
 import frc.robot.subsystem.ColorSensorSubsystem;
 import frc.robot.subsystem.DriveSubsystem;
 import frc.robot.subsystem.ShooterSubsystem;
@@ -31,15 +34,15 @@ public class RobotMap {
 	public static int backrightDriveMotor = 4;
 	public static int shooterID = 7;
 	public static int colorWheelMotorID = 6;
+	
 
 	//VICTOR
-	public static int leftintakeBeltID = 1;
-	public static int rightIntakeBeltID = 2;
-	public static int intakeSPXID = 3;
-	
+	public static int intakeBeltsID = 1;
+	public static int intakeSPXID = 2;
+	public static int hookMotorID = 4;
+	public static int climberMotorID = 3;
 	
 	//pwm mappings
-	//public static int driveShifterID = 0;  
 	public static int intakegateID = 0;
 	public static int colorWheelSolenoidID = 2;
 	public static int leftIntakeID = 3;
@@ -57,14 +60,9 @@ public class RobotMap {
 
 	//Ball Storage Subsystem
 	public static BallStorageSubsystem ballStorageSubsystem;
-	public static Talon roller;
 	public static VictorSPX intake;
-	public static VictorSPX leftIntakeBelt;
-	public static VictorSPX rightIntakeBelt;
+	public static VictorSPX intakeBelts;
 	public static Solenoid intakeGate;
-	public static Solenoid rightIntakeGate;
-	public static Solenoid leftIntakePiston;
-	public static Solenoid rightIntakePiston;
 
 	//Shooter Subsystem
 	public static ShooterSubsystem shooterSubsystem;
@@ -75,6 +73,11 @@ public class RobotMap {
 	public static WPI_TalonSRX colorWheelMotor;
 	public static Solenoid colorSensorSolenoid;
 	public static ColorSensorSubsystem colorSensorSubsystem;
+
+	//climber subsystem
+	public static VictorSPX climberSRX;
+	public static VictorSPX hookMotor;
+	public static ClimberSubsystem climberSubsystem;
 
 	public static void init() {
 		// drive initialization
@@ -93,16 +96,11 @@ public class RobotMap {
 		driveSubsystem = new DriveSubsystem(frontLeftMotorController, frontRightMotorController, backLeftMotorController, backRightMotorController, driveShifter);
 		
 		//intake initialization
-		roller = new Talon(0);
 		intake = new VictorSPX(intakeSPXID);
-		leftIntakeBelt = new VictorSPX(leftintakeBeltID);
-		leftIntakeBelt.setInverted(true);
-		rightIntakeBelt = new VictorSPX(rightIntakeBeltID);
+		intakeBelts = new VictorSPX(intakeBeltsID);
 		intakeGate = new Solenoid(intakegateID);
 		shooterTalonSRX = new WPI_TalonSRX(shooterID);
-		leftIntakePiston = new Solenoid(leftIntakeID);
-		rightIntakePiston = new Solenoid(rightIntakeID);
-		ballStorageSubsystem = new BallStorageSubsystem(roller, intake, leftIntakeBelt, rightIntakeBelt, leftIntakePiston, rightIntakePiston, intakeGate);
+		ballStorageSubsystem = new BallStorageSubsystem(intake, intakeBelts, intakeGate);
 		shooterSubsystem = new ShooterSubsystem(shooterTalonSRX);
 		
 		//color sensor initialization
@@ -110,21 +108,27 @@ public class RobotMap {
 		colorWheelMotor = new WPI_TalonSRX(colorWheelMotorID);
 		colorSensorSolenoid = new Solenoid(colorWheelSolenoidID);
 		colorSensorSubsystem = new ColorSensorSubsystem(colorSensor, colorSensorSolenoid, colorWheelMotor);
+
+		//climber init
+		climberSRX = new VictorSPX(climberMotorID);
+		hookMotor = new VictorSPX(hookMotorID);
+		climberSubsystem = new ClimberSubsystem(climberSRX, hookMotor);
 	
 		buttonbinding();
 	}
-	public static void buttonbinding(){
+	public static void buttonbinding() {
 
 		//controller0.lbButton.toggleWhenPressed(new IntakeCommand());		//toggles pistons to lower intake
 		controller0.rbButton.toggleWhenPressed(new ColorSensorCommand());	//toggle colorsensor piston
 
-		//controller0.yButton.toggleWhenPressed(new FaceOffCommand(FaceOffCommand.Target.TOP_OUTER_HOLE));	//toggles face off command
 		controller0.bButton.whenPressed(new BallStorageCommand(false, 0));
 		controller0.aButton.whenPressed(new BallStorageCommand(true, 0.5));
 
-		controller0.yButton.whenPressed(new ShootCommandGroup());
+		controller0.yButton.toggleWhenPressed(new ShootCommandGroup());
 		controller0.xButton.toggleWhenPressed(new ColorCommand());
-		
+
+		controller0.startButton.whenPressed(new RaiseRobot());
+		controller0.backButton.whenPressed(new FaceOffCommand(Target.TOP_OUTER_HOLE));
 	}
 
 	public static void logButtonState(){

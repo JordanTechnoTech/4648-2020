@@ -14,8 +14,6 @@ public class ShooterSubsystem extends SubsystemBase implements TechnoTechSubsyst
 
     private WPI_TalonSRX shooterTalonSRX;
 
-    private double shooterSpeed;
-
 
     public ShooterSubsystem(WPI_TalonSRX shooterTalonSRX) {
         addChild("intakeGate", RobotMap.intakeGate);
@@ -28,10 +26,10 @@ public class ShooterSubsystem extends SubsystemBase implements TechnoTechSubsyst
     }
 
     public void shoot(Double shooterSpeed) {
-        double kP = SmartDashboard.getNumber("Shooter P", 0);
-        double kI = SmartDashboard.getNumber("Shooter I", 0.0);
-        double kD = SmartDashboard.getNumber("Shooter D", 0);
-        double kF = SmartDashboard.getNumber("Shooter FF", 0.05);
+        double kP = SmartDashboard.getNumber("Shooter P", 1.5);
+        double kI = SmartDashboard.getNumber("Shooter I", 0.000001);
+        double kD = SmartDashboard.getNumber("Shooter D", 0.6);
+        double kF = SmartDashboard.getNumber("Shooter FF", 0.0575);
 
         Gains kGains_Velocit = new Gains( kP, kI, kD, kF,  0,  1.00);
 
@@ -45,7 +43,6 @@ public class ShooterSubsystem extends SubsystemBase implements TechnoTechSubsyst
 		this.shooterTalonSRX.config_kI(Constants.kPIDLoopIdx, kGains_Velocit.kI, Constants.kTimeoutMs);
 		this.shooterTalonSRX.config_kD(Constants.kPIDLoopIdx, kGains_Velocit.kD, Constants.kTimeoutMs);
         
-        this.shooterSpeed = shooterSpeed;
 
         shooterTalonSRX.set(ControlMode.Velocity, shooterSpeed);
     }

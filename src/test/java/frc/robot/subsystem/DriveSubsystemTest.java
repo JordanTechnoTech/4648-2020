@@ -4,7 +4,6 @@ package frc.robot.subsystem;
 
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import frc.robot.subsystem.DriveSubsystem;
 import frc.robot.RobotMap;
 
 import static org.junit.Assert.*;
