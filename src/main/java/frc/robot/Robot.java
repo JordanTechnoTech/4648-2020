@@ -129,6 +129,8 @@ public class Robot extends TimedRobot {
     // if (m_autonomousCommand != null) {
       // m_autonomousCommand.schedule(false);
     // }
+
+    t.start();
   }
 
   /**
@@ -140,13 +142,15 @@ public class Robot extends TimedRobot {
     String mostRecentFrame = "";
 
     for(int i = 0; i < splitByFrame.length; i++) {
-      if(Double.parseDouble(splitByFrame[i].split(",")[0]) < t.get()) {
+      if((Double)Double.parseDouble(splitByFrame[i].split(",")[0]) < t.get()) {
         mostRecentFrame = splitByFrame[i];
-        
-        double turn = Integer.parseInt(mostRecentFrame);
-        double rightTrigger = Integer.parseInt(mostRecentFrame);
-        double leftTrigger = Integer.parseInt(mostRecentFrame);
-        boolean yButton = Boolean.parseBoolean(mostRecentFrame);
+
+        String[] mostRecentFrameSplit = mostRecentFrame.split(",");
+
+        double turn = Double.parseDouble(mostRecentFrameSplit[1]);
+        double rightTrigger = Double.parseDouble(mostRecentFrameSplit[2]);
+        double leftTrigger = Double.parseDouble(mostRecentFrameSplit[3]);
+        boolean yButton = Boolean.parseBoolean(mostRecentFrameSplit[4]);
         boolean state = false;
 
         RobotMap.driveSubsystem.arcadeDrive(-rightTrigger + leftTrigger, -turn);
@@ -160,6 +164,7 @@ public class Robot extends TimedRobot {
           state = !state;
         }
       }
+      
     }
   }
 
@@ -196,7 +201,9 @@ public class Robot extends TimedRobot {
   @Override
   public void testInit() {
     // Cancels all running commands at the start of test mode.
-    CommandScheduler.getInstance().cancelAll();
+    //CommandScheduler.getInstance().cancelAll();
+
+    t.start();
   }
 
   /**
@@ -207,6 +214,8 @@ public class Robot extends TimedRobot {
     if(recordedString != "") {
       recordedString += "|";
     }
-    recordedString += t.get() + "," + RobotMap.controller0.getStickLeftXValue() + "," + RobotMap.controller0.getRightTriggerValue() + "," + RobotMap.controller0.getLeftTriggerValue() + ","  + RobotMap.controller0.yButton.get();
+    recordedString += t.get() + "," + RobotMap.controller0.getStickLeftXValue() * 0.6 + "," + RobotMap.controller0.getRightTriggerValue() * 0.6 + "," + RobotMap.controller0.getLeftTriggerValue() * 0.6 + ","  + RobotMap.controller0.yButton.get();
+    
+    RobotMap.driveSubsystem.arcadeDrive(-(RobotMap.controller0.getRightTriggerValue() - RobotMap.controller0.getLeftTriggerValue()) * 0.6, -RobotMap.controller0.getStickLeftXValue() * 0.6);
   }
 }
