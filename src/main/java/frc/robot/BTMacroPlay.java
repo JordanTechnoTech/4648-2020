@@ -6,6 +6,8 @@ import java.util.Scanner;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 /*Code outline to implement playing back a macro recorded in BTMacroRecord
 *Be sure to read out of the same file created in BTMacroRecord
 *BEWARE OF: setting your motors in a different order than in BTMacroRecord and changing motor values before
@@ -36,11 +38,15 @@ public class BTMacroPlay {
 		scanner.useDelimiter(",|\\n");
 		
 		//lets set start time to the current time you begin autonomous
-		startTime = System.currentTimeMillis();	
+		startTime = System.currentTimeMillis();
+
+		SmartDashboard.putString("Auto Play", "init");
 	}
 	
 	public void play()
 	{
+		SmartDashboard.putString("Auto Play", "play");
+
 		//if recordedAuto.csv has a double to read next, then read it
 		if ((scanner != null) && (scanner.hasNextDouble()))
 		{
@@ -57,7 +63,7 @@ public class BTMacroPlay {
 			}
 			
 			//time recorded for values minus how far into replaying it we are--> if not zero, hold up
-			t_delta = nextDouble - (System.currentTimeMillis()-startTime);
+			t_delta = nextDouble - (System.currentTimeMillis()- startTime);
 			
 			//if we are on time, then set motor values
 			if (t_delta <= 0)
@@ -68,6 +74,12 @@ public class BTMacroPlay {
 				
 				RobotMap.driveSubsystem.frontleftDrive.set(ControlMode.PercentOutput, scanner.nextDouble());
 				RobotMap.driveSubsystem.frontrightDrive.set(ControlMode.PercentOutput, scanner.nextDouble());
+				RobotMap.ballStorageSubsystem.intake.set(ControlMode.PercentOutput, scanner.nextDouble());
+				RobotMap.ballStorageSubsystem.intakeBelts.set(ControlMode.PercentOutput, scanner.nextDouble());
+				RobotMap.ballStorageSubsystem.intakeGate.set(scanner.nextBoolean());
+				RobotMap.shooterSubsystem.shooterTalonSRX.set(ControlMode.PercentOutput, scanner.nextDouble());
+
+				
 				//go to next double
 				onTime = true;
 			}

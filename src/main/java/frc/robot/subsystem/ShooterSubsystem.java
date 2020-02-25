@@ -12,7 +12,7 @@ import frc.robot.RobotMap;
 
 public class ShooterSubsystem extends SubsystemBase implements TechnoTechSubsystem {
 
-    private WPI_TalonSRX shooterTalonSRX;
+    public WPI_TalonSRX shooterTalonSRX;
 
 
     public ShooterSubsystem(WPI_TalonSRX shooterTalonSRX) {

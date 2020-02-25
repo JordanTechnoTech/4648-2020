@@ -68,6 +68,11 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Shooter D", 0.6);
     SmartDashboard.putNumber("Shooter FF", 0.0575);
 
+    SmartDashboard.putNumber("faceOff P", 0.7);
+    SmartDashboard.putNumber("faceOff I", 0);
+    SmartDashboard.putNumber("faceOff D", 0.006);
+    
+
     chooser.setDefaultOption("Red", Color.kFirstRed);
     chooser.addOption("Yellow", Color.kYellow);
     chooser.addOption("Blue", Color.kBlue);

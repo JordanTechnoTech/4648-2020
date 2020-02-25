@@ -8,9 +8,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class BallStorageSubsystem extends SubsystemBase implements TechnoTechSubsystem {
-	private VictorSPX intake;
-	private VictorSPX intakeBelts;
-    private Solenoid intakeGate;
+	public VictorSPX intake;
+	public VictorSPX intakeBelts;
+    public Solenoid intakeGate;
 
     public BallStorageSubsystem(VictorSPX intake, VictorSPX intakeBelts, Solenoid intakeGate) {
         this.intake = intake;

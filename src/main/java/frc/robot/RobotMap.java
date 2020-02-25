@@ -124,11 +124,10 @@ public class RobotMap {
 		controller0.bButton.whenPressed(new BallStorageCommand(false, 0));
 		controller0.aButton.whenPressed(new BallStorageCommand(true, 0.5));
 
-		controller0.yButton.toggleWhenPressed(new ShootCommandGroup());
+		controller0.yButton.toggleWhenPressed(new FaceOffCommand(Target.TOP_OUTER_HOLE));
 		controller0.xButton.toggleWhenPressed(new ColorCommand());
 
 		controller0.startButton.whenPressed(new RaiseRobot());
-		controller0.backButton.whenPressed(new FaceOffCommand(Target.TOP_OUTER_HOLE));
 	}
 
 	public static void logButtonState(){
