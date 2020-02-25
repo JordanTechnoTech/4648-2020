@@ -46,10 +46,6 @@ public class FaceOffCommand extends CommandBase {
         LimelightCamera.setLightMode(LimelightCamera.ledMode.ON);
         LimelightCamera.setPipeline(1);
         LimelightCamera.setCameraMode(LimelightCamera.cameraMode.VISION);
-
-        double Kp = SmartDashboard.getNumber("faceOff P", 0.07);
-        double Ki = SmartDashboard.getNumber("faceOff I", 0);
-        double Kd = SmartDashboard.getNumber("faceOff D", 0.006);
         
         pidController = new PIDController(0.07, 0, 0.006);
 
