@@ -126,7 +126,7 @@ public class FaceOffCommand extends CommandBase {
     }
 
     public enum Target {
-        TOP_OUTER_HOLE(89.0d);
+        TOP_OUTER_HOLE(89d);
 
         private final double height;
 
