@@ -8,19 +8,20 @@ import frc.robot.camera.LimelightCamera;
 import java.util.Arrays;
 import java.util.List;
 
+import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class FaceOffCommand extends CommandBase {
     
     public static List<RangeValue> turnSpeedRangeValues = Arrays.asList(
             new RangeValue(-999, 1, 0.0),
-            new RangeValue(1, 1.5, -0.32),
-            new RangeValue(1.5, 2.5, -0.22),
+            new RangeValue(1, 1.5, -0.3),
+            new RangeValue(1.5, 2.5, -0.2),
             new RangeValue(2.5, 5, -0.12),
-            new RangeValue(5, 10, -0.045),
-            new RangeValue(10, 15, -0.028),
-            new RangeValue(15, 25, -0.02),
-            new RangeValue(25, 999, -0.02)
+            new RangeValue(5, 10, -0.047),
+            new RangeValue(10, 15, -0.03),
+            new RangeValue(15, 25, -0.021),
+            new RangeValue(25, 999, -0.01)
     );
 
     LimelightCamera limelightCamera = new LimelightCamera();
@@ -31,6 +32,8 @@ public class FaceOffCommand extends CommandBase {
     private double limelightDistance;
 
     private long commandStartTime;
+
+    private PIDController pidController;
 
     public FaceOffCommand(Target atarget) {
         this.target = atarget;
@@ -43,6 +46,8 @@ public class FaceOffCommand extends CommandBase {
         LimelightCamera.setLightMode(LimelightCamera.ledMode.ON);
         LimelightCamera.setPipeline(1);
         LimelightCamera.setCameraMode(LimelightCamera.cameraMode.VISION);
+        
+        pidController = new PIDController(0.07, 0, 0.006);
 
         commandStartTime = System.currentTimeMillis();
 
@@ -61,16 +66,27 @@ public class FaceOffCommand extends CommandBase {
         SmartDashboard.putNumber("cachedTY", limeLightValues.ty);
         SmartDashboard.putNumber("cachedTS", limeLightValues.ts);
         SmartDashboard.putString("Faceoffcommand", "executing");
+        
+        double position = limeLightValues.tx;
+
         if (!limeLightValues.hasTarget()) {
             cameraFail = cameraFail + 1;
             SmartDashboard.putNumber("CameraFail", cameraFail);
         } else if (commandStartTime + 1000 < System.currentTimeMillis()){
-            double turnSpeed = getTurnSpeed(limeLightValues);
+            
 
+
+            double turnSpeed = pidController.calculate(position, 0);
+            if(turnSpeed > 0.4) {
+                turnSpeed = 0.4;
+            }
+            
+            //double turnSpeed = getTurnSpeed(limeLightValues);
+
+
+            RobotMap.driveSubsystem.arcadeDrive(0, turnSpeed);
             SmartDashboard.putNumber("limelightSkew", limeLightValues.getTargetSkew());
             SmartDashboard.putNumber("faceOffTTurnSpeed", turnSpeed);
-
-            RobotMap.driveSubsystem.arcadeDrive(0, -turnSpeed);
         }
     }
 
@@ -106,10 +122,10 @@ public class FaceOffCommand extends CommandBase {
         float tx = (float) limeLightValues.getTargetHorizontal();
         float angle = Math.abs(tx);
         
-        if (angle < (1.5 - (0.005 * limelightDistance)) && commandStartTime + 1500 < System.currentTimeMillis() && limeLightValues.hasTarget()) {
-            LimelightCamera.setLightMode(LimelightCamera.ledMode.OFF);
-            LimelightCamera.setPipeline(1);
-            LimelightCamera.setCameraMode(LimelightCamera.cameraMode.CAMERA);
+        if (angle < (1.5 - (0.005 * limelightDistance)) && commandStartTime + 2000 < System.currentTimeMillis() && limeLightValues.hasTarget() || commandStartTime + 3000 < System.currentTimeMillis()) {
+            // LimelightCamera.setLightMode(LimelightCamera.ledMode.OFF);
+            // LimelightCamera.setPipeline(1);
+            // LimelightCamera.setCameraMode(LimelightCamera.cameraMode.CAMERA);
             RobotMap.driveSubsystem.arcadeDrive(0, 0);
             SmartDashboard.putString("Faceoffcommand", "finished");
             return true;
@@ -126,7 +142,7 @@ public class FaceOffCommand extends CommandBase {
     }
 
     public enum Target {
-        TOP_OUTER_HOLE(89.0d);
+        TOP_OUTER_HOLE(98d);
 
         private final double height;
 

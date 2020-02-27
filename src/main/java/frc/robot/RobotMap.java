@@ -12,8 +12,8 @@ import frc.robot.command.BallStorageCommand;
 import frc.robot.command.ColorCommand;
 import frc.robot.command.ColorSensorCommand;
 import frc.robot.command.FaceOffCommand;
+import frc.robot.command.IntakeBeltCommand;
 import frc.robot.command.RaiseRobot;
-import frc.robot.command.ShootCommandGroup;
 import frc.robot.command.FaceOffCommand.Target;
 import frc.robot.subsystem.BallStorageSubsystem;
 import frc.robot.subsystem.ClimberSubsystem;
@@ -117,18 +117,18 @@ public class RobotMap {
 		buttonbinding();
 	}
 	public static void buttonbinding() {
-
-		//controller0.lbButton.toggleWhenPressed(new IntakeCommand());		//toggles pistons to lower intake
 		controller0.rbButton.toggleWhenPressed(new ColorSensorCommand());	//toggle colorsensor piston
 
 		controller0.bButton.whenPressed(new BallStorageCommand(false, 0));
 		controller0.aButton.whenPressed(new BallStorageCommand(true, 0.5));
 
-		controller0.yButton.toggleWhenPressed(new ShootCommandGroup());
+		controller0.yButton.toggleWhenPressed(new FaceOffCommand(Target.TOP_OUTER_HOLE));
 		controller0.xButton.toggleWhenPressed(new ColorCommand());
 
-		controller0.startButton.whenPressed(new RaiseRobot());
-		controller0.backButton.whenPressed(new FaceOffCommand(Target.TOP_OUTER_HOLE));
+		controller0.lbButton.whileHeld(new RaiseRobot());
+
+		controller0.dpadUpButton.whileHeld(new IntakeBeltCommand(true, false));
+		controller0.dpadUpButton.whileHeld(new IntakeBeltCommand(false, true));
 	}
 
 	public static void logButtonState(){

@@ -5,24 +5,29 @@ import frc.robot.RobotMap;
 
 public class IntakeBeltCommand extends CommandBase {
 
-    private double beltSpeed;
+    private boolean button1;
+    private boolean button2;
 
-    public IntakeBeltCommand() {
-        //addRequirements(RobotMap.ballStorageSubsystem);
+    public IntakeBeltCommand(boolean button1, boolean button2) {
+        addRequirements(RobotMap.ballStorageSubsystem);
+
+        this.button1 = button1;
+        this.button2 = button2;
     }
 
     @Override
     public void execute() {
-        if(RobotMap.controller0.dpadUpButton.get()) {
-            beltSpeed = 0.5;
+        if(button1 && !button2) {
+            RobotMap.ballStorageSubsystem.belts(0.5);
         }
-        if(RobotMap.controller0.dpadDownButton.get()) {
-            beltSpeed = -0.5;
-        }else {
-            beltSpeed = 0;
+        if(!button1 && button2) {
+            RobotMap.ballStorageSubsystem.belts(-0.5);
         }
+    }
 
-        RobotMap.ballStorageSubsystem.belts(beltSpeed);
+    @Override
+    public void end(boolean interrupted) {
+        RobotMap.ballStorageSubsystem.belts(0);
     }
 
     @Override

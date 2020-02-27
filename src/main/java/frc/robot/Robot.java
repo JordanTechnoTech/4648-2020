@@ -8,7 +8,6 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
@@ -19,10 +18,11 @@ import frc.robot.command.CounterResetCommand;
 import frc.robot.command.DriveCommand;
 import frc.robot.command.RaiseHook;
 import frc.robot.command.ShootCommand;
-import frc.robot.command.ShootCommandGroup;
 import frc.robot.command.StorageCommand;
 import frc.robot.subsystem.TechnoTechSubsystem;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,8 +42,12 @@ public class Robot extends TimedRobot {
 
   private SendableChooser<Color> chooser;
 
-  Timer t;
-  String recordedString = "";
+
+  boolean isRecording = false;
+  static final int autoNumber = 1;
+  static final String autoFile = new String("/home/lvuser/recordedAuto" + autoNumber + ".csv");
+  BTMacroPlay player;
+  BTMacroRecord recorder;
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -64,13 +68,17 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Shooter D", 0.6);
     SmartDashboard.putNumber("Shooter FF", 0.0575);
 
+    SmartDashboard.putNumber("faceOff P", 0.7);
+    SmartDashboard.putNumber("faceOff I", 0);
+    SmartDashboard.putNumber("faceOff D", 0.006);
+    
+
     chooser.setDefaultOption("Red", Color.kFirstRed);
     chooser.addOption("Yellow", Color.kYellow);
     chooser.addOption("Blue", Color.kBlue);
     chooser.addOption("Green", Color.kGreen);
 
     SmartDashboard.putData("Color", chooser);
-    t = new Timer();
   }
 
   public void initSubsystems() {
@@ -130,7 +138,13 @@ public class Robot extends TimedRobot {
       // m_autonomousCommand.schedule(false);
     // }
 
-    t.start();
+    player = null;
+
+    try {
+      player = new BTMacroPlay();
+    }catch(FileNotFoundException e) {
+      e.printStackTrace();
+    }
   }
 
   /**
@@ -138,33 +152,17 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
-    String[] splitByFrame = recordedString.split("|");
-    String mostRecentFrame = splitByFrame[0];
-
-    for(int i = 0; i < splitByFrame.length; i++) {
-      if((Double)Double.parseDouble(splitByFrame[i].split(",")[0]) < t.get()) {
-        mostRecentFrame = splitByFrame[i];
+    if(isAutonomous()) {
+      if(player != null) {
+        player.play();
+      }
+    }else {
+      if(player != null) {
+        player.end();
       }
     }
 
-    String[] mostRecentFrameSplit = mostRecentFrame.split(",");
 
-    double turn = Double.parseDouble(mostRecentFrameSplit[1]);
-    double rightTrigger = Double.parseDouble(mostRecentFrameSplit[2]);
-    double leftTrigger = Double.parseDouble(mostRecentFrameSplit[3]);
-    boolean yButton = Boolean.parseBoolean(mostRecentFrameSplit[4]);
-    boolean state = false;
-
-    RobotMap.driveSubsystem.arcadeDrive(-rightTrigger + leftTrigger, -turn);
-  
-    if(yButton && state == false) {
-      new ShootCommandGroup().schedule();
-      state = !state;
-    }
-    if(yButton && state == true) {
-      new ShootCommandGroup().cancel();
-      state = !state;
-    }
   }
 
   @Override
@@ -180,7 +178,12 @@ public class Robot extends TimedRobot {
     new ShootCommand(false).execute();
     new StorageCommand(false).execute();
 
-    SmartDashboard.putString("Auto" , recordedString);
+    recorder = null;
+    try {
+      recorder = new BTMacroRecord();
+    }catch(IOException e) {
+      e.printStackTrace();
+    }
   }
 
   /**
@@ -189,6 +192,30 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
       log();
+
+      if(isOperatorControl()) {
+        if(RobotMap.controller0.getLeftBumperValue()) {
+          isRecording = true;
+        }
+        if(isRecording) {
+          try {
+            if(recorder != null) {
+              recorder.record();
+            }
+          }catch (IOException e) {
+            e.printStackTrace();
+          }
+        }
+      }
+      else {
+        try {
+          if(recorder != null) {
+            recorder.end();
+          }
+        }catch (IOException e) {
+          e.printStackTrace();
+        }
+      }
   }
 
   private void log() {
@@ -201,8 +228,6 @@ public class Robot extends TimedRobot {
   public void testInit() {
     // Cancels all running commands at the start of test mode.
     //CommandScheduler.getInstance().cancelAll();
-
-    t.start();
   }
 
   /**
@@ -210,11 +235,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void testPeriodic() {
-    if(recordedString != "") {
-      recordedString += "|";
-    }
-    recordedString += t.get() + "," + RobotMap.controller0.getStickLeftXValue() * 0.6 + "," + RobotMap.controller0.getRightTriggerValue() * 0.6 + "," + RobotMap.controller0.getLeftTriggerValue() * 0.6 + ","  + RobotMap.controller0.yButton.get();
-    
-    RobotMap.driveSubsystem.arcadeDrive(-(RobotMap.controller0.getRightTriggerValue() - RobotMap.controller0.getLeftTriggerValue()) * 0.6, -RobotMap.controller0.getStickLeftXValue() * 0.6);
+  
   }
 }
