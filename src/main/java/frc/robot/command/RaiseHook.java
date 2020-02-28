@@ -11,7 +11,7 @@ public class RaiseHook extends CommandBase {
 
     @Override
     public void execute() {
-        RobotMap.climberSubsystem.hook(RobotMap.controller0.getStickRightYValue() * 0.9);
+        RobotMap.climberSubsystem.hook(RobotMap.controller0.getStickRightYValue());
     }
 
     @Override

@@ -135,7 +135,7 @@ public class RobotMap {
 		controller0.lbButton.whileHeld(new RaiseRobot());
 
 		controller0.dpadUpButton.whileHeld(new IntakeBeltCommand(true, false));
-		controller0.dpadUpButton.whileHeld(new IntakeBeltCommand(false, true));
+		controller0.dpadDownButton.whileHeld(new IntakeBeltCommand(false, true));
 	}
 
 	public static void logButtonState(){
