@@ -74,7 +74,7 @@ public class BTMacroPlay {
 				
 				RobotMap.driveSubsystem.frontleftDrive.set(ControlMode.PercentOutput, scanner.nextDouble());
 				RobotMap.driveSubsystem.frontrightDrive.set(ControlMode.PercentOutput, scanner.nextDouble());
-				RobotMap.ballStorageSubsystem.intake.set(ControlMode.PercentOutput, scanner.nextDouble());
+				//RobotMap.ballStorageSubsystem.intake.set(ControlMode.PercentOutput, scanner.nextDouble());
 				RobotMap.ballStorageSubsystem.intakeBelts.set(ControlMode.PercentOutput, scanner.nextDouble());
 				RobotMap.ballStorageSubsystem.intakeGate.set(scanner.nextBoolean());
 				RobotMap.shooterSubsystem.shooterTalonSRX.set(ControlMode.PercentOutput, scanner.nextDouble());

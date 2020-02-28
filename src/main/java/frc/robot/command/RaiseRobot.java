@@ -11,7 +11,7 @@ public class RaiseRobot extends CommandBase {
 
     @Override
     public void execute() {
-        RobotMap.climberSubsystem.climb(0.5);
+        RobotMap.climberSubsystem.climb(1);
     }
 
     @Override
