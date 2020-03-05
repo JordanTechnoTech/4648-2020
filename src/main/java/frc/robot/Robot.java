@@ -175,7 +175,7 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
     }
     new BallStorageCommand(false, 0).execute();
-    new ShootCommand(false).execute();
+    new ShootCommand(false, false).execute();
     new StorageCommand(false).execute();
 
     recorder = null;

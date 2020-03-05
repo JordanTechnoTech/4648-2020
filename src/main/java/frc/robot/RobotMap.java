@@ -13,6 +13,7 @@ import frc.robot.command.ColorCommand;
 import frc.robot.command.ColorSensorCommand;
 import frc.robot.command.FaceOffCommand;
 import frc.robot.command.IntakeBeltCommand;
+import frc.robot.command.ManualShootCommandGroup;
 import frc.robot.command.RaiseRobot;
 import frc.robot.command.FaceOffCommand.Target;
 import frc.robot.subsystem.BallStorageSubsystem;
@@ -129,6 +130,9 @@ public class RobotMap {
 
 		controller0.dpadUpButton.whileHeld(new IntakeBeltCommand(true, false));
 		controller0.dpadUpButton.whileHeld(new IntakeBeltCommand(false, true));
+
+		controller1.bButton.toggleWhenPressed(new ManualShootCommandGroup());
+		//controller1.aButton.whileHeld();
 	}
 
 	public static void logButtonState(){
