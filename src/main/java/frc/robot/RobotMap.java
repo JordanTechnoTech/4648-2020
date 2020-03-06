@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.command.BallStorageCommand;
-import frc.robot.command.BallStorageCommandGroup;
 import frc.robot.command.ColorCommand;
 import frc.robot.command.ColorSensorCommand;
 import frc.robot.command.FaceOffCommand;
@@ -133,7 +132,7 @@ public class RobotMap {
 		controller0.dpadUpButton.whileHeld(new IntakeBeltCommand(false, true));
 
 		controller1.bButton.toggleWhenPressed(new ManualShootCommandGroup());
-		controller1.aButton.whileHeld(new BallStorageCommandGroup());
+		//controller1.aButton.whileHeld();
 	}
 
 	public static void logButtonState(){
