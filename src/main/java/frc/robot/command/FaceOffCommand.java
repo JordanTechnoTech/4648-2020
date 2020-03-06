@@ -47,7 +47,7 @@ public class FaceOffCommand extends CommandBase {
         LimelightCamera.setPipeline(1);
         LimelightCamera.setCameraMode(LimelightCamera.cameraMode.VISION);
         
-        pidController = new PIDController(0.07, 0, 0.006);
+        pidController = new PIDController(0.35, 0, 0.035);
 
         commandStartTime = System.currentTimeMillis();
 
@@ -77,8 +77,11 @@ public class FaceOffCommand extends CommandBase {
 
 
             double turnSpeed = pidController.calculate(position, 0);
-            if(turnSpeed > 0.4) {
-                turnSpeed = 0.4;
+            if(turnSpeed > 0.7) {
+                turnSpeed = 0.7;
+            }
+            if(turnSpeed < -0.7) {
+                turnSpeed = -0.7;
             }
             
             //double turnSpeed = getTurnSpeed(limeLightValues);
@@ -122,10 +125,10 @@ public class FaceOffCommand extends CommandBase {
         float tx = (float) limeLightValues.getTargetHorizontal();
         float angle = Math.abs(tx);
         
-        if (angle < (1.5 - (0.005 * limelightDistance)) && commandStartTime + 2000 < System.currentTimeMillis() && limeLightValues.hasTarget() || commandStartTime + 3000 < System.currentTimeMillis()) {
-            // LimelightCamera.setLightMode(LimelightCamera.ledMode.OFF);
-            // LimelightCamera.setPipeline(1);
-            // LimelightCamera.setCameraMode(LimelightCamera.cameraMode.CAMERA);
+        if (angle < (1.25 - (0.005 * limelightDistance)) && commandStartTime + 1500 < System.currentTimeMillis() && limeLightValues.hasTarget() || commandStartTime + 3000 < System.currentTimeMillis()) {
+            LimelightCamera.setLightMode(LimelightCamera.ledMode.OFF);
+            LimelightCamera.setPipeline(1);
+            LimelightCamera.setCameraMode(LimelightCamera.cameraMode.CAMERA);
             RobotMap.driveSubsystem.arcadeDrive(0, 0);
             SmartDashboard.putString("Faceoffcommand", "finished");
             return true;
