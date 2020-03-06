@@ -7,16 +7,20 @@ import com.revrobotics.ColorSensorV3;
 
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.command.BallStorageCommand;
 import frc.robot.command.BallStorageCommandGroup;
 import frc.robot.command.ColorCommand;
 import frc.robot.command.ColorSensorCommand;
 import frc.robot.command.FaceOffCommand;
+//import frc.robot.command.FaceOffCommand;
 import frc.robot.command.IntakeBeltCommand;
 import frc.robot.command.ManualShootCommandGroup;
 import frc.robot.command.RaiseRobot;
-import frc.robot.command.FaceOffCommand.Target;
+//import frc.robot.command.ShootCommand;
+import frc.robot.command.ShootCommandGroup;
+//import frc.robot.command.FaceOffCommand.Target;
 import frc.robot.subsystem.BallStorageSubsystem;
 import frc.robot.subsystem.ClimberSubsystem;
 import frc.robot.subsystem.ColorSensorSubsystem;
@@ -40,13 +44,13 @@ public class RobotMap {
 
 	//VICTOR
 	public static int intakeBeltsID = 1;
-	public static int intakeSPXID = 2;
+	public static int intakeBelts2ID = 2;
 	public static int hookMotorID = 4;
 	public static int climberMotorID = 3;
 	
 	//pwm mappings
-	public static int intakegateID = 0;
-	public static int colorWheelSolenoidID = 2;
+	public static int intakegateID = 2;
+	public static int colorWheelSolenoidID = 0;
 	public static int leftIntakeID = 3;
 	public static int rightIntakeID = 4;
 
@@ -62,8 +66,9 @@ public class RobotMap {
 
 	//Ball Storage Subsystem
 	public static BallStorageSubsystem ballStorageSubsystem;
-	public static VictorSPX intake;
+	public static Talon intake;
 	public static VictorSPX intakeBelts;
+	public static VictorSPX intakeBelts2;
 	public static Solenoid intakeGate;
 
 	//Shooter Subsystem
@@ -98,11 +103,13 @@ public class RobotMap {
 		driveSubsystem = new DriveSubsystem(frontLeftMotorController, frontRightMotorController, backLeftMotorController, backRightMotorController, driveShifter);
 		
 		//intake initialization
-		intake = new VictorSPX(intakeSPXID);
+		//intake = new VictorSPX(intakeSPXID);
 		intakeBelts = new VictorSPX(intakeBeltsID);
+		intakeBelts2 = new VictorSPX(intakeBelts2ID);
 		intakeGate = new Solenoid(intakegateID);
 		shooterTalonSRX = new WPI_TalonSRX(shooterID);
-		ballStorageSubsystem = new BallStorageSubsystem(intake, intakeBelts, intakeGate);
+		intake = new Talon(0);
+		ballStorageSubsystem = new BallStorageSubsystem(intake, intakeBelts, intakeBelts2, intakeGate);
 		shooterSubsystem = new ShooterSubsystem(shooterTalonSRX);
 		
 		//color sensor initialization
@@ -124,12 +131,13 @@ public class RobotMap {
 		controller0.bButton.whenPressed(new BallStorageCommand(false, 0));
 		controller0.aButton.whenPressed(new BallStorageCommand(true, 0.5));
 
-		controller0.yButton.toggleWhenPressed(new FaceOffCommand(Target.TOP_OUTER_HOLE));
+		controller0.yButton.toggleWhenPressed(new ShootCommandGroup());
 		controller0.xButton.toggleWhenPressed(new ColorCommand());
 
 		controller0.lbButton.whileHeld(new RaiseRobot());
 
 		controller0.dpadUpButton.whileHeld(new IntakeBeltCommand(true, false));
+
 		controller0.dpadUpButton.whileHeld(new IntakeBeltCommand(false, true));
 
 		controller1.bButton.toggleWhenPressed(new ManualShootCommandGroup());

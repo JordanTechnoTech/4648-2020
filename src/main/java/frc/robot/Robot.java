@@ -134,9 +134,9 @@ public class Robot extends TimedRobot {
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
-    // if (m_autonomousCommand != null) {
-      // m_autonomousCommand.schedule(false);
-    // }
+     if (m_autonomousCommand != null) {
+       m_autonomousCommand.schedule(false);
+    }
 
     player = null;
 
@@ -152,15 +152,15 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
-    if(isAutonomous()) {
-      if(player != null) {
-        player.play();
-      }
-    }else {
-      if(player != null) {
-        player.end();
-      }
-    }
+  //  if(isAutonomous()) {
+  //    if(player != null) {
+  //      player.play();
+  //    }
+  //  }else {
+  //    if(player != null) {
+  //      player.end();
+  //    }
+  //  }
 
 
   }
@@ -178,12 +178,12 @@ public class Robot extends TimedRobot {
     new ShootCommand(false, false).execute();
     new StorageCommand(false).execute();
 
-    recorder = null;
-    try {
-      recorder = new BTMacroRecord();
-    }catch(IOException e) {
-      e.printStackTrace();
-    }
+    // recorder = null;
+    // try {
+    //   recorder = new BTMacroRecord();
+    // }catch(IOException e) {
+    //   e.printStackTrace();
+    // }
   }
 
   /**

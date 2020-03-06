@@ -19,11 +19,12 @@ public class ShootCommand extends CommandBase{
     public void execute() {
         if(state) {
             double distance = SmartDashboard.getNumber("distance", 50);
+          
             if(state2) { 
                 speed = (0.09 * distance * distance) + (3.3 * distance) + 9100;
             }else {
                 speed = SmartDashboard.getNumber("Test Speed", 8000);
-            }
+           
             RobotMap.shooterSubsystem.shoot(speed);
         }else {
             RobotMap.shooterSubsystem.stop();

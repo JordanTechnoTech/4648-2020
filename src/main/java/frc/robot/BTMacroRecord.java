@@ -49,7 +49,7 @@ public class BTMacroRecord {
 		//drive motors
 		writer.append("," + RobotMap.driveSubsystem.frontleftDrive.getMotorOutputPercent());
 		writer.append("," + RobotMap.driveSubsystem.frontrightDrive.getMotorOutputPercent());
-		writer.append("," + RobotMap.ballStorageSubsystem.intake.getMotorOutputPercent());
+		//writer.append("," + RobotMap.ballStorageSubsystem.intake.getMotorOutputPercent());
 		writer.append("," + RobotMap.ballStorageSubsystem.intakeBelts.getMotorOutputPercent());
 		writer.append("," + RobotMap.ballStorageSubsystem.intakeGate.get());
 		writer.append("," + RobotMap.shooterSubsystem.shooterTalonSRX.getMotorOutputPercent() + "\n");
