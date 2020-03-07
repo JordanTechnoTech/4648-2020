@@ -62,7 +62,7 @@ public class Robot extends TimedRobot {
     chooser = new SendableChooser<Color>();
     RobotMap.init();
     initSubsystems();
-    SmartDashboard.putNumber("Test Speed", 8000);
+    SmartDashboard.putNumber("Test Speed", 15000);
     SmartDashboard.putNumber("Shooter P", 1.5);
     SmartDashboard.putNumber("Shooter I", 0.000001);
     SmartDashboard.putNumber("Shooter D", 0.6);
@@ -87,8 +87,9 @@ public class Robot extends TimedRobot {
     subsystems.add(RobotMap.shooterSubsystem);
     subsystems.add(RobotMap.colorSensorSubsystem);
     subsystems.add(RobotMap.climberSubsystem);
+    subsystems.add(RobotMap.hookSubsystem);
     CommandScheduler.getInstance().setDefaultCommand(RobotMap.driveSubsystem, new DriveCommand());
-    CommandScheduler.getInstance().setDefaultCommand(RobotMap.climberSubsystem, new RaiseHook());
+    CommandScheduler.getInstance().setDefaultCommand(RobotMap.hookSubsystem, new RaiseHook());
   }
 
   /**
@@ -220,7 +221,6 @@ public class Robot extends TimedRobot {
 
   private void log() {
     subsystems.forEach(TechnoTechSubsystem::log);
-    RobotMap.logButtonState();
     SmartDashboard.putData("Reset Rotations", new CounterResetCommand());
   }
 

@@ -8,15 +8,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class ClimberSubsystem extends SubsystemBase implements TechnoTechSubsystem {
 
 	VictorSPX climberSRX;
-	VictorSPX hookMotor;
 
-	public ClimberSubsystem(VictorSPX climberSRX, VictorSPX hookMotor) {
+	public ClimberSubsystem(VictorSPX climberSRX) {
 		this.climberSRX = climberSRX;
-		this.hookMotor = hookMotor;
-	}
-
-	public void hook(double speed) {
-		hookMotor.set(ControlMode.PercentOutput, speed);
 	}
 
 	public void climb(double speed) {

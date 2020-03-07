@@ -13,6 +13,7 @@ public class ShootCommand extends CommandBase{
     public ShootCommand(boolean state, boolean state2) {
         addRequirements(RobotMap.shooterSubsystem);
         this.state = state;
+        this.state2 =  state2;
     }
 
     @Override
@@ -21,9 +22,9 @@ public class ShootCommand extends CommandBase{
             double distance = SmartDashboard.getNumber("distance", 50);
           
             if(state2) { 
-                speed = (0.09 * distance * distance) + (3.3 * distance) + 9100;
+                speed = (0.203 * distance * distance) - (52 * distance) + 19400;
             }else {
-                speed = SmartDashboard.getNumber("Test Speed", 8000);
+                speed = SmartDashboard.getNumber("Test Speed", 15000);
             }
             RobotMap.shooterSubsystem.shoot(speed);
             
@@ -31,7 +32,7 @@ public class ShootCommand extends CommandBase{
             RobotMap.shooterSubsystem.stop();
         }
         SmartDashboard.putString("Shoot Command state","execute");
-            SmartDashboard.putNumber("Shooter Target Speed", speed);
+        SmartDashboard.putNumber("Shooter Target Speed", speed);
     }
 
     @Override

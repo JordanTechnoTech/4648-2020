@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.revrobotics.ColorSensorV3;
 
 import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -21,11 +22,14 @@ import frc.robot.subsystem.BallStorageSubsystem;
 import frc.robot.subsystem.ClimberSubsystem;
 import frc.robot.subsystem.ColorSensorSubsystem;
 import frc.robot.subsystem.DriveSubsystem;
+import frc.robot.subsystem.HookSubsystem;
 import frc.robot.subsystem.ShooterSubsystem;
 
 public class RobotMap {
 	public static final TechnoTechXBoxController controller0 = new TechnoTechXBoxController(0);
 	public static final TechnoTechXBoxController controller1 = new TechnoTechXBoxController(1);
+	public static final Joystick leftJoystick = new Joystick(2);
+	public static final Joystick rightJoystick = new Joystick(3);
 
 	
 
@@ -81,6 +85,7 @@ public class RobotMap {
 	public static VictorSPX climberSRX;
 	public static VictorSPX hookMotor;
 	public static ClimberSubsystem climberSubsystem;
+	public static HookSubsystem hookSubsystem;
 
 	public static void init() {
 		// drive initialization
@@ -117,32 +122,34 @@ public class RobotMap {
 		//climber init
 		climberSRX = new VictorSPX(climberMotorID);
 		hookMotor = new VictorSPX(hookMotorID);
-		climberSubsystem = new ClimberSubsystem(climberSRX, hookMotor);
+		climberSubsystem = new ClimberSubsystem(climberSRX);
+		hookSubsystem = new HookSubsystem(hookMotor);
 	
 		buttonbinding();
+		buttonbinding2(true);
 	}
 	public static void buttonbinding() {
-		controller0.rbButton.toggleWhenPressed(new ColorSensorCommand());	//toggle colorsensor piston
-
-		controller0.bButton.whenPressed(new BallStorageCommand(false, 0));
-		controller0.aButton.whenPressed(new BallStorageCommand(true, 0.5));
-		controller0.yButton.toggleWhenPressed(new ShootCommandGroup());
-		controller0.xButton.toggleWhenPressed(new ColorCommand());
-		
-		controller0.dpadUpButton.whileHeld(new IntakeBeltCommand(true, false));
-		controller0.dpadUpButton.whileHeld(new IntakeBeltCommand(false, true));
-		
-		
 		controller1.dpadUpButton.whileHeld(new RaiseRobot(1));
-		controller1.dpadUpButton.whileHeld(new RaiseRobot(-0.7));
+		controller1.dpadDownButton.whileHeld(new RaiseRobot(-0.4));
 
 		controller1.bButton.toggleWhenPressed(new ManualShootCommandGroup());
 		controller1.aButton.whenPressed(new BallStorageCommandGroup(true));
 		controller1.aButton.whenReleased(new BallStorageCommandGroup(false));
 	}
 
-	public static void logButtonState(){
-		
-	}
+	public static void buttonbinding2(boolean state) {
+		if(state) {
+			controller0.rbButton.toggleWhenPressed(new ColorSensorCommand());	//toggle colorsensor piston
 
+			controller0.bButton.whenPressed(new BallStorageCommand(false, 0));
+			controller0.aButton.whenPressed(new BallStorageCommand(true, 0.5));
+			controller0.yButton.toggleWhenPressed(new ShootCommandGroup());
+			controller0.xButton.toggleWhenPressed(new ColorCommand());
+			
+			controller0.dpadUpButton.whileHeld(new IntakeBeltCommand(true, false));
+			controller0.dpadDownButton.whileHeld(new IntakeBeltCommand(false, true));
+		}else {
+			//for joysticks here	
+		}
+	}
 }
