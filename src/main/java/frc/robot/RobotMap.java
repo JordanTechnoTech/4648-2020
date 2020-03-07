@@ -137,7 +137,8 @@ public class RobotMap {
 		controller0.dpadUpButton.whileHeld(new IntakeBeltCommand(false, true));
 
 		controller1.bButton.toggleWhenPressed(new ManualShootCommandGroup());
-		controller1.aButton.whileHeld(new BallStorageCommandGroup());
+		controller1.aButton.whenPressed(new BallStorageCommandGroup(true));
+		controller1.aButton.whenReleased(new BallStorageCommandGroup(false));
 	}
 
 	public static void logButtonState(){
