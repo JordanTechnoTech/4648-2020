@@ -18,12 +18,12 @@ public class DriveCommand extends CommandBase {
     public void execute() {
         log();
         //Left stick only for driving
-        RobotMap.driveSubsystem.arcadeDrive(RobotMap.controller0.getStickLeftYValue(), -RobotMap.controller0.getStickLeftXValue() * 0.7f);
+        //RobotMap.driveSubsystem.arcadeDrive(RobotMap.controller0.getStickLeftYValue(), -RobotMap.controller0.getStickLeftXValue() * 0.7f);
         //for stick + triggers
         //RobotMap.driveSubsystem.arcadeDrive(-RobotMap.controller0.getRightTriggerValue() + RobotMap.controller0.getLeftTriggerValue(), - RobotMap.controller0.getStickLeftXValue() * 0.6f);
 
         //for joysticks and controller
-        //RobotMap.driveSubsystem.arcadeDrive(RobotMap.leftJoystick.getY(), RobotMap.rightJoystick.getX());
+        RobotMap.driveSubsystem.arcadeDrive(RobotMap.leftJoystick.getY(), -RobotMap.rightJoystick.getX());
     }
 
     @Override

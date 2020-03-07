@@ -71,6 +71,10 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("faceOff P", 0.7);
     SmartDashboard.putNumber("faceOff I", 0);
     SmartDashboard.putNumber("faceOff D", 0.006);
+
+    SmartDashboard.putNumber("Drive P", 0.25);
+    SmartDashboard.putNumber("Drive I", 0);
+    SmartDashboard.putNumber("Drive D", 0);
     
 
     chooser.setDefaultOption("Red", Color.kFirstRed);

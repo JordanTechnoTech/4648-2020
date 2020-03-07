@@ -10,10 +10,12 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.command.BallStorageCommand;
 import frc.robot.command.BallStorageCommandGroup;
 import frc.robot.command.ColorCommand;
 import frc.robot.command.ColorSensorCommand;
+import frc.robot.command.DriveDistanceCommand;
 import frc.robot.command.IntakeBeltCommand;
 import frc.robot.command.ManualShootCommandGroup;
 import frc.robot.command.RaiseRobot;
@@ -26,10 +28,23 @@ import frc.robot.subsystem.HookSubsystem;
 import frc.robot.subsystem.ShooterSubsystem;
 
 public class RobotMap {
-	public static final TechnoTechXBoxController controller0 = new TechnoTechXBoxController(0);
-	public static final TechnoTechXBoxController controller1 = new TechnoTechXBoxController(1);
-	public static final Joystick leftJoystick = new Joystick(2);
-	public static final Joystick rightJoystick = new Joystick(3);
+	public static final TechnoTechXBoxController controller0 = new TechnoTechXBoxController(2);
+	public static final TechnoTechXBoxController controller1 = new TechnoTechXBoxController(3);
+	public static final Joystick leftJoystick = new Joystick(0);
+	public static final Joystick rightJoystick = new Joystick(1);
+		public static final JoystickButton 
+		leftbutton1 = new JoystickButton(leftJoystick, 1), 
+		leftbutton2 = new JoystickButton(leftJoystick, 2),
+		leftbutton3 = new JoystickButton(leftJoystick, 3),
+		leftbutton4 = new JoystickButton(leftJoystick, 4),
+		leftbutton5 = new JoystickButton(leftJoystick, 5),
+		
+		rightbutton1 = new JoystickButton(rightJoystick, 1),
+		rightbutton2 = new JoystickButton(rightJoystick, 2),
+		rightbutton3 = new JoystickButton(rightJoystick, 3),
+		rightbutton4 = new JoystickButton(rightJoystick, 4),
+		rightbutton5 = new JoystickButton(rightJoystick, 5),
+		rightbutton9 = new JoystickButton(rightJoystick, 9);
 
 	
 
@@ -126,15 +141,11 @@ public class RobotMap {
 		hookSubsystem = new HookSubsystem(hookMotor);
 	
 		buttonbinding();
-		buttonbinding2(true);
+		buttonbinding2(false);
 	}
 	public static void buttonbinding() {
 		controller1.dpadUpButton.whileHeld(new RaiseRobot(1));
 		controller1.dpadDownButton.whileHeld(new RaiseRobot(-0.4));
-
-		controller1.bButton.toggleWhenPressed(new ManualShootCommandGroup());
-		controller1.aButton.whenPressed(new BallStorageCommandGroup(true));
-		controller1.aButton.whenReleased(new BallStorageCommandGroup(false));
 	}
 
 	public static void buttonbinding2(boolean state) {
@@ -149,7 +160,17 @@ public class RobotMap {
 			controller0.dpadUpButton.whileHeld(new IntakeBeltCommand(true, false));
 			controller0.dpadDownButton.whileHeld(new IntakeBeltCommand(false, true));
 		}else {
-			//for joysticks here	
+			rightbutton3.whenPressed(new BallStorageCommand(true, 0.5));
+			rightbutton2.whenPressed(new BallStorageCommand(false, 0));
+			rightbutton5.toggleWhenPressed(new ColorSensorCommand());
+			rightbutton4.toggleWhenPressed(new ColorCommand());
+			rightbutton1.toggleWhenPressed(new ShootCommandGroup());
+
+			leftbutton3.whileHeld(new IntakeBeltCommand(true, false));
+			leftbutton2.whileHeld(new IntakeBeltCommand(false, true));
+			leftbutton1.toggleWhenPressed(new ManualShootCommandGroup());
+
+			rightbutton9.toggleWhenPressed(new DriveDistanceCommand(10 * 1000));
 		}
 	}
 }
