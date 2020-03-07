@@ -105,8 +105,8 @@ public class RobotMap {
 		intakeGate = new Solenoid(intakegateID);
 		shooterTalonSRX = new WPI_TalonSRX(shooterID);
 		intake = new Talon(0);
-		ballStorageSubsystem = new BallStorageSubsystem(intake, intakeBelts, intakeBelts2, intakeGate);
-		shooterSubsystem = new ShooterSubsystem(shooterTalonSRX);
+		ballStorageSubsystem = new BallStorageSubsystem(intake, intakeBelts, intakeBelts2);
+		shooterSubsystem = new ShooterSubsystem(shooterTalonSRX, intakeGate);
 		
 		//color sensor initialization
 		colorSensor = new ColorSensorV3(I2C.Port.kOnboard);

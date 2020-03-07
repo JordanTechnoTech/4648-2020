@@ -8,13 +8,13 @@ public class StorageCommand extends CommandBase {
     private boolean state;
 
     public StorageCommand(boolean state) {
-        addRequirements(RobotMap.ballStorageSubsystem);
+        addRequirements(RobotMap.shooterSubsystem);
         this.state = state;
     }
 
     @Override
     public void execute() {
-        RobotMap.ballStorageSubsystem.gate(state);
+        RobotMap.shooterSubsystem.gate(state);
     }
 
     @Override

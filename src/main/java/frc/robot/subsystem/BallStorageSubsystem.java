@@ -12,23 +12,16 @@ public class BallStorageSubsystem extends SubsystemBase implements TechnoTechSub
 	public Talon intake;
     public VictorSPX intakeBelts;
     public VictorSPX intakeBelts2;
-    public Solenoid intakeGate;
 
-    public BallStorageSubsystem(Talon intake, VictorSPX intakeBelts, VictorSPX intakeBelts2, Solenoid intakeGate) {
+    public BallStorageSubsystem(Talon intake, VictorSPX intakeBelts, VictorSPX intakeBelts2) {
         this.intake = intake;
         this.intakeBelts2 = intakeBelts2;
         this.intakeBelts = intakeBelts;
-        this.intakeGate = intakeGate;
-        
     }
 
     public void intake(double beltSpeed) {
         intake.set(beltSpeed * 0.45f);
 
-    }
-
-    public void gate(boolean state) {
-        intakeGate.set(state);
     }
 
     public void belts(double speed) {
