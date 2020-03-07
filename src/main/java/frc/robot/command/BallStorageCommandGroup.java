@@ -8,7 +8,7 @@ public class BallStorageCommandGroup extends SequentialCommandGroup {
 
     public BallStorageCommandGroup(boolean state) {
         this.state = state;
-        addCommands(new StorageCommand(state), new BallStorageCommand(state, 0.65));
+        addCommands(new StorageCommand(this.state), new BallStorageCommand(state, 0.65));
 
     }
 

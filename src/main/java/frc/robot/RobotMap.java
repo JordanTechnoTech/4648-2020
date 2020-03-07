@@ -126,15 +126,15 @@ public class RobotMap {
 
 		controller0.bButton.whenPressed(new BallStorageCommand(false, 0));
 		controller0.aButton.whenPressed(new BallStorageCommand(true, 0.5));
-
 		controller0.yButton.toggleWhenPressed(new ShootCommandGroup());
 		controller0.xButton.toggleWhenPressed(new ColorCommand());
-
-		controller0.lbButton.whileHeld(new RaiseRobot());
-
+		
 		controller0.dpadUpButton.whileHeld(new IntakeBeltCommand(true, false));
-
 		controller0.dpadUpButton.whileHeld(new IntakeBeltCommand(false, true));
+		
+		
+		controller1.dpadUpButton.whileHeld(new RaiseRobot(1));
+		controller1.dpadUpButton.whileHeld(new RaiseRobot(-0.7));
 
 		controller1.bButton.toggleWhenPressed(new ManualShootCommandGroup());
 		controller1.aButton.whenPressed(new BallStorageCommandGroup(true));
