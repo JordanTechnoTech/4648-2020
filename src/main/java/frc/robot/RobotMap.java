@@ -11,15 +11,15 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.command.AutonomousDistanceGroup;
 import frc.robot.command.BallStorageCommand;
-import frc.robot.command.BallStorageCommandGroup;
 import frc.robot.command.ColorCommand;
 import frc.robot.command.ColorSensorCommand;
-import frc.robot.command.DriveDistanceCommand;
 import frc.robot.command.IntakeBeltCommand;
 import frc.robot.command.ManualShootCommandGroup;
 import frc.robot.command.RaiseRobot;
 import frc.robot.command.ShootCommandGroup;
+import frc.robot.command.Turn;
 import frc.robot.subsystem.BallStorageSubsystem;
 import frc.robot.subsystem.ClimberSubsystem;
 import frc.robot.subsystem.ColorSensorSubsystem;
@@ -44,6 +44,7 @@ public class RobotMap {
 		rightbutton3 = new JoystickButton(rightJoystick, 3),
 		rightbutton4 = new JoystickButton(rightJoystick, 4),
 		rightbutton5 = new JoystickButton(rightJoystick, 5),
+		rightbutton8 = new JoystickButton(rightJoystick, 8),
 		rightbutton9 = new JoystickButton(rightJoystick, 9);
 
 	
@@ -170,7 +171,8 @@ public class RobotMap {
 			leftbutton2.whileHeld(new IntakeBeltCommand(false, true));
 			leftbutton1.toggleWhenPressed(new ManualShootCommandGroup());
 
-			rightbutton9.toggleWhenPressed(new DriveDistanceCommand(10 * 1000));
+			rightbutton9.whenPressed(new AutonomousDistanceGroup());
+			rightbutton8.whenPressed(new Turn(180));
 		}
 	}
 }
