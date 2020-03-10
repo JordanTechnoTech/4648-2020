@@ -8,7 +8,8 @@ public class LimeLightValues {
     public double ta;
 
     public boolean hasTarget(){
-        return tv == 1;
+        return true;
+        //return tv == 1;
     }
 
     public double getTargetHorizontal(){

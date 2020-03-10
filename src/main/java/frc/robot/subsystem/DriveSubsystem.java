@@ -50,11 +50,12 @@ public class DriveSubsystem extends SubsystemBase implements TechnoTechSubsystem
 		configureTalonSRX(this.backleftDrive);
 		configureTalonSRX(this.backrightDrive);
 
-		this.backleftDrive.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
-		this.backrightDrive.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
+		this.backleftDrive.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 0);
+		this.backrightDrive.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 0);
 
-		frontleftDrive.setInverted(false);
 		backleftDrive.setInverted(true);
+		backleftDrive.setSensorPhase(true);
+		backrightDrive.setInverted(false);
 
 		frontleftDrive.set(ControlMode.Follower, 3);
 		frontrightDrive.set(ControlMode.Follower, 4);
@@ -62,14 +63,13 @@ public class DriveSubsystem extends SubsystemBase implements TechnoTechSubsystem
 	}
 
 	public void configureTalonSRX(WPI_TalonSRX srx) {
-		//srx.configFactoryDefault();
-        srx.setSensorPhase(true);
+		srx.configFactoryDefault();
 		
-		double kP = SmartDashboard.getNumber("Drive P", 0.25);
+		double kP = SmartDashboard.getNumber("Drive P", 0.15);
         double kI = SmartDashboard.getNumber("Drive I", 0);
-        double kD = SmartDashboard.getNumber("Drive D", 0);
+        double kD = SmartDashboard.getNumber("Drive D", 1.5);
 
-        Gains kGains_Velocit = new Gains( kP, kI, kD, 1023.0/7200.0,  300,  1.00);
+        Gains kGains_Velocit = new Gains(kP, kI, kD, 0,  1,  0.5);
 		
 		srx.configNominalOutputForward(0, Constants.kTimeoutMs);
 		srx.configNominalOutputReverse(0, Constants.kTimeoutMs);
@@ -81,7 +81,25 @@ public class DriveSubsystem extends SubsystemBase implements TechnoTechSubsystem
 		srx.config_kI(Constants.kPIDLoopIdx, kGains_Velocit.kI, Constants.kTimeoutMs);
 		srx.config_kD(Constants.kPIDLoopIdx, kGains_Velocit.kD, Constants.kTimeoutMs);
 
+		srx.configClosedLoopPeakOutput(0, 0.8);
 		srx.setNeutralMode(NeutralMode.Brake);
+
+		srx.configMotionAcceleration(2000);
+		srx.configMotionCruiseVelocity(3500);
+		srx.configMotionSCurveStrength(0);
+	}
+
+	public void configureTalonSRX2(boolean state) {
+		if(state) {
+			backleftDrive.configMotionCruiseVelocity(1000);
+			backrightDrive.configMotionCruiseVelocity(1000);
+			frontleftDrive.configMotionCruiseVelocity(1000);
+			frontrightDrive.configMotionCruiseVelocity(1000);
+		}else {
+			backleftDrive.configMotionCruiseVelocity(3500);
+			backrightDrive.configMotionCruiseVelocity(3500);
+			frontleftDrive.configMotionCruiseVelocity(3500);
+			frontrightDrive.configMotionCruiseVelocity(3500);		}
 	}
 
 	public void tankDrive(double leftSpeed, double rightSpeed) {
@@ -92,18 +110,14 @@ public class DriveSubsystem extends SubsystemBase implements TechnoTechSubsystem
 		differentialDrive1.arcadeDrive(forwardSpeed, rotationSpeed);
 	}
 
-	public void driveDistance(double distance) {
-		//backleftDrive.set(ControlMode.PercentOutput, -0.1);
-		this.backleftDrive.setSelectedSensorPosition(0, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
-		//this.frontleftDrive.setSelectedSensorPosition(0, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
-		this.backrightDrive.setSelectedSensorPosition(0, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
-		//this.frontrightDrive.setSelectedSensorPosition(0, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
-		backrightDrive.set(ControlMode.Position, distance);
-		backleftDrive.set(ControlMode.Position, distance);
+	public void driveDistance(double leftdistance, double rightdistance) {
+		backleftDrive.set(ControlMode.MotionMagic, -leftdistance);
+		backrightDrive.set(ControlMode.MotionMagic, rightdistance);
 	}
 
-	public void changeGear(boolean state) {
-		//driveShifter.set(state);
+	public void resetEncoders() {
+		backleftDrive.setSelectedSensorPosition(0, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
+		backrightDrive.setSelectedSensorPosition(0, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
 	}
 
 	public void log() {	
@@ -113,7 +127,12 @@ public class DriveSubsystem extends SubsystemBase implements TechnoTechSubsystem
 		SmartDashboard.putNumber("Back Right Speed", backrightDrive.getMotorOutputPercent());
 		//SmartDashboard.putBoolean("Shifter Gear", driveShifter.get());
 		
-		SmartDashboard.putNumber("Left Encoder", backleftDrive.getSelectedSensorVelocity());
-		SmartDashboard.putNumber("Right Encoder", backrightDrive.getSelectedSensorVelocity());
+		SmartDashboard.putNumber("Left Encoder Velocity", backleftDrive.getSelectedSensorVelocity());
+		SmartDashboard.putNumber("Right Encoder Velocity", backrightDrive.getSelectedSensorVelocity());
+		SmartDashboard.putNumber("Left Encoder Position", backleftDrive.getSelectedSensorPosition());
+		SmartDashboard.putNumber("Right Encoder Position", backrightDrive.getSelectedSensorPosition());
+
+		SmartDashboard.putNumber("Left Closed Loop Error", backleftDrive.getClosedLoopError());
+		SmartDashboard.putNumber("Right Closed Loop Error", backrightDrive.getClosedLoopError());
 	}
 }

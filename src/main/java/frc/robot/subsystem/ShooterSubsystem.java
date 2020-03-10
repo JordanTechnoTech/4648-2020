@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -13,12 +14,13 @@ import frc.robot.RobotMap;
 public class ShooterSubsystem extends SubsystemBase implements TechnoTechSubsystem {
 
     public WPI_TalonSRX shooterTalonSRX;
+    public Solenoid intakeGate;
 
 
-    public ShooterSubsystem(WPI_TalonSRX shooterTalonSRX) {
+    public ShooterSubsystem(WPI_TalonSRX shooterTalonSRX, Solenoid intakeGate) {
         addChild("intakeGate", RobotMap.intakeGate);
         this.shooterTalonSRX = shooterTalonSRX;
-        
+        this.intakeGate = intakeGate;
         
         this.shooterTalonSRX.configFactoryDefault();
         this.shooterTalonSRX.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
@@ -49,6 +51,10 @@ public class ShooterSubsystem extends SubsystemBase implements TechnoTechSubsyst
 
     public void stop(){
         shooterTalonSRX.set(ControlMode.PercentOutput, 0.0);
+    }
+
+    public void gate(boolean state) {
+        intakeGate.set(state);
     }
 
 

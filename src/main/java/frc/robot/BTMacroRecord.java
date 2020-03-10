@@ -51,7 +51,7 @@ public class BTMacroRecord {
 		writer.append("," + RobotMap.driveSubsystem.frontrightDrive.getMotorOutputPercent());
 		//writer.append("," + RobotMap.ballStorageSubsystem.intake.getMotorOutputPercent());
 		writer.append("," + RobotMap.ballStorageSubsystem.intakeBelts.getMotorOutputPercent());
-		writer.append("," + RobotMap.ballStorageSubsystem.intakeGate.get());
+		writer.append("," + RobotMap.shooterSubsystem.intakeGate.get());
 		writer.append("," + RobotMap.shooterSubsystem.shooterTalonSRX.getMotorOutputPercent() + "\n");
 
 		/*

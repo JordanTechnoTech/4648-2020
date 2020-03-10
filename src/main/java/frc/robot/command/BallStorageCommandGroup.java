@@ -3,9 +3,13 @@ package frc.robot.command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 public class BallStorageCommandGroup extends SequentialCommandGroup {
+    
+    private boolean state;
 
-    public BallStorageCommandGroup() {
-        addCommands(new StorageCommand(true), new BallStorageCommand(true, 0.5));
+    public BallStorageCommandGroup(boolean state) {
+        this.state = state;
+        addCommands(new StorageCommand(this.state), new BallStorageCommand(state, 0.65));
+
     }
 
     @Override
@@ -16,7 +20,7 @@ public class BallStorageCommandGroup extends SequentialCommandGroup {
 
     @Override  
     public void end(boolean interrupted) {
-        new StorageCommand(false).execute();
-        new BallStorageCommand(false, 0).execute();
+        //new StorageCommand(false).execute();
+        //new BallStorageCommand(false, 0).execute();
     }
 }

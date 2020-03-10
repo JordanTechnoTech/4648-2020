@@ -7,8 +7,8 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 public class ManualShootCommandGroup extends SequentialCommandGroup {
 
     public ManualShootCommandGroup() {
-        addCommands(new ShootCommand(true, false),
-        new WaitCommand(10));
+        addCommands(new ShootCommand(true, false), new WaitCommand(1), new BallStorageCommandGroup(true),
+        new WaitCommand(2));
     }
 
     @Override

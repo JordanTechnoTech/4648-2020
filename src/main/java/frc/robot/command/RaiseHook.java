@@ -6,12 +6,12 @@ import frc.robot.RobotMap;
 public class RaiseHook extends CommandBase {
 
     public RaiseHook() {
-        addRequirements(RobotMap.climberSubsystem);
+        addRequirements(RobotMap.hookSubsystem);
     }
 
     @Override
     public void execute() {
-        RobotMap.climberSubsystem.hook(RobotMap.controller0.getStickRightYValue());
+        RobotMap.hookSubsystem.hook(RobotMap.controller1.getStickRightYValue());
     }
 
     @Override
