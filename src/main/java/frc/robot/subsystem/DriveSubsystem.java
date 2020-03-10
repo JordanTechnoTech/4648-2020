@@ -65,9 +65,9 @@ public class DriveSubsystem extends SubsystemBase implements TechnoTechSubsystem
 	public void configureTalonSRX(WPI_TalonSRX srx) {
 		srx.configFactoryDefault();
 		
-		double kP = SmartDashboard.getNumber("Drive P", .2);
+		double kP = SmartDashboard.getNumber("Drive P", 0.15);
         double kI = SmartDashboard.getNumber("Drive I", 0);
-        double kD = SmartDashboard.getNumber("Drive D", 2);
+        double kD = SmartDashboard.getNumber("Drive D", 1.5);
 
         Gains kGains_Velocit = new Gains(kP, kI, kD, 0,  1,  0.5);
 		

@@ -15,6 +15,7 @@ import frc.robot.command.AutonomousDistanceGroup;
 import frc.robot.command.BallStorageCommand;
 import frc.robot.command.ColorCommand;
 import frc.robot.command.ColorSensorCommand;
+import frc.robot.command.DriveDistanceCommand;
 import frc.robot.command.IntakeBeltCommand;
 import frc.robot.command.ManualShootCommandGroup;
 import frc.robot.command.RaiseRobot;
@@ -32,21 +33,22 @@ public class RobotMap {
 	public static final TechnoTechXBoxController controller1 = new TechnoTechXBoxController(3);
 	public static final Joystick leftJoystick = new Joystick(0);
 	public static final Joystick rightJoystick = new Joystick(1);
-		public static final JoystickButton 
-		leftbutton1 = new JoystickButton(leftJoystick, 1), 
-		leftbutton2 = new JoystickButton(leftJoystick, 2),
-		leftbutton3 = new JoystickButton(leftJoystick, 3),
-		leftbutton4 = new JoystickButton(leftJoystick, 4),
-		leftbutton5 = new JoystickButton(leftJoystick, 5),
-		
-		rightbutton1 = new JoystickButton(rightJoystick, 1),
-		rightbutton2 = new JoystickButton(rightJoystick, 2),
-		rightbutton3 = new JoystickButton(rightJoystick, 3),
-		rightbutton4 = new JoystickButton(rightJoystick, 4),
-		rightbutton5 = new JoystickButton(rightJoystick, 5),
-		rightbutton8 = new JoystickButton(rightJoystick, 8),
-		rightbutton9 = new JoystickButton(rightJoystick, 9);
+	public static final JoystickButton 
+	leftbutton1 = new JoystickButton(leftJoystick, 1), 
+	leftbutton2 = new JoystickButton(leftJoystick, 2),
+	leftbutton3 = new JoystickButton(leftJoystick, 3),
+	leftbutton4 = new JoystickButton(leftJoystick, 4),
+	leftbutton5 = new JoystickButton(leftJoystick, 5),
+	
+	rightbutton1 = new JoystickButton(rightJoystick, 1),
+	rightbutton2 = new JoystickButton(rightJoystick, 2),
+	rightbutton3 = new JoystickButton(rightJoystick, 3),
+	rightbutton4 = new JoystickButton(rightJoystick, 4),
+	rightbutton5 = new JoystickButton(rightJoystick, 5),
+	rightbutton8 = new JoystickButton(rightJoystick, 8),
+	rightbutton9 = new JoystickButton(rightJoystick, 9);
 
+	
 	
 
 	//TALON
@@ -172,7 +174,7 @@ public class RobotMap {
 			leftbutton1.toggleWhenPressed(new ManualShootCommandGroup());
 
 			rightbutton9.whenPressed(new AutonomousDistanceGroup());
-			rightbutton8.whenPressed(new Turn(180));
+			rightbutton8.whenPressed(new Turn(360));
 		}
 	}
 }

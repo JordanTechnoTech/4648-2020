@@ -8,7 +8,7 @@ public class ManualShootCommandGroup extends SequentialCommandGroup {
 
     public ManualShootCommandGroup() {
         addCommands(new ShootCommand(true, false), new WaitCommand(1), new BallStorageCommandGroup(true),
-        new WaitCommand(10));
+        new WaitCommand(2));
     }
 
     @Override

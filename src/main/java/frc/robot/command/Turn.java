@@ -28,7 +28,7 @@ public class Turn extends CommandBase {
         RobotMap.driveSubsystem.driveDistance(distance, -distance);
         
         if(Math.abs(distance + RobotMap.driveSubsystem.backleftDrive.getSelectedSensorPosition()) <= 500) {
-            if(time != System.currentTimeMillis()) {
+            if(time == 0) {
                 time = System.currentTimeMillis();
             }
         }
@@ -49,5 +49,7 @@ public class Turn extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         RobotMap.driveSubsystem.arcadeDrive(0, 0);
+
+        time = 0;
     }
 }

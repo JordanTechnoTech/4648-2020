@@ -43,7 +43,10 @@ public class TechnoTechXBoxController {
     public double getStickRightXValue(){ return controller.getX(GenericHID.Hand.kRight);}
     public double getLeftTriggerValue(){ return controller.getTriggerAxis(GenericHID.Hand.kLeft);}
     public double getRightTriggerValue(){ return controller.getTriggerAxis(GenericHID.Hand.kRight);}
+
     
+    
+
     public boolean getAButtonValue(){
         return controller.getAButton();
     }

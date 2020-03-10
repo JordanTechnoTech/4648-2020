@@ -6,6 +6,7 @@ import frc.robot.RobotMap;
 public class DriveDistanceCommand extends CommandBase {
 
     private double distance;
+    private double feet;
     private double time = 0;
 
     public DriveDistanceCommand(double distance) {
@@ -17,15 +18,17 @@ public class DriveDistanceCommand extends CommandBase {
     public void initialize() {
         RobotMap.driveSubsystem.resetEncoders();
         RobotMap.driveSubsystem.configureTalonSRX2(false);
+        feet = 100000 / 8.9 * distance; 
         super.initialize();
     }
 
     @Override
     public void execute() {
-        RobotMap.driveSubsystem.driveDistance(distance, distance);
+        //RobotMap.driveSubsystem.driveDistance(distance, distance);
+        RobotMap.driveSubsystem.driveDistance(feet, feet);
 
-        if(Math.abs(distance + RobotMap.driveSubsystem.backleftDrive.getSelectedSensorPosition()) <= 200) {
-            if(time != System.currentTimeMillis()) {
+        if(Math.abs(feet + RobotMap.driveSubsystem.backleftDrive.getSelectedSensorPosition()) <= 800) {
+            if(time == 0) {
                 time = System.currentTimeMillis();
             }
         }
@@ -39,12 +42,13 @@ public class DriveDistanceCommand extends CommandBase {
             return false;
         }
         else {
-            return time + 200 < System.currentTimeMillis();
+            return time + 300 < System.currentTimeMillis();
         }
     }
 
     @Override
     public void end(boolean interrupted) {
         RobotMap.driveSubsystem.arcadeDrive(0, 0);
+        time = 0;
     }
 }
