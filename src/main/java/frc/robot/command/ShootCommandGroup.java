@@ -10,7 +10,7 @@ public class ShootCommandGroup extends SequentialCommandGroup {
     public ShootCommandGroup() {
         addCommands(
             parallel(new FaceOffCommand(Target.TOP_OUTER_HOLE), new ShootCommand(true, true)),
-            parallel(new StorageCommand(true), new BallStorageCommand(true, 0.65)),
+            parallel(new StorageCommand(true), new BallStorageCommand(true, 0.6)),
             sequence(new WaitCommand(6))
         );
         

@@ -47,7 +47,7 @@ public class FaceOffCommand extends CommandBase {
         LimelightCamera.setPipeline(1);
         LimelightCamera.setCameraMode(LimelightCamera.cameraMode.VISION);
         
-        pidController = new PIDController(0.35, 0, 0.035);
+        pidController = new PIDController(0.1, 0, 0.01);
 
         commandStartTime = System.currentTimeMillis();
 
@@ -77,11 +77,11 @@ public class FaceOffCommand extends CommandBase {
 
 
             double turnSpeed = pidController.calculate(position, 0);
-            if(turnSpeed > 0.7) {
-                turnSpeed = 0.7;
+            if(turnSpeed > 0.5) {
+                turnSpeed = 0.5;
             }
-            if(turnSpeed < -0.7) {
-                turnSpeed = -0.7;
+            if(turnSpeed < -0.5) {
+                turnSpeed = -0.5;
             }
             
             //double turnSpeed = getTurnSpeed(limeLightValues);
@@ -145,7 +145,7 @@ public class FaceOffCommand extends CommandBase {
     }
 
     public enum Target {
-        TOP_OUTER_HOLE(98d);
+        TOP_OUTER_HOLE(89d);
 
         private final double height;
 

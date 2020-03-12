@@ -15,7 +15,6 @@ import frc.robot.command.AutonomousDistanceGroup;
 import frc.robot.command.BallStorageCommand;
 import frc.robot.command.ColorCommand;
 import frc.robot.command.ColorSensorCommand;
-import frc.robot.command.DriveDistanceCommand;
 import frc.robot.command.IntakeBeltCommand;
 import frc.robot.command.ManualShootCommandGroup;
 import frc.robot.command.RaiseRobot;
@@ -29,8 +28,8 @@ import frc.robot.subsystem.HookSubsystem;
 import frc.robot.subsystem.ShooterSubsystem;
 
 public class RobotMap {
-	public static final TechnoTechXBoxController controller0 = new TechnoTechXBoxController(2);
-	public static final TechnoTechXBoxController controller1 = new TechnoTechXBoxController(3);
+	public static final TechnoTechXBoxController controller0 = new TechnoTechXBoxController(3);
+	public static final TechnoTechXBoxController controller1 = new TechnoTechXBoxController(2);
 	public static final Joystick leftJoystick = new Joystick(0);
 	public static final Joystick rightJoystick = new Joystick(1);
 	public static final JoystickButton 
